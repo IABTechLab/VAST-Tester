@@ -1,0 +1,65 @@
+$font-family: Arial, Helvetica, sans-serif;
+$font-weight-bold: 700;
+
+$video-aspect-ratio: 16 / 9;
+
+$background-color: #fff;
+$foreground-color: #000;
+$accent-color-1: #36c;
+$accent-color-2: #f66;
+$accent-color-3: #c33;
+$info-color: #09c;
+$warning-color: #c90;
+$error-color: #c00;
+$scrollbar-foreground-color: #d0d0d0;
+$scrollbar-background-color: #f9f9f9;
+
+$scrollbar-size: 8px;
+
+$xs-min-width: 240px;
+$xs-font-size: 12px;
+$xs-font-size-large: $xs-font-size * 1.25;
+$xs-space-tiny: 2px;
+$xs-space-small: 4px;
+$xs-space-medium: 8px;
+$xs-space-large: 16px;
+$xs-button-size: $xs-font-size + $xs-space-small * 2;
+$xs-header-height: $xs-font-size-large + 2 * $xs-space-large;
+$xs-footer-height: $xs-button-size + 2 * $xs-space-large;
+
+$sm-min-width: 360px;
+$sm-font-size: $xs-font-size;
+$sm-font-size-large: $xs-font-size-large;
+$sm-space-tiny: $xs-space-tiny;
+$sm-space-small: $xs-space-small;
+$sm-space-medium: $xs-space-medium;
+$sm-space-large: $xs-space-large;
+$sm-button-size: $xs-button-size;
+$sm-header-height: $xs-header-height;
+$sm-footer-height: $xs-footer-height;
+
+$md-min-width: 480px;
+$md-font-size: 16px;
+$md-font-size-large: $md-font-size * 1.25;
+$md-space-tiny: 2px;
+$md-space-small: 4px;
+$md-space-medium: 8px;
+$md-space-large: 16px;
+$md-button-size: $md-font-size + $md-space-small * 2;
+$md-header-height: $md-font-size-large + 2 * $md-space-large;
+$md-footer-height: $md-button-size + 2 * $md-space-large;
+
+$lg-min-width: 720px;
+$lg-font-size: $md-font-size;
+$lg-font-size-large: $md-font-size-large;
+$lg-space-tiny: $md-space-tiny;
+$lg-space-small: $md-space-small;
+$lg-space-medium: $md-space-medium;
+$lg-space-large: $md-space-large;
+$lg-button-size: $md-button-size;
+$lg-header-height: $md-header-height;
+$lg-footer-height: $md-footer-height;
+
+$heart-size: 90px;
+$heart-curvature: 0.6;
+$heart-scale: 1.125;

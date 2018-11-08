@@ -1,0 +1,128 @@
+.log {
+  table {
+    width: 100%;
+  }
+
+  td {
+    border-bottom: $xs-space-tiny solid $background-color;
+    @include respond2('padding',
+      $xs-space-medium $xs-space-medium / 2
+      $sm-space-medium $sm-space-medium / 2
+      $md-space-medium $md-space-medium / 2
+      $lg-space-medium $lg-space-medium / 2);
+
+    &:first-child {
+      @include respond('padding-left', $r-space-medium);
+    }
+
+    &:last-child {
+      @include respond('padding-right', $r-space-medium);
+    }
+  }
+
+  .time {
+    color: transparentize($foreground-color, 2 / 3);
+    cursor: help;
+  }
+
+  .level, .category {
+    text-transform: uppercase;
+  }
+
+  .first {
+    .category, .text, .level .icon {
+      display: none;
+    }
+  }
+
+  .second {
+    .category {
+      color: transparentize($foreground-color, 2 / 3);
+      text-align: right;
+    }
+  }
+
+  @media (min-width: $md-min-width) {
+    .first {
+      .category, .text {
+        display: table-cell;
+      }
+
+      .time, .level, .category {
+        font-size: 85%;
+      }
+
+      .level {
+        text-align: center;
+
+        .label {
+          display: none;
+        }
+
+        .icon {
+          display: inline;
+        }
+      }
+    }
+
+    .second {
+      display: none;
+    }
+  }
+
+  .level-info {
+    .level, &.first .category {
+      color: $info-color;
+    }
+
+    &.first td {
+      background: transparentize($info-color, 0.9);
+    }
+  }
+
+  .level-warn {
+    .level, &.first .category {
+      color: $warning-color;
+    }
+
+    &.first td {
+      background: transparentize($warning-color, 0.9);
+    }
+  }
+
+  .level-error {
+    &.first td, &.second td {
+      color: $error-color;
+    }
+
+    &.first td {
+      background: transparentize($error-color, 0.9);
+    }
+  }
+
+  .metadata {
+    margin: 0;
+    padding: 0;
+
+    dt, dd {
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      width: auto;
+      float: left;
+    }
+
+    dt {
+      clear: left;
+
+      span:after {
+        content: ":\00a0";
+        align: left;
+      }
+    }
+
+    dd {
+      white-space: pre-wrap;
+    }
+  }
+}

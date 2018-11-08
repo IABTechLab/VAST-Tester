@@ -1,0 +1,15 @@
+.vast-details {
+  .vast-info {
+    dt {
+      width: 33.3%;
+    }
+
+    dd {
+      width: 66.7%;
+    }
+  }
+
+  .vast {
+    @include respond('margin-bottom', $r-space-medium);
+  }
+}

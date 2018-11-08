@@ -1,0 +1,61 @@
+<VAST version="3.0">
+  <Ad id="demo">
+    <InLine>
+      <AdSystem version="1.0">Demo</AdSystem>
+      <AdTitle>
+        <![CDATA[Demo]]>
+      </AdTitle>
+      <Description>
+        <![CDATA[Just a demonstration.]]>
+      </Description>
+      <Error>
+        <![CDATA[https://example.com/error?code=[ERRORCODE]&_=[CACHEBUSTING]]]>
+      </Error>
+      <Impression>
+        <![CDATA[https://example.com/impression?_=[CACHEBUSTING]]]>
+      </Impression>
+      <Creatives>
+        <Creative>
+          <Linear>
+            <Duration>00:00:17.320</Duration>
+            <AdParameters>
+              <![CDATA[{"mediaFiles":[{"delivery":"progressive","type":"video/webm","width":640,"height":360,"uri":"https://assets.zentrick.io/h/he/heetb2ic/media/360p30.webm"},{"delivery":"progressive","type":"video/mp4","width":640,"height":360,"uri":"https://assets.zentrick.io/h/he/heetb2ic/media/360p30.mp4"}]}]]>
+            </AdParameters>
+            <MediaFiles>
+              <MediaFile delivery="progressive" type="application/javascript" width="16" height="9" apiFramework="VPAID">
+                <![CDATA[https://tester.zentrick.io/fixtures/vpaid/vpaid-video.js]]>
+              </MediaFile>
+              <MediaFile delivery="progressive" type="video/webm" width="640" height="360">
+                <![CDATA[https://assets.zentrick.io/h/he/heetb2ic/media/360p30.webm]]>
+              </MediaFile>
+              <MediaFile delivery="progressive" type="video/mp4" width="640" height="360">
+                <![CDATA[https://assets.zentrick.io/h/he/heetb2ic/media/360p30.mp4]]>
+              </MediaFile>
+            </MediaFiles>
+          </Linear>
+        </Creative>
+      </Creatives>
+      <Extensions>
+        <Extension type="AdVerifications">
+          <AdVerifications>
+            <Verification vendor="vendor1">
+              <JavaScriptResource apiFramework="omid">
+                <![CDATA[https://tester.zentrick.io/fixtures/omid/omid-dummy.js?vendor1]]>
+              </JavaScriptResource>
+            </Verification>
+            <Verification vendor="vendor2">
+              <JavaScriptResource apiFramework="omid">
+                <![CDATA[https://tester.zentrick.io/fixtures/omid/omid-dummy.js?vendor2]]>
+              </JavaScriptResource>
+            </Verification>
+            <Verification vendor="invalid">
+              <JavaScriptResource apiFramework="omid">
+                <![CDATA[https://unknown.dev/omid_verification.js]]>
+              </JavaScriptResource>
+            </Verification>
+          </AdVerifications>
+        </Extension>
+      </Extensions>
+    </InLine>
+  </Ad>
+</VAST>

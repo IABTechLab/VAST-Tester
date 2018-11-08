@@ -1,0 +1,7 @@
+.config {
+  .contents {
+    padding: $xs-space-large;
+    overflow: auto;
+    @include respond('padding', $r-space-large);
+  }
+}

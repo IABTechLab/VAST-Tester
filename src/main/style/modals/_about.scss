@@ -1,0 +1,61 @@
+@keyframes throb {
+  0% { transform: scale(1); }
+  20% { transform: scale($heart-scale); }
+  40% { transform: scale(1);  }
+  60% { transform: scale($heart-scale); }
+  80% { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+.about {
+  div {
+    margin: 1em 0;
+  }
+
+  .version {
+    font-weight: $font-weight-bold;
+    @include respond('font-size', $r-font-size-large);
+  }
+
+  .heart {
+    position: relative;
+    height: $heart-size * 1.41; // sqrt(2) because of the rotation
+    animation: throb 1.5s infinite;
+
+    .heart-inner {
+      pointer-events: none;
+      position: relative;
+      width: $heart-size;
+      height: $heart-size;
+      margin: 0 auto;
+      transform-origin: 50% 50%;
+      transform: rotate(45deg) scale(1);
+
+      &:before {
+        content: "";
+        position: absolute;
+        display: block;
+        border-top-left-radius: $heart-size * $heart-curvature / 2;
+        border-bottom-left-radius: $heart-size * $heart-curvature / 2;
+        background-color: $accent-color-3;
+        width: inherit;
+        height: $heart-size * $heart-curvature;
+        top: $heart-size * (1 - $heart-curvature);
+        left: 0;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: block;
+        background-color: $accent-color-3;
+        width: $heart-size * $heart-curvature;
+        top: 0;
+        left: $heart-size * (1 - $heart-curvature);
+        height: inherit;
+        border-top-left-radius: $heart-size * $heart-curvature / 2;
+        border-top-right-radius: $heart-size * $heart-curvature / 2;
+      }
+    }
+  }
+}

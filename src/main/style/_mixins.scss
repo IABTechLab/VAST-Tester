@@ -1,0 +1,42 @@
+@mixin respond($prop, $values) {
+  #{$prop}: nth($values, 1);
+
+  @for $i from 2 through length($values) {
+    @media (min-width: nth($r-min-width, $i)) {
+      #{$prop}: nth($values, $i);
+    }
+  }
+}
+
+@mixin respond2($prop, $values) {
+  #{$prop}: nth($values, 1) nth($values, 2);
+
+  @for $i from 2 through length($values) / 2 {
+    @media (min-width: nth($r-min-width, $i)) {
+      $j: ($i - 1) * 2;
+      #{$prop}: nth($values, $j + 1) nth($values, $j + 2);
+    }
+  }
+}
+
+@mixin respond3($prop, $values) {
+  #{$prop}: nth($values, 1) nth($values, 2) nth($values, 3);
+
+  @for $i from 2 through length($values) / 3 {
+    @media (min-width: nth($r-min-width, $i)) {
+      $j: ($i - 1) * 3;
+      #{$prop}: nth($values, $j + 1) nth($values, $j + 2) nth($values, $j + 3);
+    }
+  }
+}
+
+@mixin respond4($prop, $values) {
+  #{$prop}: nth($values, 1) nth($values, 2) nth($values, 3);
+
+  @for $i from 2 through length($values) / 3 {
+    @media (min-width: nth($r-min-width, $i)) {
+      $j: ($i - 1) * 4;
+      #{$prop}: nth($values, $j + 1) nth($values, $j + 2) nth($values, $j + 3) nth($values, $j + 4);
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.actions {
+  width: 100%;
+  background: $accent-color-1;
+  @include respond3('padding',
+    ($xs-footer-height - $xs-button-size) / 2 $xs-space-large - $xs-space-small / 2 0
+    ($sm-footer-height - $sm-button-size) / 2 $sm-space-large - $sm-space-small / 2 0
+    ($md-footer-height - $md-button-size) / 2 $md-space-large - $md-space-small / 2 0
+    ($lg-footer-height - $lg-button-size) / 2 $lg-space-large - $lg-space-small / 2 0);
+  @include respond('height', $r-footer-height);
+
+  ul {
+    display: flex;
+
+    li {
+      flex: 1;
+      @include respond2('padding',
+        0 $xs-space-small / 2
+        0 $sm-space-small / 2
+        0 $md-space-small / 2
+        0 $lg-space-small / 2);
+
+      a {
+        width: 100%;
+        background: $background-color;
+        color: $accent-color-1;
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+$logo-aspect-ratio: 685 / 345;
+
+header h1 .before {
+  float: left;
+  background-image: url(/iab-logo-white.png);
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  background-size: contain;
+  height: 100%;
+  @include respond('width',
+    $xs-font-size-large * $logo-aspect-ratio
+    $sm-font-size-large * $logo-aspect-ratio
+    $md-font-size-large * $logo-aspect-ratio
+    $lg-font-size-large * $logo-aspect-ratio);
+  @include respond('margin-right', $r-space-medium);
+}

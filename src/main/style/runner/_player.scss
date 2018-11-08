@@ -1,0 +1,97 @@
+$sm-controls-width: $sm-button-size + $sm-space-large * 2;
+$md-controls-width: $md-button-size + $md-space-large * 2;
+$lg-controls-width: $lg-button-size + $lg-space-large * 2;
+
+$sm-video-width: $sm-min-width - $sm-space-large * 2 - $sm-controls-width;
+$md-video-width: $md-min-width - $md-space-large * 2 - $md-controls-width;
+$lg-video-width: $lg-min-width - $lg-space-large * 2 - $lg-controls-width;
+
+$sm-min-height: ($sm-video-width / $video-aspect-ratio + $sm-space-large) * 2 + $sm-header-height + $sm-footer-height;
+$md-min-height: ($md-video-width / $video-aspect-ratio + $md-space-large) * 2 + $md-header-height + $md-footer-height;
+$lg-min-height: ($lg-video-width / $video-aspect-ratio + $lg-space-large) * 2 + $lg-header-height + $lg-footer-height;
+
+.video-player {
+  background: darken($background-color, 50%);
+  display: flex;
+}
+
+.video-player-main {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  @include respond('padding', $r-space-large);
+}
+
+.video-player-inner {
+  background: #000;
+  width: $xs-min-width;
+  height: $xs-min-width / $video-aspect-ratio;
+  position: relative;
+
+  @media (min-width: $sm-min-width) and (min-height: $sm-min-height) {
+    & {
+      width: $sm-video-width;
+      height: $sm-video-width / $video-aspect-ratio;
+    }
+  }
+
+  @media (min-width: $md-min-width) and (min-height: $md-min-height) {
+    & {
+      width: $md-video-width;
+      height: $md-video-width / $video-aspect-ratio;
+    }
+  }
+
+  @media (min-width: $lg-min-width) and (min-height: $lg-min-height) {
+    & {
+      width: $lg-video-width;
+      height: $lg-video-width / $video-aspect-ratio;
+    }
+  }
+
+  video, .vpaid-host {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+
+  video {
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.video-player-controls {
+  background: rgba(0, 0, 0, 0.05);
+  width: $xs-button-size + $xs-space-large * 2;
+  padding: $xs-space-large;
+  height: 100%;
+
+  @media (min-width: $md-min-width) {
+    width: $md-button-size + $md-space-large * 2;
+    padding: $md-space-large;
+  }
+
+  li {
+    @include respond('margin-bottom', $r-space-medium);
+  }
+
+  a {
+    background: rgba(255, 255, 255, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    @include respond('width', $r-button-size);
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    &.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+    }
+  }
+}

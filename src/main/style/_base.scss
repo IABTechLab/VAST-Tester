@@ -1,0 +1,227 @@
+@import '../../../node_modules/font-awesome/css/font-awesome.css';
+@import '../../../node_modules/react-toggle/style.css';
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: $scrollbar-size;
+  height: $scrollbar-size;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: $scrollbar-background-color;
+  border-radius: $scrollbar-size / 2;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $scrollbar-foreground-color;
+  border-radius: $scrollbar-size / 2;
+}
+
+html, body {
+  background: $background-color;
+  color: $foreground-color;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: $font-family;
+  @include respond('font-size', $r-font-size);
+}
+
+a {
+  color: $foreground-color;
+  text-decoration: none;
+  border-bottom: 2px solid $accent-color-2;
+}
+
+input, textarea, select, button {
+  font-family: $font-family;
+  border: 1px solid transparentize($foreground-color, 0.9);
+  color: $foreground-color;
+  background: $background-color;
+  @include respond('font-size', $r-font-size);
+
+  &:focus {
+    outline: 0;
+    box-shadow: 0 0 2px 2px $accent-color-2;
+  }
+}
+
+input, textarea {
+  padding: 0.5ex;
+}
+
+.form-group {
+  @include respond('margin-bottom', $r-space-medium);
+
+  input, textarea, select {
+    width: 100%;
+    border-radius: 0;
+  }
+
+  label {
+    display: block;
+    @include respond('margin-bottom', $r-space-small);
+  }
+}
+
+.form-group-checkbox {
+  display: flex;
+
+  label {
+    flex: 1;
+    @include respond('padding-top',
+      (24px - $xs-font-size) / 2
+      (24px - $sm-font-size) / 2
+      (24px - $md-font-size) / 2
+      (24px - $lg-font-size) / 2);
+  }
+}
+
+.react-toggle-track {
+  background-color: $foreground-color !important;
+}
+
+.react-toggle-thumb {
+  border-color: $foreground-color !important;
+}
+
+.react-toggle--checked, .react-toggle--checked:hover {
+  .react-toggle-track {
+    background-color: $accent-color-2 !important;
+  }
+
+  .react-toggle-thumb {
+    border-color: $accent-color-2 !important;
+  }
+}
+
+.react-toggle--focus, .react-toggle:active:not(.react-toggle--disabled) {
+  .react-toggle-thumb {
+    box-shadow: 0 0 2px 2px $accent-color-2 !important;
+  }
+}
+
+fieldset {
+  border-top: 1px solid $accent-color-2;
+  @include respond('margin-bottom', $r-space-large);
+  @include respond('padding', $r-space-medium);
+
+  &:first-child {
+    margin-top: 0 !important;
+  }
+
+  legend {
+    color: $accent-color-2;
+    text-align: center;
+    @include respond('margin-bottom', $r-space-small);
+    @include respond('padding-left', $r-space-medium);
+    @include respond('padding-right', $r-space-medium);
+  }
+
+  p {
+    text-align: justify;
+  }
+
+  &.notice, &.notice * {
+    color: darken($background-color, 33%);
+    border-color: darken($background-color, 33%);
+  }
+}
+
+nav a, button {
+  background: $accent-color-2;
+  color: $background-color;
+  font-family: $font-family;
+  font-weight: $font-weight-bold;
+  line-height: 1em;
+  text-align: center;
+  margin: 0;
+  width: 20ex;
+  cursor: pointer;
+  @include respond('font-size', $r-font-size);
+  @include respond('padding', $r-space-small);
+  @include respond('height', $r-button-size);
+
+  &:disabled {
+    opacity: 0.5;
+    text-decoration: none;
+    cursor: default;
+  }
+}
+
+nav a {
+  display: block;
+  border: 0;
+}
+
+.placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: transparentize($foreground-color, 0.5);
+  background: transparentize($foreground-color, 0.95);
+}
+
+dl.kv {
+  display: flex;
+  flex-wrap: wrap;
+
+  dt, dd {
+    width: 50%;
+    @include respond('padding', $r-space-small);
+    @include respond('margin-bottom', $r-space-tiny);
+
+    span {
+      white-space: pre-wrap;
+    }
+
+    &.kv-nowrap span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  dt {
+    text-align: right;
+    background: transparentize($foreground-color, 0.95);
+  }
+}
+
+.Collapsible {
+  @include respond('margin-bottom', $r-space-small);
+
+  .Collapsible__trigger {
+    display: block;
+    color: $accent-color-2;
+    cursor: pointer;
+    @include respond('padding', $r-space-medium);
+
+    &.is-open:before, &.is-closed:before {
+      margin-top: -0.1em;
+      display: block;
+      float: left;
+      @include respond('margin-right', $r-space-small);
+    }
+
+    &.is-open:before {
+      content: '▾';
+    }
+
+    &.is-closed:before {
+      content: '▸';
+    }
+  }
+
+  .Collapsible__contentOuter {
+    width: 100%;
+  }
+}

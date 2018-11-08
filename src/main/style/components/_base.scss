@@ -1,0 +1,43 @@
+#root, main {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .contents {
+    flex: 1;
+  }
+}
+
+$lg-max-width: $lg-min-width + 2 * $lg-space-large;
+$lg-max-height: ($lg-min-width / $video-aspect-ratio + 2 * $lg-space-large) * 2 + $lg-header-height + $lg-footer-height;
+
+@media (min-width: $lg-max-width), (min-height: $lg-max-height) {
+  body {
+    display: flex;
+    flex-direction: column;
+    background: #f9f9f9;
+  }
+
+  #root {
+    position: relative;
+    max-width: $lg-max-width;
+    max-height: $lg-max-height;
+    margin: auto;
+    background: $background-color;
+    overflow: hidden;
+    border-radius: 5px;
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.2);
+  }
+
+  main {
+    position: relative;
+  }
+}

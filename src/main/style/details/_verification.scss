@@ -1,0 +1,17 @@
+.verification-details {
+  .properties {
+    @include respond('margin-bottom', $r-space-small);
+
+    dt {
+      width: 33.3%;
+    }
+
+    dd {
+      width: 66.7%;
+    }
+
+    .kv-Parameters-value {
+      white-space: pre-wrap;
+    }
+  }
+}

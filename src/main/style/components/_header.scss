@@ -1,0 +1,48 @@
+header {
+  background: $accent-color-1;
+  color: $background-color;
+  display: flex;
+  justify-content: space-between;
+  @include respond('height', $r-header-height);
+
+  h1 {
+    flex-grow: 1;
+    @include respond('margin-left', $r-space-large);
+
+    .title {
+      display: block;
+      font-weight: $font-weight-bold;
+      text-transform: uppercase;
+      @include respond('font-size', $r-font-size-large);
+      @include respond('margin-top', $r-space-large);
+    }
+  }
+
+  nav {
+    @include respond('margin-top',
+      ($xs-header-height - $xs-button-size) / 2
+      ($sm-header-height - $sm-button-size) / 2
+      ($md-header-height - $md-button-size) / 2
+      ($lg-header-height - $lg-button-size) / 2);
+
+    ul {
+      float: right;
+      @include respond('margin-right', $r-space-large);
+
+      li {
+        float: left;
+        @include respond('padding-left', $r-space-medium);
+      }
+    }
+
+    a {
+      background: $background-color;
+      color: $accent-color-1;
+      @include respond('width', $r-button-size);
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}

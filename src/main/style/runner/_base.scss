@@ -1,0 +1,10 @@
+.runner .contents {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .video-player, .details {
+    flex: 1;
+    overflow: hidden;
+  }
+}
