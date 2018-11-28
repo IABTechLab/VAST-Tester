@@ -1,13 +1,6 @@
 import OmidEvent from './OmidEvent'
 import defer from '../../common/util/defer'
-import loadScript from '../../common/util/loadScript'
 import { OMID_VIDEO_LIFECYCLE_EVENT_TYPES } from '../../common/constants/omid'
-
-const callIfFunction = fn => {
-  if (typeof fn === 'function') {
-    fn()
-  }
-}
 
 export default class VerificationClient {
   constructor (adSessionContext, adSessionId, verificationParameters, onEvent) {
@@ -32,10 +25,6 @@ export default class VerificationClient {
       .then(() => {
         this._onEvent('sessionFinish')
       })
-  }
-
-  isSupported () {
-    return true
   }
 
   registerSessionObserver (observer, vendorKey) {
@@ -67,51 +56,6 @@ export default class VerificationClient {
     for (let i = 0; i < events; ++i) {
       listener(events[i])
     }
-  }
-
-  sendUrl (url, successCallback, failureCallback) {
-    this._onEvent('sendingUrl', { url })
-    const xhr = new window.XmlHttpRequest()
-    xhr.addEventListener('load', () => {
-      this._onEvent('urlSent', { url })
-      callIfFunction(successCallback)
-    })
-    xhr.addEventListener('error', () => {
-      this._onEvent('urlSendError', { url })
-      callIfFunction(failureCallback)
-    })
-    xhr.open('GET', url)
-    xhr.send()
-  }
-
-  setTimeout (callback, timeInMillis) {
-    return window.setTimeout(callback, timeInMillis)
-  }
-
-  clearTimeout (timeoutId) {
-    return window.clearTimeout(timeoutId)
-  }
-
-  setInterval (callback, timeInMillis) {
-    return window.setInterval(callback, timeInMillis)
-  }
-
-  clearInterval (intervalId) {
-    return window.clearInterval(intervalId)
-  }
-
-  injectJavaScriptResource (url, successCallback, failureCallback) {
-    this._onEvent('injectingJavaScriptResource', { url })
-    loadScript(url).then(
-      () => {
-        this._onEvent('javaScriptResourceInjected', { url })
-        callIfFunction(successCallback)
-      },
-      () => {
-        this._onEvent('javaScriptResourceInjectionError', { url })
-        callIfFunction(failureCallback)
-      }
-    )
   }
 
   _startSession () {

@@ -3,13 +3,7 @@ import { connect } from 'react-redux'
 import {
   loadVerificationHost,
   verificationHostLoaded,
-  verificationScriptRegisteringSessionObserver,
-  verificationScriptSendingUrl,
-  verificationScriptUrlSent,
-  verificationScriptUrlSendError,
-  verificationScriptInjectingJavaScriptResource,
-  verificationScriptJavaScriptResourceInjected,
-  verificationScriptJavaScriptResourceInjectionError
+  verificationScriptRegisteringSessionObserver
 } from '../actions'
 import verificationServer from '../util/verificationServer'
 import { APP_URL_1, APP_URL_2 } from '../../common/settings'
@@ -94,24 +88,10 @@ const VerificationHost = ({
 const mapProp = (factory, name) => (verification, data) =>
   factory(verification, data[name])
 
-const mapUrl = factory => mapProp(factory, 'url')
-
 const eventTypeToFactory = {
   registeringSessionObserver: mapProp(
     verificationScriptRegisteringSessionObserver,
     'vendorKey'
-  ),
-  sendingUrl: mapUrl(verificationScriptSendingUrl),
-  urlSent: mapUrl(verificationScriptUrlSent),
-  urlSendError: mapUrl(verificationScriptUrlSendError),
-  injectingJavaScriptResource: mapUrl(
-    verificationScriptInjectingJavaScriptResource
-  ),
-  javaScriptResourceInjected: mapUrl(
-    verificationScriptJavaScriptResourceInjected
-  ),
-  javaScriptResourceInjectionError: mapUrl(
-    verificationScriptJavaScriptResourceInjectionError
   )
 }
 

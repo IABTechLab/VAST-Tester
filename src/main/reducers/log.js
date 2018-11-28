@@ -19,17 +19,11 @@ import {
   VAST_LOADED,
   VAST_WARNING,
   VERIFICATION_EVENT,
-  VERIFICATION_SCRIPT_INJECTING_JAVASCRIPT_RESOURCE,
-  VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTED,
-  VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTION_ERROR,
   VERIFICATION_SCRIPT_LOAD_ERROR,
   VERIFICATION_SCRIPT_LOADED,
   VERIFICATION_SCRIPT_REGISTERING_SESSION_OBSERVER,
-  VERIFICATION_SCRIPT_SENDING_URL,
   VERIFICATION_SCRIPT_SESSION_START_ERROR,
   VERIFICATION_SCRIPT_SESSION_STARTED,
-  VERIFICATION_SCRIPT_URL_SEND_ERROR,
-  VERIFICATION_SCRIPT_URL_SENT,
   VERIFICATION_SCRIPTS_STARTED,
   VIDEO_EVENT,
   VIDEO_PLAY_NO_PROMISE,
@@ -175,47 +169,6 @@ const HANDLERS = {
     text:
       `Started ${scriptCount} script(s)` +
       (sessionFinished ? ' after session finished' : '')
-  }),
-  [VERIFICATION_SCRIPT_SENDING_URL]: ({ verification, url }) => ({
-    category: OMID,
-    text: `Sending URL for script from ${quote(verification.vendor)}: ${url}`
-  }),
-  [VERIFICATION_SCRIPT_URL_SENT]: ({ verification, url }) => ({
-    category: OMID,
-    text: `URL sent for script from ${quote(verification.vendor)}: ${url}`
-  }),
-  [VERIFICATION_SCRIPT_URL_SEND_ERROR]: ({ verification, url }) => ({
-    category: OMID,
-    text: `Failed to send URL for script from ${quote(
-      verification.vendor
-    )}: ${url}`
-  }),
-  [VERIFICATION_SCRIPT_INJECTING_JAVASCRIPT_RESOURCE]: ({
-    verification,
-    url
-  }) => ({
-    category: OMID,
-    text: `Injecting JavaScript resource for script from ${quote(
-      verification.vendor
-    )}: ${url}`
-  }),
-  [VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTED]: ({
-    verification,
-    url
-  }) => ({
-    category: OMID,
-    text: `JavaScript resource injected for script from ${quote(
-      verification.vendor
-    )}: ${url}`
-  }),
-  [VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTION_ERROR]: ({
-    verification,
-    url
-  }) => ({
-    category: OMID,
-    text: `Failed to inject JavaScript resource for script from ${quote(
-      verification.vendor
-    )}: ${url}`
   }),
   [VERIFICATION_EVENT]: ({ type, data }) => ({
     category: OMID,

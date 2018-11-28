@@ -5,6 +5,13 @@ import loadScript from '../../common/util/loadScript'
 import { APP_VENDOR, APP_VERSION } from '../../common/settings'
 
 const WINDOW_KEY = 'omid3p'
+const SESSION_EVENT_TYPE_PREFIX = 'session'
+const OPTIONAL_CONTEXT_PROPERTY_NAMES = [
+  'adServingId',
+  'transactionId',
+  'podSequence',
+  'adCount'
+]
 
 class OmidRpcClient extends Client {
   handleStartSession () {
@@ -20,13 +27,6 @@ class OmidRpcClient extends Client {
   }
 }
 
-// Not included:
-// - omidNativeInfo
-// - omidJsInfo.sessionClientVersion
-// - omidJsInfo.serviceVersion
-// - app
-// - deviceInfo
-// - customReferenceData
 const createAdSessionContext = config => {
   const dom = config.accessMode === 'full' ? window.parent.__sharedDom__ : {}
   const context = {
@@ -38,16 +38,16 @@ const createAdSessionContext = config => {
     adSessionType: 'html',
     omidJsInfo: {
       omidImplementer: APP_VENDOR,
+      serviceVersion: APP_VERSION,
       partnerName: APP_VENDOR,
       partnerVersion: APP_VERSION
-    },
-    supports: ['clid']
+    }
   }
   Object.assign(
     context,
-    ...['adServingId', 'transactionId', 'podSequence', 'adCount']
-      .filter(key => config[key] != null)
-      .map(key => ({ [key]: config[key] }))
+    ...OPTIONAL_CONTEXT_PROPERTY_NAMES.filter(key => config[key] != null).map(
+      key => ({ [key]: config[key] })
+    )
   )
   return context
 }
@@ -61,8 +61,13 @@ const main = async () => {
     config.adSessionId,
     config.verificationParameters,
     (type, data) => {
-      if (type.substr(0, 7) === 'session') {
-        rpcClient.send('acceptSession' + type.substr(7))
+      if (
+        type.substr(0, SESSION_EVENT_TYPE_PREFIX.length) ===
+        SESSION_EVENT_TYPE_PREFIX
+      ) {
+        rpcClient.send(
+          'acceptSession' + type.substr(SESSION_EVENT_TYPE_PREFIX.length)
+        )
       } else {
         rpcClient.send('acceptEvent', { type, data })
       }

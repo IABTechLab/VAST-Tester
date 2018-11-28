@@ -196,13 +196,15 @@ const loadVastEpic = (action$, state$) =>
   action$.pipe(
     ofType(LOAD_VAST),
     mergeMap(() => {
-      const { config: { vastUrl, verificationFullAccessMode } } = state$.value
+      const {
+        config: { vastUrl, verificationLimitedAccessMode }
+      } = state$.value
       const endTest$ = action$.ofType(END_TEST)
       return loadAndAnalyzeVastChain(vastUrl, warn).pipe(
         map(({ chain, inLine, linear, verifications }) => {
           applyVerificationAccessMode(
             verifications,
-            verificationFullAccessMode ? 'full' : 'limited'
+            verificationLimitedAccessMode ? 'limited' : 'full'
           )
           return vastLoaded(chain, inLine, linear, verifications)
         }),

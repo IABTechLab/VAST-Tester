@@ -15,16 +15,6 @@ export const VERIFICATION_SCRIPT_SESSION_STARTED =
   'VERIFICATION_SCRIPT_SESSION_STARTED'
 export const VERIFICATION_SCRIPT_SESSION_START_ERROR =
   'VERIFICATION_SCRIPT_SESSION_START_ERROR'
-export const VERIFICATION_SCRIPT_SENDING_URL = 'VERIFICATION_SCRIPT_SENDING_URL'
-export const VERIFICATION_SCRIPT_URL_SENT = 'VERIFICATION_SCRIPT_URL_SENT'
-export const VERIFICATION_SCRIPT_URL_SEND_ERROR =
-  'VERIFICATION_SCRIPT_URL_SEND_ERROR'
-export const VERIFICATION_SCRIPT_INJECTING_JAVASCRIPT_RESOURCE =
-  'VERIFICATION_SCRIPT_INJECTING_JAVASCRIPT_RESOURCE'
-export const VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTED =
-  'VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTED'
-export const VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTION_ERROR =
-  'VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTION_ERROR'
 export const SCHEDULE_VERIFICATION_EVENT = 'SCHEDULE_VERIFICATION_EVENT'
 export const VERIFICATION_EVENT = 'VERIFICATION_EVENT'
 
@@ -111,60 +101,6 @@ export const verificationScriptsStarted = (
   payload: {
     scriptCount,
     sessionFinished
-  }
-})
-
-export const verificationScriptSendingUrl = (verification, url) => ({
-  type: VERIFICATION_SCRIPT_SENDING_URL,
-  payload: {
-    verification,
-    url
-  }
-})
-
-export const verificationScriptUrlSent = (verification, url) => ({
-  type: VERIFICATION_SCRIPT_URL_SENT,
-  payload: {
-    verification,
-    url
-  }
-})
-
-export const verificationScriptUrlSendError = (verification, url) => ({
-  type: VERIFICATION_SCRIPT_URL_SEND_ERROR,
-  payload: {
-    verification,
-    url
-  }
-})
-
-export const verificationScriptInjectingJavaScriptResource = (
-  verification,
-  url
-) => ({
-  type: VERIFICATION_SCRIPT_INJECTING_JAVASCRIPT_RESOURCE,
-  payload: {
-    url
-  }
-})
-
-export const verificationScriptJavaScriptResourceInjected = (
-  verification,
-  url
-) => ({
-  type: VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTED,
-  payload: {
-    url
-  }
-})
-
-export const verificationScriptJavaScriptResourceInjectionError = (
-  verification,
-  url
-) => ({
-  type: VERIFICATION_SCRIPT_JAVASCRIPT_RESOURCE_INJECTION_ERROR,
-  payload: {
-    url
   }
 })
 

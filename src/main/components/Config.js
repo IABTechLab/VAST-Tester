@@ -22,10 +22,10 @@ class Config extends React.Component {
     this.state = {
       vastUrl: DEFAULT_VAST_URL,
       audioUnmuted: false,
-      vpaidEnabled: true,
-      verificationFullAccessMode: false,
-      verificationSessionRequired: false,
       startDelayed: false,
+      vpaidEnabled: true,
+      verificationSessionRequired: false,
+      verificationLimitedAccessMode: false,
       ...props.config
     }
   }
@@ -84,15 +84,6 @@ class Config extends React.Component {
             </Fieldset>
             <Fieldset legend='OMID Verification'>
               <Checkbox
-                label='Run verification scripts in full-access mode'
-                defaultValue={this.state.verificationFullAccessMode}
-                onChange={verificationFullAccessMode => {
-                  this._update({
-                    verificationFullAccessMode
-                  })
-                }}
-              />
-              <Checkbox
                 label='Delay playback until verification start'
                 defaultValue={this.state.verificationSessionRequired}
                 onChange={verificationSessionRequired => {
@@ -101,15 +92,17 @@ class Config extends React.Component {
                   })
                 }}
               />
+              <Checkbox
+                label='Run verification scripts in limited-access mode'
+                defaultValue={this.state.verificationLimitedAccessMode}
+                onChange={verificationLimitedAccessMode => {
+                  this._update({
+                    verificationLimitedAccessMode
+                  })
+                }}
+              />
             </Fieldset>
           </form>
-          <Fieldset legend='Notice' className='notice'>
-            <p>
-              Support for verification scripts is based on the latest draft of
-              the OMID JS Verification Client specification (current as of May
-              24, 2018). This document is internal to the IAB Tech Lab.
-            </p>
-          </Fieldset>
         </div>
         <div className='actions'>
           <nav>
