@@ -107,7 +107,7 @@ const bootstrapVideoElementEpic = action$ =>
             videoElement.removeEventListener(type, onVideoEvent)
           }
         }
-      })
+      }).pipe(takeUntil(action$.ofType(END_TEST)))
     )
   )
 

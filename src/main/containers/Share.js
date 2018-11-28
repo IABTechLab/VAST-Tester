@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { saveAs } from 'file-saver'
 import moment from 'moment'
-import qs from 'qs'
 import Modal from '../components/Modal'
 import { getHistory } from '../middleware/history'
+import { stringifyConfig } from '../util/config'
 import stringify from '../../common/util/stringify'
 import { APP_VERSION } from '../../common/settings'
 
@@ -54,7 +54,7 @@ const Share = ({ url }) => {
 }
 
 const mapStateToProps = ({ config }) => ({
-  url: getBaseUrl() + (config != null ? '#/run?' + qs.stringify(config) : '')
+  url: getBaseUrl() + (config != null ? '#/run?' + stringifyConfig(config) : '')
 })
 
 export default connect(mapStateToProps)(Share)

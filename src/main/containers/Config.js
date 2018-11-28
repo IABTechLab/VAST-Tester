@@ -1,33 +1,26 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
-import qs from 'qs'
-import Fieldset from './Fieldset'
+import Fieldset from '../components/Fieldset'
 import Header from '../components/Header'
 import TextInput from '../components/TextInput'
 import Checkbox from '../components/Checkbox'
-import { DEFAULT_VAST_URL } from '../../common/settings'
-
-const removeFalse = obj =>
-  Object.keys(obj).reduce(
-    (acc, key) => (obj[key] === false ? acc : { ...acc, [key]: obj[key] }),
-    {}
-  )
-
-const configToQuery = config => qs.stringify(removeFalse(config))
+import {
+  createDefaultConfig,
+  parseConfig,
+  stringifyConfig
+} from '../util/config'
+import { setConfig } from '../actions'
 
 class Config extends React.Component {
   constructor (props) {
     super(props)
-    this.state = {
-      vastUrl: DEFAULT_VAST_URL,
-      audioUnmuted: false,
-      startDelayed: false,
-      vpaidEnabled: true,
-      verificationSessionRequired: false,
-      verificationLimitedAccessMode: false,
-      ...props.config
+    const { location, config, onResetConfig } = props
+    if (config != null) {
+      onResetConfig()
     }
+    this.state = parseConfig(location.search.substr(1)) || createDefaultConfig()
   }
 
   render () {
@@ -44,62 +37,38 @@ class Config extends React.Component {
             <Fieldset legend='VAST URL'>
               <TextInput
                 defaultValue={this.state.vastUrl}
-                onChange={vastUrl => {
-                  this._update({
-                    vastUrl
-                  })
-                }}
+                onChange={this._onChange('vastUrl')}
               />
             </Fieldset>
             <Fieldset legend='Video Player Behavior'>
               <Checkbox
                 label='Enable audio by default'
                 defaultValue={this.state.audioUnmuted}
-                onChange={audioUnmuted => {
-                  this._update({
-                    audioUnmuted
-                  })
-                }}
+                onChange={this._onChange('audioUnmuted')}
               />
               <Checkbox
                 label='Simulate creative preloading'
                 defaultValue={this.state.startDelayed}
-                onChange={startDelayed => {
-                  this._update({
-                    startDelayed
-                  })
-                }}
+                onChange={this._onChange('startDelayed')}
               />
             </Fieldset>
             <Fieldset legend='Media File Selection'>
               <Checkbox
                 label='Allow VPAID media files'
                 defaultValue={this.state.vpaidEnabled}
-                onChange={vpaidEnabled => {
-                  this._update({
-                    vpaidEnabled
-                  })
-                }}
+                onChange={this._onChange('vpaidEnabled')}
               />
             </Fieldset>
             <Fieldset legend='OMID Verification'>
               <Checkbox
                 label='Delay playback until verification start'
                 defaultValue={this.state.verificationSessionRequired}
-                onChange={verificationSessionRequired => {
-                  this._update({
-                    verificationSessionRequired
-                  })
-                }}
+                onChange={this._onChange('verificationSessionRequired')}
               />
               <Checkbox
                 label='Run verification scripts in limited-access mode'
                 defaultValue={this.state.verificationLimitedAccessMode}
-                onChange={verificationLimitedAccessMode => {
-                  this._update({
-                    verificationLimitedAccessMode
-                  })
-                }}
+                onChange={this._onChange('verificationLimitedAccessMode')}
               />
             </Fieldset>
           </form>
@@ -109,7 +78,8 @@ class Config extends React.Component {
             <ul>
               <li>
                 <Link
-                  to={{ pathname: '/run', search: configToQuery(this.state) }}
+                  to={{ pathname: '/run', search: stringifyConfig(this.state) }}
+                  onClick={this.props.onRun}
                   innerRef={ref => {
                     this._runButton = ref
                   }}
@@ -124,12 +94,22 @@ class Config extends React.Component {
     )
   }
 
-  _update (delta) {
-    this.setState({
-      ...this.state,
-      ...delta
-    })
+  _onChange (key) {
+    return value => {
+      this.setState({
+        ...this.state,
+        [key]: value
+      })
+    }
   }
 }
 
-export default Config
+const mapStateToProps = ({ config }) => ({ config })
+
+const mapDispatchToProps = dispatch => ({
+  onResetConfig: () => {
+    dispatch(setConfig(null))
+  }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Config)
