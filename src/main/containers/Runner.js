@@ -6,8 +6,7 @@ import VideoPlayer from './VideoPlayer'
 import VerificationHostList from './VerificationHostList'
 import Header from '../components/Header'
 import Details from '../components/Details'
-import { setConfig } from '../actions'
-import { parseConfig, stringifyConfig, configsEqual } from '../util/config'
+import { stringifyConfig } from '../util/config'
 
 const Runner = ({
   location,
@@ -16,12 +15,8 @@ const Runner = ({
   vastLoaded,
   mediaFileIsVpaid,
   omidScriptsPresent
-}) => {
-  const newConfig = parseConfig(location.search.substr(1))
-  if (!configsEqual(config, newConfig)) {
-    onApplyConfig(newConfig)
-  }
-  return (
+}) =>
+  config == null ? null : (
     <main className='runner'>
       <Header />
       <div className='contents'>
@@ -46,7 +41,6 @@ const Runner = ({
       </div>
     </main>
   )
-}
 
 const mapStateToProps = ({
   config,
@@ -59,10 +53,4 @@ const mapStateToProps = ({
   omidScriptsPresent: verifications.length > 0
 })
 
-const mapDispatchToProps = dispatch => ({
-  onApplyConfig: config => {
-    dispatch(setConfig(config))
-  }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Runner)
+export default connect(mapStateToProps)(Runner)
