@@ -103,7 +103,8 @@ const createVerificationEventData = (
       // Not included: skipOffset: null
       return {
         skippable: false,
-        autoPlay: true
+        autoPlay: true,
+        position: 'standalone'
       }
     case 'start':
       // Not included: deviceVolume
