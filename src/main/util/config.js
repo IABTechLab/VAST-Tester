@@ -1,14 +1,14 @@
 import qs from 'qs'
 import { DEFAULT_VAST_URL } from '../../common/settings'
 
-const isEmpty = value => value == null || value === false
+const isUnset = value => value == null || value === false || value === ''
 
 const isBooleanKey = key => key !== 'vastUrl'
 
 const normalize = config =>
   Object.entries(config).reduce(
     (acc, [key, value]) =>
-      isEmpty(value)
+      isUnset(value)
         ? acc
         : {
           ...acc,
