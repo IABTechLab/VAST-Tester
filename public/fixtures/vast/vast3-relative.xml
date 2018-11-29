@@ -38,19 +38,9 @@
       <Extensions>
         <Extension type="AdVerifications">
           <AdVerifications>
-            <Verification vendor="vendor1">
+            <Verification vendor="iabtechlab.com-omid">
               <JavaScriptResource apiFramework="omid">
-                <![CDATA[/fixtures/omid/omid-dummy.js?vendor1]]>
-              </JavaScriptResource>
-            </Verification>
-            <Verification vendor="vendor2">
-              <JavaScriptResource apiFramework="omid">
-                <![CDATA[/fixtures/omid/omid-dummy.js?vendor2]]>
-              </JavaScriptResource>
-            </Verification>
-            <Verification vendor="invalid">
-              <JavaScriptResource apiFramework="omid">
-                <![CDATA[https://unknown.dev/omid_verification.js]]>
+                <![CDATA[/fixtures/omid/omid-validation-verification-script-v1.js]]>
               </JavaScriptResource>
             </Verification>
           </AdVerifications>

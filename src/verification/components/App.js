@@ -2,6 +2,7 @@ import React from 'react'
 import VerificationClient from '../omid/VerificationClient'
 import { Client } from '../../common/rpc'
 import loadScript from '../../common/util/loadScript'
+import startsWith from '../../common/util/startsWith'
 import { APP_VENDOR, APP_VERSION } from '../../common/settings'
 
 const WINDOW_KEY = 'omid3p'
@@ -61,13 +62,10 @@ const main = async () => {
     config.adSessionId,
     config.verificationParameters,
     (type, data) => {
-      if (
-        type.substr(0, SESSION_EVENT_TYPE_PREFIX.length) ===
-        SESSION_EVENT_TYPE_PREFIX
-      ) {
-        rpcClient.send(
+      if (startsWith(type, SESSION_EVENT_TYPE_PREFIX)) {
+        const action =
           'acceptSession' + type.substr(SESSION_EVENT_TYPE_PREFIX.length)
-        )
+        rpcClient.send(action)
       } else {
         rpcClient.send('acceptEvent', { type, data })
       }
@@ -79,10 +77,11 @@ const main = async () => {
     await loadScript(config.scriptUri, null, document)
   } catch (err) {
     error = err
+  } finally {
+    rpcClient.send('acceptScriptInsertionResult', {
+      error: error != null ? error.toString() : null
+    })
   }
-  rpcClient.send('acceptScriptInsertionResult', {
-    error: error != null ? error.toString() : null
-  })
 }
 
 class App extends React.Component {

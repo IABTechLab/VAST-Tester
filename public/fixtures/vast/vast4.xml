@@ -36,9 +36,9 @@
         </Creative>
       </Creatives>
       <AdVerifications>
-        <Verification vendor="vendor1">
+        <Verification vendor="iabtechlab.com-omid">
           <JavaScriptResource apiFramework="omid">
-            <![CDATA[https://tester.zentrick.io/fixtures/omid/omid-dummy.js?vendor1]]>
+            <![CDATA[https://tester.zentrick.io/fixtures/omid/omid-validation-verification-script-v1.js]]>
           </JavaScriptResource>
         </Verification>
       </AdVerifications>
