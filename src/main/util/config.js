@@ -1,9 +1,19 @@
 import qs from 'qs'
 import { DEFAULT_VAST_URL } from '../../common/settings'
 
+const ConfigSchema = {
+  vastUrl: { type: 'string', default: DEFAULT_VAST_URL },
+  audioUnmuted: { type: 'boolean', default: false },
+  startDelayed: { type: 'boolean', default: false },
+  vpaidEnabled: { type: 'boolean', default: true },
+  verificationSessionRequired: { type: 'boolean', default: false },
+  verificationLimitedAccessMode: { type: 'boolean', default: false }
+}
+
 const isUnset = value => value == null || value === false || value === ''
 
-const isBooleanKey = key => key !== 'vastUrl'
+const isBooleanKey = key =>
+  ConfigSchema[key] != null && ConfigSchema[key].type === 'boolean'
 
 const normalize = config =>
   Object.entries(config).reduce(
@@ -17,18 +27,23 @@ const normalize = config =>
     {}
   )
 
-export const createDefaultConfig = () => ({
-  vastUrl: DEFAULT_VAST_URL,
-  audioUnmuted: false,
-  startDelayed: false,
-  vpaidEnabled: true,
-  verificationSessionRequired: false,
-  verificationLimitedAccessMode: false
-})
+const createDefaultConfig = () =>
+  Object.entries(ConfigSchema).reduce(
+    (acc, [key, { default: value }]) => ({ ...acc, [key]: value }),
+    {}
+  )
 
-export const parseConfig = str => (str === '' ? null : normalize(qs.parse(str)))
+const parseConfig = str => (str === '' ? null : normalize(qs.parse(str)))
 
-export const stringifyConfig = config =>
+const stringifyConfig = config =>
   config == null ? '' : qs.stringify(normalize(config))
 
-export const configsEqual = (a, b) => stringifyConfig(a) === stringifyConfig(b)
+const configsEqual = (a, b) => stringifyConfig(a) === stringifyConfig(b)
+
+export {
+  ConfigSchema,
+  createDefaultConfig,
+  parseConfig,
+  stringifyConfig,
+  configsEqual
+}
