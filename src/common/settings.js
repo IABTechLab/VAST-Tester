@@ -10,8 +10,6 @@ export const APP_BUILD_DATE = process.env.REACT_APP_BUILD_DATE
 export const APP_URL_1 = isDev ? `//localhost:${port}` : homepage
 export const APP_URL_2 = isDev ? `//127.0.0.1:${port}` : homepageAlt
 
-export const GOOGLE_ANALYTICS_PROPERTY_ID = process.env.REACT_APP_GA_PROPERTY_ID
-
 export const DEFAULT_VAST_URL =
   window.location.protocol + `//${window.location.host}/fixtures/vast/vast3.xml`
 

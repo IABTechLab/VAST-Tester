@@ -5,14 +5,12 @@ import { HashRouter, Switch, Route } from 'react-router-dom'
 import About from '../components/About'
 import ApplyConfig from './ApplyConfig'
 import Config from './Config'
-import GoogleAnalytics from '../components/GoogleAnalytics'
 import Runner from './Runner'
 import Share from './Share'
 
 const App = ({ config }) => (
   <HashRouter>
     <React.Fragment>
-      <GoogleAnalytics />
       <Runner />
       <Switch>
         <Route exact path='/' component={Config} />
