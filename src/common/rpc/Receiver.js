@@ -1,5 +1,5 @@
+import defer from 'p-defer'
 import ucfirst from 'upper-case-first'
-import defer from '../util/defer'
 
 export default class Receiver {
   constructor (target) {

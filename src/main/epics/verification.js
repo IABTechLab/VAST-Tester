@@ -15,6 +15,7 @@ import {
   tap
 } from 'rxjs/operators'
 import { ofType, combineEpics } from 'redux-observable'
+import timeout from 'p-timeout'
 import {
   AD_BUFFER_FINISH,
   AD_BUFFER_START,
@@ -55,7 +56,6 @@ import verificationServer from '../util/verificationServer'
 import sharedDom from '../util/sharedDom'
 import msToString from '../../common/util/msToString'
 import noop from '../../common/util/noop'
-import timeout from '../../common/util/timeout'
 
 // Not included:
 // - containerGeometry

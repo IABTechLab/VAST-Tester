@@ -1,5 +1,5 @@
+import defer from 'p-defer'
 import OmidEvent from './OmidEvent'
-import defer from '../../common/util/defer'
 import { OMID_VIDEO_LIFECYCLE_EVENT_TYPES } from '../../common/constants/omid'
 
 export default class VerificationClient {

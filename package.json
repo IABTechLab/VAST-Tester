@@ -37,6 +37,8 @@
     "lower-case-first": "^1.0.2",
     "moment": "^2.22.2",
     "node-sass": "^4.10.0",
+    "p-defer": "^1.0.0",
+    "p-timeout": "^2.0.1",
     "prettier-standard": "^8.0.1",
     "prop-types": "^15.6.2",
     "qs": "^6.5.2",

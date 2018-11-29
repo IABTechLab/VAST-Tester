@@ -1,7 +1,7 @@
 import _debug from 'debug'
+import defer from 'p-defer'
 import Peer from './Peer'
 import Receiver from './Receiver'
-import defer from '../util/defer'
 import noop from '../util/noop'
 
 const debug = _debug('rpc:Server')
