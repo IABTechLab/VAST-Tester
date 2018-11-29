@@ -1,3 +1,3 @@
-import theme from 'base16/src/tomorrow'
+import theme from 'base16/src/google'
 
 export default theme
