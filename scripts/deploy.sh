@@ -18,6 +18,15 @@ echo 'Uploading build to AWS S3 ...'
 aws s3 cp \
   --recursive \
   --acl public-read \
+  --exclude '*' \
+  --include 'static/*' \
+  --cache-control 'public, max-age=86400' \
+  build \
+  s3://$S3_BUCKET/
+aws s3 cp \
+  --recursive \
+  --acl public-read \
+  --exclude 'static/*' \
   --cache-control 'public, max-age=300' \
   build \
   s3://$S3_BUCKET/
