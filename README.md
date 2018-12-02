@@ -100,7 +100,7 @@ During development, you can use:
 
 We welcome pull requests for bug fixes and new features.
 
-# License
+## License
 
 Copyright 2018 IAB Technology Laboratory, Inc.
 
