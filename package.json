@@ -23,7 +23,7 @@
     "build": "yarn run clean && REACT_APP_BUILD_DATE=\"$(TZ=GMT date)\" react-scripts build",
     "test": "standard \"src/**/*.js\"",
     "deploy": "yarn run build && scripts/deploy.sh",
-    "postversion": "yarn run deploy"
+    "postversion": "yarn run deploy && git push && git push --tags"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
