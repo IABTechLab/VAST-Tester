@@ -11,6 +11,8 @@ export const VAST_EVENT_TYPES = [
   'impression',
   'creativeView',
   ...VAST_QUARTILE_EVENT_TYPES,
+  'mute',
+  'unmute',
   'pause',
   'resume',
   'skip',

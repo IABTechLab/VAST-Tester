@@ -2,22 +2,27 @@ import { of as _of } from 'rxjs'
 import {
   combineLatest,
   delay,
+  distinctUntilChanged,
   filter,
   map,
   mapTo,
   mergeMap,
+  skip,
   takeUntil
 } from 'rxjs/operators'
 import { ofType, combineEpics } from 'redux-observable'
 import {
   END_TEST,
   SCHEDULE_AD_START,
+  SET_AD_ACTIVE,
+  SET_AD_MUTED,
   SET_CONFIG,
   VAST_EVENT,
   VERIFICATION_SCRIPTS_STARTED,
   scheduleAdStart,
   setAdActive,
-  startAd
+  startAd,
+  vastEvent
 } from '../actions'
 import { PRELOAD_SIMULATION_TIME } from '../../common/settings'
 
@@ -62,6 +67,29 @@ const adStartEpic = action$ =>
     )
   )
 
+const muteUnmuteEpic = action$ =>
+  action$.pipe(
+    ofType(SET_CONFIG),
+    map(({ payload: config }) => config),
+    filter(Boolean),
+    mergeMap(config =>
+      action$.pipe(
+        ofType(SET_AD_MUTED),
+        combineLatest(
+          action$.pipe(
+            ofType(SET_AD_ACTIVE),
+            filter(({ payload: { active } }) => active)
+          )
+        ),
+        map(([{ payload: { muted } }]) => muted),
+        distinctUntilChanged(),
+        skip(1),
+        map(muted => vastEvent(muted ? 'mute' : 'unmute')),
+        takeUntil(action$.ofType(END_TEST))
+      )
+    )
+  )
+
 const mapVastEventsToAdActive = (vastEvents, active) => action$ =>
   action$.pipe(
     ofType(VAST_EVENT),
@@ -72,6 +100,7 @@ const mapVastEventsToAdActive = (vastEvents, active) => action$ =>
 export default combineEpics(
   scheduleAdStartEpic,
   adStartEpic,
+  muteUnmuteEpic,
   mapVastEventsToAdActive(['start'], true),
   mapVastEventsToAdActive(['complete', 'skip', 'error'], false)
 )
