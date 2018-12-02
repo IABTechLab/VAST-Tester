@@ -4,6 +4,7 @@
   "description": "Tests IAB VAST ads.",
   "private": true,
   "repository": "InteractiveAdvertisingBureau/VAST-Tester",
+  "license": "Apache-2.0",
   "engines": {
     "node": ">=8",
     "yarn": ">=1.7.0"
