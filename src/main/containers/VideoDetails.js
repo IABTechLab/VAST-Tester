@@ -29,7 +29,7 @@ const stringifyProperties = properties => {
   return out
 }
 
-const VideoDetails = ({ eventCounts, properties }) => (
+const VideoDetails = React.memo(({ eventCounts, properties }) => (
   <div className='video-details'>
     <Collapsible trigger='Video Events'>
       <div className='events'>
@@ -42,7 +42,7 @@ const VideoDetails = ({ eventCounts, properties }) => (
       </div>
     </Collapsible>
   </div>
-)
+))
 
 const mapStateToProps = ({ video }) => video
 

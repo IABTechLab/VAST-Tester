@@ -30,28 +30,26 @@ const onActivateDownloadLog = () => {
   saveAs(blob, getLogFileName())
 }
 
-const Share = ({ url }) => {
-  return (
-    <Modal>
-      <div className='share'>
-        <div>Link to this page:</div>
-        <div>
-          <textarea readOnly value={url} />
-        </div>
-        <div>
-          <CopyToClipboard text={url}>
-            <button>Copy to Clipboard</button>
-          </CopyToClipboard>
-        </div>
-        <div className='spacer' />
-        <div>Grab a log file for debugging:</div>
-        <div>
-          <button onClick={onActivateDownloadLog}>Download Log</button>
-        </div>
+const Share = ({ url }) => (
+  <Modal>
+    <div className='share'>
+      <div>Link to this page:</div>
+      <div>
+        <textarea readOnly value={url} />
       </div>
-    </Modal>
-  )
-}
+      <div>
+        <CopyToClipboard text={url}>
+          <button>Copy to Clipboard</button>
+        </CopyToClipboard>
+      </div>
+      <div className='spacer' />
+      <div>Grab a log file for debugging:</div>
+      <div>
+        <button onClick={onActivateDownloadLog}>Download Log</button>
+      </div>
+    </div>
+  </Modal>
+)
 
 const mapStateToProps = ({ config }) => ({
   url: getBaseUrl() + (config != null ? '#/run?' + stringifyConfig(config) : '')

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import FontAwesome from 'react-fontawesome'
 import { APP_NAME } from '../../common/settings'
 
-const Header = ({ onActivateCopyLink, onActivateAbout }) => (
+const Header = React.memo(({ onActivateCopyLink, onActivateAbout }) => (
   <header>
     <h1>
       <span className='before' />
@@ -34,6 +34,6 @@ const Header = ({ onActivateCopyLink, onActivateAbout }) => (
       </ul>
     </nav>
   </header>
-)
+))
 
 export default Header

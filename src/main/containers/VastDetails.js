@@ -21,7 +21,7 @@ const VastTagOutline = ({ vast }) => (
   </div>
 )
 
-const VastDetails = ({ eventCounts, chain, mediaFileUrl }) => (
+const VastDetails = React.memo(({ eventCounts, chain, mediaFileUrl }) => (
   <div className='vast-details'>
     <Collapsible trigger='VAST Tag'>
       <div className='vast-info'>
@@ -43,7 +43,7 @@ const VastDetails = ({ eventCounts, chain, mediaFileUrl }) => (
       </div>
     </Collapsible>
   </div>
-)
+))
 
 const mapStateToProps = ({ vast: { eventCounts, chain, mediaFile } }) => ({
   eventCounts,

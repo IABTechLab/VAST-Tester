@@ -1,6 +1,6 @@
 import React from 'react'
 
-const KeyValue = ({ data, sort, nowrap, serializer }) => {
+const KeyValue = React.memo(({ data, sort, nowrap, serializer }) => {
   const keys = Object.keys(data)
   if (sort) {
     keys.sort()
@@ -37,6 +37,6 @@ const KeyValue = ({ data, sort, nowrap, serializer }) => {
       })}
     </dl>
   )
-}
+})
 
 export default KeyValue

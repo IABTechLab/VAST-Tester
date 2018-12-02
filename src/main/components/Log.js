@@ -12,59 +12,62 @@ const LEVEL_TO_ICON = {
   error: 'times'
 }
 
-const LogItem = ({
-  timestamp,
-  timeDelta,
-  timeTotal,
-  level,
-  category,
-  text,
-  metadata
-}) => {
-  const classNames = `level-${level} category-${category.toLowerCase()}`
-  const timeTooltip =
-    timeDelta >= 0
-      ? `Elapsed: ${msToString(timeDelta)} since previous, ${msToString(
-        timeTotal
-      )} total`
-      : null
-  const textWithMetadata =
-    metadata == null ? (
-      text
-    ) : (
+class LogItem extends React.PureComponent {
+  render () {
+    const {
+      timestamp,
+      timeDelta,
+      timeTotal,
+      level,
+      category,
+      text,
+      metadata
+    } = this.props
+    const classNames = `level-${level} category-${category.toLowerCase()}`
+    const timeTooltip =
+      timeDelta >= 0
+        ? `Elapsed: ${msToString(timeDelta)} since previous, ${msToString(
+          timeTotal
+        )} total`
+        : null
+    const textWithMetadata =
+      metadata == null ? (
+        text
+      ) : (
+        <React.Fragment>
+          {text}
+          <div className='metadata'>
+            <KeyValue data={metadata} serializer={stringify} />
+          </div>
+        </React.Fragment>
+      )
+    return (
       <React.Fragment>
-        {text}
-        <div className='metadata'>
-          <KeyValue data={metadata} serializer={stringify} />
-        </div>
+        <tr className={`${classNames} first`}>
+          <td className='time' title={timeTooltip}>
+            {fecha.format(timestamp, 'HH:mm:ss.SSS')}
+          </td>
+          <td className='level'>
+            <span className='icon'>
+              <FontAwesome name={LEVEL_TO_ICON[level]} />
+            </span>
+            <span className='label'>{level}</span>
+          </td>
+          <td className='category'>{category}</td>
+          <td className='text'>{textWithMetadata}</td>
+        </tr>
+        <tr className={`${classNames} second`}>
+          <td className='category'>{category}</td>
+          <td className='text' colSpan='3'>
+            {textWithMetadata}
+          </td>
+        </tr>
       </React.Fragment>
     )
-  return (
-    <React.Fragment>
-      <tr className={`${classNames} first`}>
-        <td className='time' title={timeTooltip}>
-          {fecha.format(timestamp, 'HH:mm:ss.SSS')}
-        </td>
-        <td className='level'>
-          <span className='icon'>
-            <FontAwesome name={LEVEL_TO_ICON[level]} />
-          </span>
-          <span className='label'>{level}</span>
-        </td>
-        <td className='category'>{category}</td>
-        <td className='text'>{textWithMetadata}</td>
-      </tr>
-      <tr className={`${classNames} second`}>
-        <td className='category'>{category}</td>
-        <td className='text' colSpan='3'>
-          {textWithMetadata}
-        </td>
-      </tr>
-    </React.Fragment>
-  )
+  }
 }
 
-class Log extends React.Component {
+class Log extends React.PureComponent {
   constructor (props) {
     super(props)
     this._containerRef = React.createRef()

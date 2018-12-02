@@ -3,7 +3,7 @@ import Toggle from 'react-toggle'
 
 let counter = 0
 
-const Checkbox = ({ label, defaultValue, onChange }) => {
+const Checkbox = React.memo(({ label, defaultValue, onChange }) => {
   const id = 'checkbox-' + ++counter
   return (
     <div className='form-group form-group-checkbox'>
@@ -16,6 +16,6 @@ const Checkbox = ({ label, defaultValue, onChange }) => {
       />
     </div>
   )
-}
+})
 
 export default Checkbox

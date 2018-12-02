@@ -2,7 +2,7 @@ import React from 'react'
 
 let counter = 0
 
-const TextInput = ({ label, defaultValue, onChange }) => {
+const TextInput = React.memo(({ label, defaultValue, onChange }) => {
   const id = 'text-input-' + ++counter
   return (
     <div className='form-group form-group-input'>
@@ -14,6 +14,6 @@ const TextInput = ({ label, defaultValue, onChange }) => {
       />
     </div>
   )
-}
+})
 
 export default TextInput
