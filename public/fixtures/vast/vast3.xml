@@ -19,11 +19,11 @@
           <Linear>
             <Duration>00:00:17.320</Duration>
             <AdParameters>
-              <![CDATA[{"mediaFiles":[{"delivery":"progressive","type":"video/webm","width":640,"height":360,"uri":"https://assets.zentrick.io/h/he/heetb2ic/media/360p30.webm"},{"delivery":"progressive","type":"video/mp4","width":640,"height":360,"uri":"https://assets.zentrick.io/h/he/heetb2ic/media/360p30.mp4"}]}]]>
+              <![CDATA[{ "buttonForegroundColor": "white", "buttonBackgroundColor": "black" }]]>
             </AdParameters>
             <MediaFiles>
               <MediaFile delivery="progressive" type="application/javascript" width="16" height="9" apiFramework="VPAID">
-                <![CDATA[https://vasttester.iab.com/fixtures/vpaid/vpaid-video.js]]>
+                <![CDATA[https://vasttester.iab.com/fixtures/vpaid/vpaid-example.js]]>
               </MediaFile>
               <MediaFile delivery="progressive" type="video/webm" width="640" height="360">
                 <![CDATA[https://assets.zentrick.io/h/he/heetb2ic/media/360p30.webm]]>
