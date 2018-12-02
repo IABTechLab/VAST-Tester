@@ -67,7 +67,7 @@ const vpaidObservable = vpaid => {
     }
   })
   for (const name of VPAID_EVENT_NAMES) {
-    const listener = data => {
+    const listener = (...data) => {
       out$.next(event(name, data))
     }
     in$.next(invoke('subscribe', [listener, name]))
