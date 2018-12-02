@@ -64,17 +64,39 @@ const LogItem = ({
   )
 }
 
-const Log = ({ dispatch, events }) => {
-  if (events.length === 0) {
-    return <Placeholder>No log items to show</Placeholder>
+class Log extends React.Component {
+  constructor (props) {
+    super(props)
+    this._containerRef = React.createRef()
   }
-  const startTime = events[0].timestamp
-  return (
-    <div className='log'>
-      <table>
-        <tbody>
-          {events
-            .map(({ timestamp, level, category, text, metadata }, i) => (
+
+  getSnapshotBeforeUpdate (prevProps) {
+    if (prevProps.events.length === this.props.events.length) {
+      return false
+    }
+    const container = this._containerRef.current
+    const parent = container.parentNode
+    return parent.scrollTop + parent.clientHeight === parent.scrollHeight
+  }
+
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (snapshot) {
+      const container = this._containerRef.current
+      container.querySelector('.last').scrollIntoView()
+    }
+  }
+
+  render () {
+    const { events } = this.props
+    if (events.length === 0) {
+      return <Placeholder>No log items to show</Placeholder>
+    }
+    const startTime = events[0].timestamp
+    return (
+      <div className='log' ref={this._containerRef}>
+        <table>
+          <tbody>
+            {events.map(({ timestamp, level, category, text, metadata }, i) => (
               <LogItem
                 key={i}
                 timestamp={timestamp}
@@ -85,12 +107,13 @@ const Log = ({ dispatch, events }) => {
                 text={text}
                 metadata={metadata}
               />
-            ))
-            .reverse()}
-        </tbody>
-      </table>
-    </div>
-  )
+            ))}
+            <tr className='last' />
+          </tbody>
+        </table>
+      </div>
+    )
+  }
 }
 
 export default Log
