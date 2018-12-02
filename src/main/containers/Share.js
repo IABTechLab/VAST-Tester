@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import CopyToClipboard from 'react-copy-to-clipboard'
 import { saveAs } from 'file-saver'
-import moment from 'moment'
+import fecha from 'fecha'
 import Modal from '../components/Modal'
 import { getHistory } from '../middleware/history'
 import { stringifyConfig } from '../util/config'
@@ -23,7 +23,7 @@ const getLogData = () =>
   })
 
 const getLogFileName = () =>
-  'vast-tester-' + moment().format('YYYY-MM-DD-HH-mm-ss') + '.json'
+  'vast-tester-' + fecha.format(new Date(), 'YYYY-MM-DD-HH-mm-ss') + '.json'
 
 const onActivateDownloadLog = () => {
   const blob = new Blob([getLogData()], { type: LOG_MIME_TYPE })

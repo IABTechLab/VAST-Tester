@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import fecha from 'fecha'
 import FontAwesome from 'react-fontawesome'
 import KeyValue from './KeyValue'
 import Placeholder from './Placeholder'
@@ -43,7 +43,7 @@ const LogItem = ({
     <React.Fragment>
       <tr className={`${classNames} first`}>
         <td className='time' title={timeTooltip}>
-          {moment(timestamp).format('HH:mm:ss.SSS')}
+          {fecha.format(timestamp, 'HH:mm:ss.SSS')}
         </td>
         <td className='level'>
           <span className='icon'>
