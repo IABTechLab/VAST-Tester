@@ -58,19 +58,19 @@ OMID interface. It does not use Redux at all.
 
 In the _main_ app, there are subdirectories for the standard React-Redux model:
 
-- [`components/`](src/main/components/): React components (without Redux);
-- [`containers/`](src/main/containers/): React components connected to Redux's
-  store;
-- [`actions/`](src/main/actions/): Redux action definitions;
-- [`reducers/`](src/main/reducers/): Redux reducers;
-- [`epics/`](src/main/epics/): epics for redux-observable;
-- [`middleware/`](src/main/middleware/): Redux middleware.
+-   [`components/`](src/main/components/): React components (without Redux);
+-   [`containers/`](src/main/containers/): React components connected to Redux's
+    store;
+-   [`actions/`](src/main/actions/): Redux action definitions;
+-   [`reducers/`](src/main/reducers/): Redux reducers;
+-   [`epics/`](src/main/epics/): epics for redux-observable;
+-   [`middleware/`](src/main/middleware/): Redux middleware.
 
 In addition to those, there are also:
 
-- [`util/`](src/main/util/): various utility modules;
-- [`style/`](src/main/style): [Sass](https://sass-lang.com/) style sheets for
-  the app.
+-   [`util/`](src/main/util/): various utility modules;
+-   [`style/`](src/main/style): [Sass](https://sass-lang.com/) style sheets for
+    the app.
 
 More detailed documentation will be added at a later stage. For now, we suggest
 exploring the source code.
@@ -79,21 +79,22 @@ exploring the source code.
 
 During development, you can use:
 
-- [React DevTools](https://github.com/facebook/react-devtools)
-  for React's DOM;
-- [Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension)
-  for Redux actions and redux-observable effects;
-- [Logger for Redux](https://github.com/evgenyrodionov/redux-logger)
-  by setting `localStorage.reduxLogger` to `true`;
-- [debug](https://www.npmjs.com/package/debug)
-  by setting `localStorage.debug` to `'rpc:*'`.
+-   [React DevTools](https://github.com/facebook/react-devtools)
+    for React's DOM;
+-   [Redux DevTools](https://github.com/zalmoxisus/redux-devtools-extension)
+    for Redux actions and redux-observable effects;
+-   [Logger for Redux](https://github.com/evgenyrodionov/redux-logger)
+    by setting `localStorage.reduxLogger` to `true`;
+-   [debug](https://www.npmjs.com/package/debug)
+    by setting `localStorage.debug` to `'rpc:*'`.
 
 ## To Do
 
-- Resize support
-- Canned test scenarios
-- Reporting and recommendations
-- VAST validation
+-   OM SDK in-app support
+-   Resize support
+-   Canned test scenarios
+-   Reporting and recommendations
+-   VAST validation
 
 ## Contributing
 
