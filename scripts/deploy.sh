@@ -10,18 +10,24 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$DIR/.."
 
 # Read config
-source .deployment
+source deployment/config
+if [[ -f deployment/.secrets ]]; then source deployment/.secrets; fi
 
 # Upload to AWS S3
 echo 'Uploading build to AWS S3 ...'
-aws s3 cp --recursive --acl public-read --cache-control 'public, max-age=300' build s3://$S3_BUCKET/
+aws s3 cp \
+  --recursive \
+  --acl public-read \
+  --cache-control 'public, max-age=300' \
+  build \
+  s3://$S3_BUCKET/
 
 # Build maxpurge command line for purging MaxCDN cache
 args=''
-[[ -n $MAXCDN_ALIAS ]] && args="$args -a ${MAXCDN_ALIAS}"
-[[ -n $MAXCDN_TOKEN ]] && args="$args -t ${MAXCDN_TOKEN}"
-[[ -n $MAXCDN_SECRET ]] && args="$args -s ${MAXCDN_SECRET}"
-[[ -n $MAXCDN_ZONE ]] && args="$args -z ${MAXCDN_ZONE}"
+if [[ -n $MAXCDN_ALIAS ]];  then args="$args -a ${MAXCDN_ALIAS}";  fi
+if [[ -n $MAXCDN_TOKEN ]];  then args="$args -t ${MAXCDN_TOKEN}";  fi
+if [[ -n $MAXCDN_SECRET ]]; then args="$args -s ${MAXCDN_SECRET}"; fi
+if [[ -n $MAXCDN_ZONE ]];   then args="$args -z ${MAXCDN_ZONE}";   fi
 
 # If MAXCDN_ZONE or maxpurge's own ZONE was set, purge cache
 if [[ -n $MAXCDN_ZONE || -n $ZONE ]]; then
