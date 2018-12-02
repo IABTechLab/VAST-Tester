@@ -17,6 +17,16 @@ const Header = ({ onActivateCopyLink, onActivateAbout }) => (
           </Link>
         </li>
         <li>
+          <a
+            href='https://github.com/InteractiveAdvertisingBureau/VAST-Tester'
+            target='_blank'
+            rel='noopener noreferrer'
+            title='Fork on GitHub'
+          >
+            <FontAwesome name='github-alt' />
+          </a>
+        </li>
+        <li>
           <Link to='/about' title='About'>
             <FontAwesome name='info' />
           </Link>
