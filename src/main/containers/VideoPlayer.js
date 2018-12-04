@@ -87,6 +87,7 @@ const VideoPlayer = ({
           <ul>
             <li>
               <a
+                href='#'
                 title={adPaused ? 'Resume Ad' : 'Pause Ad'}
                 onClick={adActive ? () => onSetAdPaused(!adPaused) : null}
                 className={adActive ? '' : 'disabled'}
@@ -96,6 +97,7 @@ const VideoPlayer = ({
             </li>
             <li>
               <a
+                href='#'
                 title={adMuted ? 'Unmute Audio' : 'Mute Audio'}
                 onClick={adActive ? () => onSetAdMuted(!adMuted) : null}
                 className={adActive ? '' : 'disabled'}
@@ -105,6 +107,7 @@ const VideoPlayer = ({
             </li>
             <li>
               <a
+                href='#'
                 title='Skip Ad'
                 onClick={adActive ? onSkipAd : null}
                 className={adActive ? '' : 'disabled'}

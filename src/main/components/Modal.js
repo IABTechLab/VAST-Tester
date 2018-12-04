@@ -9,6 +9,7 @@ const Modal = ({ history, children, onActivateClose }) => (
       <ul>
         <li>
           <a
+            href='#'
             onClick={() => {
               if (history.length > 1) {
                 history.goBack()
