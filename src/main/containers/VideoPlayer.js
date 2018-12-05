@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from 'react'
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
@@ -87,7 +89,6 @@ const VideoPlayer = ({
           <ul>
             <li>
               <a
-                href='#ignored'
                 title={adPaused ? 'Resume Ad' : 'Pause Ad'}
                 onClick={adActive ? () => onSetAdPaused(!adPaused) : null}
                 className={adActive ? '' : 'disabled'}
@@ -97,7 +98,6 @@ const VideoPlayer = ({
             </li>
             <li>
               <a
-                href='#ignored'
                 title={adMuted ? 'Unmute Audio' : 'Mute Audio'}
                 onClick={adActive ? () => onSetAdMuted(!adMuted) : null}
                 className={adActive ? '' : 'disabled'}
@@ -107,7 +107,6 @@ const VideoPlayer = ({
             </li>
             <li>
               <a
-                href='#ignored'
                 title='Skip Ad'
                 onClick={adActive ? onSkipAd : null}
                 className={adActive ? '' : 'disabled'}
