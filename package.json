@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Tests IAB VAST ads.",
   "private": true,
+  "homepage": "https://vasttester.iabtechlab.com/",
   "repository": "InteractiveAdvertisingBureau/VAST-Tester",
   "license": "Apache-2.0",
   "engines": {
@@ -15,8 +16,6 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "//vasttester.iabtechlab.com",
-  "homepageAlt": "//vasttester2.iabtechlab.com",
   "scripts": {
     "start": "react-scripts start",
     "clean": "rimraf build",

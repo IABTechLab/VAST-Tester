@@ -6,10 +6,7 @@ import {
   verificationScriptRegisteringSessionObserver
 } from '../actions'
 import verificationServer from '../util/verificationServer'
-import { APP_URL_1, APP_URL_2 } from '../../common/settings'
-
-const limitedAccessModeBase =
-  '//' + window.location.host === APP_URL_2 ? APP_URL_1 : APP_URL_2
+import { APP_URL_ALT } from '../../common/settings'
 
 let idCount = 0
 
@@ -35,7 +32,7 @@ const buildIframeUrl = (
     adCount
   }
   return (
-    (accessMode === 'limited' ? limitedAccessModeBase : '') +
+    (accessMode === 'limited' ? APP_URL_ALT : '') +
     '/?mode=verification#' +
     encodeURIComponent(JSON.stringify(clientConfig))
   )
