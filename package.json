@@ -15,8 +15,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "homepage": "//vasttester.iab.com",
-  "homepageAlt": "//vasttester2.iab.com",
+  "homepage": "//vasttester.iabtechlab.com",
+  "homepageAlt": "//vasttester2.iabtechlab.com",
   "scripts": {
     "start": "react-scripts start",
     "clean": "rimraf build",

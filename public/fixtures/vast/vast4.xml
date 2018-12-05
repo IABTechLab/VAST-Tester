@@ -23,7 +23,7 @@
             </AdParameters>
             <MediaFiles>
               <MediaFile delivery="progressive" type="application/javascript" width="16" height="9" apiFramework="VPAID">
-                <![CDATA[https://vasttester.iab.com/fixtures/vpaid/vpaid-example.js]]>
+                <![CDATA[https://vasttester.iabtechlab.com/fixtures/vpaid/vpaid-example.js]]>
               </MediaFile>
               <MediaFile delivery="progressive" type="video/webm" width="640" height="360">
                 <![CDATA[https://assets.zentrick.io/h/he/heetb2ic/media/360p30.webm]]>
@@ -38,7 +38,7 @@
       <AdVerifications>
         <Verification vendor="iabtechlab.com-omid">
           <JavaScriptResource apiFramework="omid">
-            <![CDATA[https://vasttester.iab.com/fixtures/omid/omid-validation-verification-script-v1.js]]>
+            <![CDATA[https://vasttester.iabtechlab.com/fixtures/omid/omid-validation-verification-script-v1.js]]>
           </JavaScriptResource>
         </Verification>
       </AdVerifications>
