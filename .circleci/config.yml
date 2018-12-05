@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:8-browsers
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -32,10 +32,10 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-        
+
       # rebuild
       - run: yarn build
-        
+
       # run tests!
       - run: sleep 5
       - run: yarn test
@@ -48,4 +48,4 @@ jobs:
             pwd
             echo "Ready aws client"
             echo ""
-            aws s3 sync build/ s3://vasttester-origin-$CIRCLE_BRANCH.iabtechlab.com/ --delete --cache-control max-age=86400 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+            aws s3 sync build/ s3://vasttester-origin-$CIRCLE_BRANCH.iabtechlab.com/ --delete --cache-control max-age=300 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers

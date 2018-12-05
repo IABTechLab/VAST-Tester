@@ -1,15 +1,16 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+
 import React from 'react'
 import { withRouter } from 'react-router'
 import FontAwesome from 'react-fontawesome'
 
-const Modal = ({ history, children, onActivateClose }) => (
+const Modal = ({ history, children }) => (
   <div className='modal'>
     {children}
     <nav>
       <ul>
         <li>
           <a
-            href='#ignored'
             onClick={() => {
               if (history.length > 1) {
                 history.goBack()
