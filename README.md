@@ -24,12 +24,6 @@ Create a production build:
 yarn run build
 ```
 
-Tag and deploy a new version:
-
-```bash
-yarn version
-```
-
 ## Architecture
 
 This is a [React](https://reactjs.org/) app bootstrapped with
