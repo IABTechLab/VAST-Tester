@@ -10,7 +10,7 @@ import {
 const About = () => (
   <Modal>
     <div className='about'>
-      <div className='version'>
+      <div className='title'>
         {APP_VENDOR} {APP_NAME}
       </div>
       <div>Version {APP_VERSION}</div>

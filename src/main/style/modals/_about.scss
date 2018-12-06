@@ -12,7 +12,7 @@
     margin: 1em 0;
   }
 
-  .version {
+  .title {
     font-weight: $font-weight-bold;
     @include respond('font-size', $r-font-size-large);
   }
