@@ -1,4 +1,4 @@
-# Javascript Node CircleCI 2.0 configuration file
+# JavaScript Node CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
@@ -6,13 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      # specify the version you desire here
       - image: circleci/node:8-browsers
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
@@ -23,28 +17,46 @@ jobs:
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "yarn.lock" }}
-          # fallback to using the latest cache if no exact match is found
+          # Fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: yarn install
+      - run:
+          name: Set up apt
+          command: |
+            sudo apt-get -qq update
+            sudo apt-get -y -qq install apt-transport-https
+
+      - run:
+          name: Install Yarn
+          command: |
+            sudo rm -f /usr/local/bin/yarn
+            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+            sudo apt-get -qq update
+            # transform the '>=x.y.z' version constraint in package.json to the 'x.y.z-1' version format of apt-get
+            YARN_VERSION=$( jq -r '(.engines.yarn | gsub("[^0-9.]";"")) + "-1"' < package.json )
+            sudo apt-get -qq install --no-install-recommends yarn=$YARN_VERSION
+
+      - run:
+          name: Install dependencies
+          command: yarn --frozen-lockfile
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
-      # rebuild
-      - run: yarn build
+      # Build
+      - run:
+          name: Build
+          command: yarn build
 
-      # run tests!
-      - run: yarn test
+      # Run tests
+      - run:
+          name: Test
+          command: yarn test
 
       - deploy:
           command: |
-            yarn run build
             sudo apt-get -y -qq install awscli
-            echo "Here I am. Current dir and contents below"
-            pwd
-            echo "Ready aws client"
-            echo ""
             aws s3 sync build/ s3://vasttester-origin-$CIRCLE_BRANCH.iabtechlab.com/ --delete --cache-control max-age=300 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
