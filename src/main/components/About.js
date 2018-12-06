@@ -1,11 +1,19 @@
 import React from 'react'
 import Modal from './Modal'
-import { APP_VERSION, APP_BUILD_DATE } from '../../common/settings'
+import {
+  APP_VENDOR,
+  APP_NAME,
+  APP_VERSION,
+  APP_BUILD_DATE
+} from '../../common/settings'
 
 const About = () => (
   <Modal>
     <div className='about'>
-      <div className='version'>VAST Tester v{APP_VERSION}</div>
+      <div className='version'>
+        {APP_VENDOR} {APP_NAME}
+      </div>
+      <div>Version {APP_VERSION}</div>
       {APP_BUILD_DATE != null ? <div>Built {APP_BUILD_DATE}</div> : null}
       <div className='spacer' />
       <div>Contributed with</div>
