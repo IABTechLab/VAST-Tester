@@ -19,7 +19,7 @@
   "scripts": {
     "start": "react-scripts start",
     "clean": "rimraf build",
-    "build": "yarn run clean && REACT_APP_BUILD_DATE=\"$(TZ=GMT date)\" react-scripts build",
+    "build": "yarn run clean && REACT_APP_VERSION=\"$( git rev-parse --short HEAD )\" REACT_APP_BUILD_DATE=\"$( TZ=GMT date )\" react-scripts build",
     "test": "standard \"src/**/*.js\""
   },
   "dependencies": {
