@@ -49,7 +49,7 @@ jobs:
       # Build
       - run:
           name: Build
-          command: yarn build
+          command: REACT_APP_VERSION="${CIRCLE_SHA1:0:7} ($CIRCLE_BRANCH)" yarn build
 
       # Run tests
       - run:
