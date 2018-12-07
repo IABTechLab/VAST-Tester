@@ -16,14 +16,13 @@ if (isDev) {
   if (host === PUBLIC_HOST_2) {
     altHost = PUBLIC_HOST_1
   } else {
-    const match = /^(vasttester-origin-\w+\.iabtechlab\.com)(\.s3[^.]*\.amazonaws\.com)?$/.exec(
+    const match = /^vasttester-(?:origin-)?(\w+)\.iabtechlab\.com(\.s3[^.]*\.amazonaws\.com)?$/.exec(
       host
     )
     if (match != null) {
-      const [, bucket, suffix] = match
-      altHost =
-        bucket +
-        (suffix == null ? `.s3-website-${S3_REGION}.amazonaws.com` : '')
+      const [, branch, s3] = match
+      const suffix = s3 == null ? `.s3-website-${S3_REGION}.amazonaws.com` : ''
+      altHost = `vasttester-origin-${branch}.iabtechlab.com` + suffix
     } else {
       altHost = PUBLIC_HOST_2
     }
