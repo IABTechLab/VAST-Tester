@@ -4,6 +4,7 @@ import {
   APP_VENDOR,
   APP_NAME,
   APP_VERSION,
+  APP_BRANCH,
   APP_BUILD_DATE
 } from '../../common/settings'
 
@@ -13,8 +14,10 @@ const About = () => (
       <div className='title'>
         {APP_VENDOR} {APP_NAME}
       </div>
-      <div>Version {APP_VERSION}</div>
-      {APP_BUILD_DATE != null ? <div>Built {APP_BUILD_DATE}</div> : null}
+      <div>
+        Version {APP_VERSION} {APP_BRANCH != null && ` (${APP_BRANCH} branch)`}
+      </div>
+      {APP_BUILD_DATE != null && <div>Built {APP_BUILD_DATE}</div>}
       <div className='spacer' />
       <div>Contributed with</div>
       <div className='heart'>
