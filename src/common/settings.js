@@ -32,6 +32,7 @@ if (isDev) {
 export const APP_NAME = process.env.REACT_APP_NAME
 export const APP_VENDOR = process.env.REACT_APP_VENDOR
 export const APP_VERSION = process.env.REACT_APP_VERSION
+export const APP_BRANCH = process.env.REACT_APP_BRANCH
 export const APP_BUILD_DATE = process.env.REACT_APP_BUILD_DATE
 export const APP_URL = `${protocol}//${host}`
 export const APP_URL_ALT = `${protocol}//${altHost}`
