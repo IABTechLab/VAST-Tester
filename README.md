@@ -1,4 +1,4 @@
-# IAB VAST Tester
+# IAB Tech Lab VAST Tester
 
 [![CircleCI](https://circleci.com/gh/InteractiveAdvertisingBureau/VAST-Tester.svg?style=shield)](https://circleci.com/gh/InteractiveAdvertisingBureau/VAST-Tester) [![JavaScript Standard Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://standardjs.com/)
 
