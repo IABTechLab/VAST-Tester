@@ -35,7 +35,9 @@ export const VPAID_PROPERTY_NAMES = [
   'adSkippableState',
   'adRemainingTime',
   'adDuration',
-  'adVolume'
+  'adVolume',
+  'adCompanions',
+  'adIcons'
 ]
 
 export const VPAID_EVENT_TYPE_TO_VAST_EVENT_TYPE = {
