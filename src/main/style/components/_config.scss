@@ -4,4 +4,8 @@
     overflow: auto;
     @include respond('padding', $r-space-large);
   }
+
+  textarea.expanding {
+    max-height: 20em;
+  }
 }
