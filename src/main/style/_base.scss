@@ -55,6 +55,10 @@ input, textarea {
   padding: 0.5ex;
 }
 
+textarea.expanding {
+  resize: vertical;
+}
+
 .form-group {
   @include respond('margin-bottom', $r-space-medium);
 

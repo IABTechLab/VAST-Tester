@@ -152,4 +152,7 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayer)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VideoPlayer)

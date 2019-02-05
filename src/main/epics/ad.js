@@ -81,7 +81,13 @@ const muteUnmuteEpic = action$ =>
             filter(({ payload: { active } }) => active)
           )
         ),
-        map(([{ payload: { muted } }]) => muted),
+        map(
+          ([
+            {
+              payload: { muted }
+            }
+          ]) => muted
+        ),
         distinctUntilChanged(),
         skip(1),
         map(muted => vastEvent(muted ? 'mute' : 'unmute')),

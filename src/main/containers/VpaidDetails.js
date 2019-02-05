@@ -33,7 +33,10 @@ const VpaidDetails = React.memo(
 
 const mapStateToProps = ({
   vpaid: { status, eventCounts, properties },
-  vast: { mediaFile: { url }, adParameters }
+  vast: {
+    mediaFile: { url },
+    adParameters
+  }
 }) => ({
   status,
   url,
