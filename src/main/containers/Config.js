@@ -11,19 +11,16 @@ import {
   parseConfig,
   stringifyConfig
 } from '../util/config'
-import identity from '../../common/util/identity'
+import isDataURI from '../../common/util/isDataURI'
 import { setConfig } from '../actions'
 
-const { btoa } = window
+const { atob, btoa } = window
 
-const normalizers = {
-  vastUrl: value => {
-    value = value.trim()
-    return value.charAt(0) === '<'
-      ? `data:text/xml;base64,${btoa(value)}`
-      : value
-  }
-}
+const fromDataUri = uri =>
+  isDataURI(uri) ? atob(uri.substr(uri.indexOf(',') + 1)) : uri
+
+const toDataUri = value =>
+  value.trim().charAt(0) === '<' ? 'data:text/xml;base64,' + btoa(value) : value
 
 class Config extends React.Component {
   constructor (props) {
@@ -48,7 +45,7 @@ class Config extends React.Component {
           >
             <Fieldset legend='VAST (URL or XML)'>
               <TextInput
-                defaultValue={this.state.vastUrl}
+                defaultValue={fromDataUri(this.state.vastUrl)}
                 onChange={this._onChange('vastUrl')}
               />
             </Fieldset>
@@ -91,7 +88,6 @@ class Config extends React.Component {
               <li>
                 <Link
                   to={{ pathname: '/run', search: stringifyConfig(this.state) }}
-                  onClick={this.props.onRun}
                   innerRef={ref => {
                     this._runButton = ref
                   }}
@@ -107,11 +103,13 @@ class Config extends React.Component {
   }
 
   _onChange (key) {
-    const normalize = normalizers[key] || identity
     return value => {
+      if (key === 'vastUrl') {
+        value = toDataUri(value)
+      }
       this.setState({
         ...this.state,
-        [key]: normalize(value)
+        [key]: value
       })
     }
   }
