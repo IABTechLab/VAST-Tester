@@ -1,5 +1,5 @@
 import React from 'react'
-import TextArea from 'react-expanding-textarea'
+import TextArea from 'react-textarea-autosize'
 
 let counter = 0
 
@@ -12,6 +12,8 @@ const TextInput = React.memo(({ label, defaultValue, onChange }) => {
         id={id}
         defaultValue={defaultValue}
         className={'expanding'}
+        minRows={1}
+        maxRows={10}
         onChange={evt => onChange(evt.target.value)}
       />
     </div>
