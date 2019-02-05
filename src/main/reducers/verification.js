@@ -108,7 +108,11 @@ const reducer = handleActions(
     }),
     [SET_VIDEO_PROPERTIES]: (
       state,
-      { payload: { properties: { duration, muted, volume } } }
+      {
+        payload: {
+          properties: { duration, muted, volume }
+        }
+      }
     ) =>
       state.isVpaid
         ? state
@@ -119,7 +123,11 @@ const reducer = handleActions(
         },
     [SET_VPAID_PROPERTIES]: (
       state,
-      { payload: { properties: { adDuration, adVolume } } }
+      {
+        payload: {
+          properties: { adDuration, adVolume }
+        }
+      }
     ) => ({
       ...state,
       duration: adDuration,

@@ -219,7 +219,9 @@ const vastLoadedEpic = (action$, state$) =>
   action$.pipe(
     ofType(VAST_LOADED),
     mergeMap(({ payload: { chain, inLine, linear, verifications } }) => {
-      const { config: { audioUnmuted, vpaidEnabled } } = state$.value
+      const {
+        config: { audioUnmuted, vpaidEnabled }
+      } = state$.value
       const mediaFile = selectMediaFile(linear, vpaidEnabled)
       const results = []
       if (mediaFile != null) {

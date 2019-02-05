@@ -13,8 +13,8 @@ const renderItem = (type, data, itemType, itemString) => (
     {data != null && data[TYPE] != null
       ? data[TYPE]
       : type === 'Array'
-      ? itemString
-      : itemType}
+        ? itemString
+        : itemType}
   </span>
 )
 

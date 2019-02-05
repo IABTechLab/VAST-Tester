@@ -20,7 +20,8 @@
     "start": "react-scripts start",
     "clean": "rimraf build",
     "build": "yarn run clean && REACT_APP_BUILD_DATE=\"$( TZ=GMT date )\" react-scripts build",
-    "test": "standard \"src/**/*.js\""
+    "test": "standard \"src/**/*.js\"",
+    "format": "prettier-standard \"src/**/*.js\" && standard --fix \"src/**/*.js\""
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -68,6 +69,7 @@
   "lint-staged": {
     "src/**/*.js": [
       "prettier-standard",
+      "standard --fix",
       "git add"
     ]
   },

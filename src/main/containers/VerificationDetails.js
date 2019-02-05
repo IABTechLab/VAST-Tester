@@ -27,27 +27,26 @@ const VerificationVendorDetails = React.memo(
   )
 )
 
-const VerificationDetails = React.memo(
-  ({ eventCounts, verifications }) =>
-    verifications.length === 0 ? (
-      <Placeholder>No verification scripts active</Placeholder>
-    ) : (
-      <div className='verification-details'>
-        <Collapsible trigger='OMID Events'>
-          <div className='events'>
-            <KeyValue data={eventCounts} />
-          </div>
-        </Collapsible>
-        {verifications.map(({ verification, scriptStatus }, i) => (
-          <VerificationVendorDetails
-            key={i}
-            number={i + 1}
-            verification={verification}
-            scriptStatus={scriptStatus}
-          />
-        ))}
-      </div>
-    )
+const VerificationDetails = React.memo(({ eventCounts, verifications }) =>
+  verifications.length === 0 ? (
+    <Placeholder>No verification scripts active</Placeholder>
+  ) : (
+    <div className='verification-details'>
+      <Collapsible trigger='OMID Events'>
+        <div className='events'>
+          <KeyValue data={eventCounts} />
+        </div>
+      </Collapsible>
+      {verifications.map(({ verification, scriptStatus }, i) => (
+        <VerificationVendorDetails
+          key={i}
+          number={i + 1}
+          verification={verification}
+          scriptStatus={scriptStatus}
+        />
+      ))}
+    </div>
+  )
 )
 
 const mapStateToProps = ({

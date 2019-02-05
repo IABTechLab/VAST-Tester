@@ -69,7 +69,10 @@ const withoutApiFramework = ({ payload: { apiFramework } }) =>
   apiFramework == null
 
 const toVastMediaFileActionStream = action$ =>
-  action$.pipe(ofType(SET_MEDIA_FILE), filter(withoutApiFramework))
+  action$.pipe(
+    ofType(SET_MEDIA_FILE),
+    filter(withoutApiFramework)
+  )
 
 const videoElementUpdateEpic = action$ =>
   action$.pipe(
@@ -120,7 +123,9 @@ const toggleVideoPausedStateEpic = (action$, state$) =>
   toVastMediaFileActionStream(action$).pipe(
     combineLatest(action$.ofType(SET_VIDEO_ELEMENT)),
     mergeMap(() => {
-      const { video: { paused } } = state$.value
+      const {
+        video: { paused }
+      } = state$.value
       const { videoElement } = sharedDom
       return paused !== videoElement.paused
         ? _of(setVideoPaused(paused))
@@ -162,14 +167,19 @@ const toVideoEventStream = (action$, desiredType) =>
 const startAdEpic = action$ =>
   toVastMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      action$.pipe(ofType(START_AD), takeUntil(action$.ofType(END_TEST)))
+      action$.pipe(
+        ofType(START_AD),
+        takeUntil(action$.ofType(END_TEST))
+      )
     ),
     mapTo(setVideoPaused(false))
   )
 
 const filterEnded = state$ =>
   filter(() => {
-    const { video: { properties } } = state$.value
+    const {
+      video: { properties }
+    } = state$.value
     return !properties.ended
   })
 
@@ -221,9 +231,8 @@ const adErrorEpic = action$ =>
       toVideoEventStream(action$, 'error').pipe(
         combineLatest(action$.ofType(SET_VIDEO_PROPERTIES)),
         take(1),
-        map(
-          ([, { payload: { properties: { error } } }]) =>
-            error != null ? error.message : null
+        map(([, { payload: { properties: { error } } }]) =>
+          error != null ? error.message : null
         ),
         takeUntil(action$.ofType(END_TEST))
       )
@@ -238,9 +247,13 @@ const quartilesEpic = (action$, state$) =>
     mergeMapTo(
       toVideoEventStream(action$, 'timeupdate').pipe(
         map(() => {
-          const { video: { properties: { played, duration } } } = state$.value
+          const {
+            video: {
+              properties: { played, duration }
+            }
+          } = state$.value
           return duration > 0
-            ? clamp(Math.floor(sumTimeRanges(played) / duration * 4), 0, 4)
+            ? clamp(Math.floor((sumTimeRanges(played) / duration) * 4), 0, 4)
             : 0
         }),
         filter(quartile => quartile > 0),
@@ -280,7 +293,9 @@ const videoPropertiesToAdStateEpic = action$ =>
         ofType(SET_VIDEO_PROPERTIES),
         mergeMap(
           ({
-            payload: { properties: { paused, readyState, muted, volume } }
+            payload: {
+              properties: { paused, readyState, muted, volume }
+            }
           }) => [
             setAdPaused(paused || readyState < 3),
             setAdMuted(muted || volume === 0)

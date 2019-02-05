@@ -108,4 +108,7 @@ const mapDispatchToProps = (dispatch, { verification }) => ({
   }
 })
 
-export default connect(null, mapDispatchToProps)(VerificationHost)
+export default connect(
+  null,
+  mapDispatchToProps
+)(VerificationHost)

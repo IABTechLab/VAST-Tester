@@ -70,7 +70,10 @@ const withVpaidApiFramework = ({ payload: { apiFramework } }) =>
   apiFramework === 'VPAID'
 
 const toVpaidMediaFileActionStream = action$ =>
-  action$.pipe(ofType(SET_MEDIA_FILE), filter(withVpaidApiFramework))
+  action$.pipe(
+    ofType(SET_MEDIA_FILE),
+    filter(withVpaidApiFramework)
+  )
 
 const vpaidIframeUpdateEpic = action$ =>
   action$.pipe(
@@ -179,12 +182,20 @@ const runVpaidAd = (win, slotElement, videoElement, adParameters, action$) =>
       dispatch(setVpaidProperties(properties))
     })
 
-    action$.pipe(ofType(START_VPAID_AD), takeUntilEndTest).subscribe(() => {
-      call('startAd')
-    })
+    action$
+      .pipe(
+        ofType(START_VPAID_AD),
+        takeUntilEndTest
+      )
+      .subscribe(() => {
+        call('startAd')
+      })
 
     action$
-      .pipe(ofType(CALL_VPAID_FUNCTION), takeUntilEndTest)
+      .pipe(
+        ofType(CALL_VPAID_FUNCTION),
+        takeUntilEndTest
+      )
       .subscribe(({ payload: { name, args } }) => {
         call(name, args)
       })
@@ -278,7 +289,9 @@ const startVpaidEpic = (action$, state$) =>
     ofType(VPAID_LOADED),
     mergeMap(() => {
       const { vpaidIframe: iframe, slotElement, videoElement } = sharedDom
-      const { vast: { adParameters } } = state$.value
+      const {
+        vast: { adParameters }
+      } = state$.value
       return runVpaidAd(
         iframe.contentWindow,
         slotElement,
@@ -302,7 +315,10 @@ const startVpaidEpic = (action$, state$) =>
 const startAdEpic = action$ =>
   toVpaidMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      action$.pipe(ofType(START_AD), takeUntil(action$.ofType(END_TEST)))
+      action$.pipe(
+        ofType(START_AD),
+        takeUntil(action$.ofType(END_TEST))
+      )
     ),
     mapTo(startVpaidAd())
   )
@@ -327,11 +343,12 @@ const vpaidEventsToPausedEpic = action$ =>
     mergeMapTo(
       action$.pipe(
         ofType(VPAID_EVENT),
-        map(
-          ({ payload: { name } }) =>
-            PLAY_EVENTS.indexOf(name) >= 0
-              ? false
-              : PAUSE_EVENTS.indexOf(name) >= 0 ? true : null
+        map(({ payload: { name } }) =>
+          PLAY_EVENTS.indexOf(name) >= 0
+            ? false
+            : PAUSE_EVENTS.indexOf(name) >= 0
+              ? true
+              : null
         ),
         filter(value => typeof value === 'boolean'),
         map(paused => setAdPaused(paused)),
