@@ -44,6 +44,7 @@
     "react-collapsible": "^2.3.2",
     "react-copy-to-clipboard": "^5.0.1",
     "react-dom": "^16.7.0",
+    "react-expanding-textarea": "^0.2.0",
     "react-fontawesome": "^1.6.1",
     "react-json-tree": "^0.11.2",
     "react-redux": "^6.0.0",

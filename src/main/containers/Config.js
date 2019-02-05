@@ -11,7 +11,19 @@ import {
   parseConfig,
   stringifyConfig
 } from '../util/config'
+import identity from '../../common/util/identity'
 import { setConfig } from '../actions'
+
+const { btoa } = window
+
+const normalizers = {
+  vastUrl: value => {
+    value = value.trim()
+    return value.charAt(0) === '<'
+      ? `data:text/xml;base64,${btoa(value)}`
+      : value
+  }
+}
 
 class Config extends React.Component {
   constructor (props) {
@@ -34,7 +46,7 @@ class Config extends React.Component {
               this._runButton.click()
             }}
           >
-            <Fieldset legend='VAST URL'>
+            <Fieldset legend='VAST (URL or XML)'>
               <TextInput
                 defaultValue={this.state.vastUrl}
                 onChange={this._onChange('vastUrl')}
@@ -95,10 +107,11 @@ class Config extends React.Component {
   }
 
   _onChange (key) {
+    const normalize = normalizers[key] || identity
     return value => {
       this.setState({
         ...this.state,
-        [key]: value
+        [key]: normalize(value)
       })
     }
   }
@@ -112,4 +125,7 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Config)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Config)
