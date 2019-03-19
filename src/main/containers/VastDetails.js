@@ -4,7 +4,7 @@ import JSONTree from '../components/JSONTree'
 import Collapsible from '../components/Collapsible'
 import KeyValue from '../components/KeyValue'
 import replaceKey from '../../common/util/replaceKey'
-import isDataURI from '../../common/util/isDataURI'
+import startsWith from '../../common/util/startsWith'
 
 const TYPE = Symbol('type')
 
@@ -28,7 +28,7 @@ const VastDetails = React.memo(({ eventCounts, chain, mediaFileUrl }) => {
   const { uri } = chain[0]
   return (
     <div className='vast-details'>
-      {!isDataURI(uri) && (
+      {!startsWith(uri, 'data:') && (
         <Collapsible trigger='VAST Tag'>
           <div className='vast-info'>
             <KeyValue

@@ -11,13 +11,21 @@ import {
   parseConfig,
   stringifyConfig
 } from '../util/config'
-import isDataURI from '../../common/util/isDataURI'
 import { setConfig } from '../actions'
 
 const { atob, btoa } = window
 
-const fromDataUri = uri =>
-  isDataURI(uri) ? atob(uri.substr(uri.indexOf(',') + 1)) : uri
+const reBase64DataUri = /^data:[^,;]+;base64,(.*)/
+
+const fromDataUri = uri => {
+  const match = reBase64DataUri.exec(uri)
+  if (match != null) {
+    try {
+      uri = atob(match[1])
+    } catch (_) {}
+  }
+  return uri
+}
 
 const toDataUri = value =>
   value.trim().charAt(0) === '<' ? 'data:text/xml;base64,' + btoa(value) : value
