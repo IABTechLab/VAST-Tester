@@ -76,8 +76,26 @@ $lg-min-height: ($lg-video-width / $video-aspect-ratio + $lg-space-large) * 2 + 
     padding: $md-space-large;
   }
 
-  li {
-    @include respond('margin-bottom', $r-space-medium);
+  nav {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  ul.ad-controls {
+    flex: 1;
+
+    li {
+      @include respond('margin-bottom', $r-space-medium);
+    }
+  }
+
+  ul.playback-controls {
+    flex: 0;
+
+    li {
+      @include respond('margin-top', $r-space-medium);
+    }
   }
 
   a {

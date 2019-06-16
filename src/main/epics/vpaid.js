@@ -17,6 +17,7 @@ import {
   CALL_VPAID_FUNCTION,
   END_TEST,
   REQUEST_AD_MUTED,
+  REQUEST_AD_FULLSCREEN,
   REQUEST_AD_PAUSED,
   REQUEST_AD_SKIP,
   REQUEST_VPAID_DOM_UPDATE,
@@ -396,6 +397,34 @@ const requestAdMutedEpic = action$ =>
     )
   )
 
+const isStrictlyPositive = val => isFinite(val) && val > 0
+
+const requestAdFullscreenEpic = (action$, state$) =>
+  toVpaidMediaFileActionStream(action$).pipe(
+    mergeMapTo(
+      action$.pipe(
+        ofType(REQUEST_AD_FULLSCREEN),
+        map(({ payload: { fullscreen } }) => {
+          const {
+            vpaid: {
+              properties: { adWidth, adHeight }
+            }
+          } = state$.value
+          const [width, height] =
+            isStrictlyPositive(adWidth) && isStrictlyPositive(adHeight)
+              ? [adWidth, adHeight]
+              : [sharedDom.videoSlot.width, sharedDom.videoSlot.height]
+          return callVpaidFunction('resizeAd', [
+            width,
+            height,
+            fullscreen ? 'fullscreen' : 'normal'
+          ])
+        }),
+        takeUntil(action$.ofType(END_TEST))
+      )
+    )
+  )
+
 const requestAdSkipEpic = action$ =>
   toVpaidMediaFileActionStream(action$).pipe(
     mergeMapTo(
@@ -417,5 +446,6 @@ export default combineEpics(
   vpaidVolumeToMutedEpic,
   requestAdPausedEpic,
   requestAdMutedEpic,
+  requestAdFullscreenEpic,
   requestAdSkipEpic
 )

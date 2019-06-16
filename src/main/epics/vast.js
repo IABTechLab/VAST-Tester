@@ -220,7 +220,7 @@ const loadVastEpic = (action$, state$) =>
 const vastLoadedEpic = (action$, state$) =>
   action$.pipe(
     ofType(VAST_LOADED),
-    mergeMap(({ payload: { chain, inLine, linear, verifications } }) => {
+    mergeMap(({ payload: { linear, verifications } }) => {
       const {
         config: { audioUnmuted, vpaidEnabled }
       } = state$.value

@@ -1,5 +1,6 @@
 import errorToString from '../../common/util/errorToString'
 
+export const VIDEO_WARNING = 'VIDEO_WARNING'
 export const REQUEST_VIDEO_ELEMENT_UPDATE = 'REQUEST_VIDEO_ELEMENT_UPDATE'
 export const SET_VIDEO_ELEMENT = 'SET_VIDEO_ELEMENT'
 export const UNSET_VIDEO_ELEMENT = 'SET_VIDEO_ELEMENT'
@@ -12,6 +13,13 @@ export const VIDEO_PLAY_NO_PROMISE = 'VIDEO_PLAY_NO_PROMISE'
 export const VIDEO_PLAY_PROMISE_FULFILLED = 'VIDEO_PLAY_PROMISE_FULFILLED'
 export const VIDEO_PLAY_PROMISE_REJECTED = 'VIDEO_PLAY_PROMISE_REJECTED'
 export const VIDEO_EVENT = 'VIDEO_EVENT'
+
+export const videoWarning = message => ({
+  type: VIDEO_WARNING,
+  payload: {
+    message
+  }
+})
 
 export const requestVideoElementUpdate = () => ({
   type: REQUEST_VIDEO_ELEMENT_UPDATE

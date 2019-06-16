@@ -5,6 +5,7 @@ import {
   combineLatest,
   distinct,
   filter,
+  ignoreElements,
   map,
   mapTo,
   mergeMap,
@@ -18,6 +19,7 @@ import { ofType, combineEpics } from 'redux-observable'
 import {
   END_TEST,
   REQUEST_AD_MUTED,
+  REQUEST_AD_FULLSCREEN,
   REQUEST_AD_PAUSED,
   REQUEST_AD_SKIP,
   SET_MEDIA_FILE,
@@ -33,6 +35,7 @@ import {
   adStopped,
   adVolumeChange,
   setAdMuted,
+  setAdFullscreen,
   setAdPaused,
   setVideoElement,
   setVideoMuted,
@@ -41,6 +44,7 @@ import {
   setVideoSrc,
   unsetVideoElement,
   vastEvent,
+  videoWarning,
   videoEvent,
   videoPlayNoPromise,
   videoPlayPromise,
@@ -93,6 +97,7 @@ const bootstrapVideoElementEpic = action$ =>
     mergeMapTo(
       new Observable(observer => {
         const { videoElement } = sharedDom
+        const doc = videoElement.ownerDocument
         observer.next(
           setVideoProperties(normalizeVideoProperties(videoElement))
         )
@@ -102,13 +107,19 @@ const bootstrapVideoElementEpic = action$ =>
           )
           observer.next(videoEvent(type))
         }
+        const onFullscreenchange = () => {
+          const isFullscreen = doc.fullscreenElement != null
+          observer.next(setAdFullscreen(isFullscreen))
+        }
         for (const type of VIDEO_EVENT_TYPES) {
           videoElement.addEventListener(type, onVideoEvent)
         }
+        doc.addEventListener('fullscreenchange', onFullscreenchange)
         return () => {
           for (const type of VIDEO_EVENT_TYPES) {
             videoElement.removeEventListener(type, onVideoEvent)
           }
+          doc.removeEventListener('fullscreenchange', onFullscreenchange)
         }
       }).pipe(takeUntil(action$.ofType(END_TEST)))
     )
@@ -328,6 +339,34 @@ const requestAdMutedEpic = action$ =>
     )
   )
 
+const requestAdFullscreenEpic = action$ =>
+  toVastMediaFileActionStream(action$).pipe(
+    mergeMapTo(
+      action$.pipe(
+        ofType(REQUEST_AD_FULLSCREEN),
+        mergeMap(({ payload: { fullscreen } }) => {
+          const { videoElement } = sharedDom
+          let subject, func
+          if (fullscreen) {
+            ;[subject, func] = [videoElement, 'requestFullscreen']
+          } else {
+            ;[subject, func] = [videoElement.ownerDocument, 'exitFullscreen']
+          }
+          if (typeof subject[func] !== 'function') {
+            return _of(
+              videoWarning(
+                `Fullscreen API not supported: ${func}() not available`
+              )
+            )
+          }
+          const promise = subject[func]()
+          return _of(promise).pipe(ignoreElements())
+        }),
+        takeUntil(action$.ofType(END_TEST))
+      )
+    )
+  )
+
 const requestAdSkipEpic = action$ =>
   toVastMediaFileActionStream(action$).pipe(
     mergeMapTo(
@@ -359,6 +398,7 @@ export default combineEpics(
   videoPropertiesToAdStateEpic,
   requestAdPausedEpic,
   requestAdMutedEpic,
+  requestAdFullscreenEpic,
   requestAdSkipEpic,
   adStoppedEpic,
   adErrorEpic
