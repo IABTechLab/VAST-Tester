@@ -140,7 +140,9 @@ const applyVerificationAccessMode = (verifications, accessMode) => {
 
 const selectVideos = (mediaFiles, response, videoElement) =>
   mediaFiles.filter(
-    mediaFile => videoElement.canPlayType(mediaFile.type) === response
+    mediaFile =>
+      mediaFile.type !== 'video/3gpp' &&
+      videoElement.canPlayType(mediaFile.type) === response
   )
 
 const triageMediaFiles = linear => {
