@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:12-browsers
 
     working_directory: ~/repo
 
@@ -16,9 +16,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - node12-dependencies-{{ checksum "yarn.lock" }}
           # Fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+          - node12-dependencies-
 
       - run:
           name: Set up apt
@@ -44,7 +44,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: node12-dependencies-{{ checksum "yarn.lock" }}
 
       # Build
       - run:
