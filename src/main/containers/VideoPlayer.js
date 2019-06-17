@@ -8,6 +8,7 @@ import {
   requestVpaidDomUpdate,
   requestAdPaused,
   requestAdMuted,
+  requestAdFullscreen,
   requestAdSkip
 } from '../actions'
 import {
@@ -47,83 +48,98 @@ const acceptIframeRef = iframe => {
 const VideoPlayer = ({
   shared,
   videoSrc,
-  videoPaused,
   videoMuted,
   adActive,
   adPaused,
   adMuted,
+  adFullscreen,
   onVideoElementRef,
   onVpaidIframeLoaded,
   onSetAdPaused,
   onSetAdMuted,
+  onSetAdFullscreen,
   onSkipAd
-}) => {
-  return (
-    <div className='video-player'>
-      <div className='video-player-main'>
-        <div className='video-player-inner'>
-          <video
-            id={VIDEO_ELEMENT_ID}
-            src={videoSrc}
-            muted={videoMuted}
-            playsInline
-            ref={acceptVideoRef(
-              { shared, videoSrc, videoMuted },
-              onVideoElementRef
-            )}
+}) => (
+  <div className='video-player'>
+    <div className='video-player-main'>
+      <div className='video-player-inner'>
+        <video
+          id={VIDEO_ELEMENT_ID}
+          src={videoSrc}
+          muted={videoMuted}
+          playsInline
+          ref={acceptVideoRef(
+            { shared, videoSrc, videoMuted },
+            onVideoElementRef
+          )}
+        />
+        {shared ? (
+          <iframe
+            id={VPAID_IFRAME_ID}
+            src='about:blank'
+            className='vpaid-host'
+            title='VPAID Host'
+            ref={acceptIframeRef}
+            onLoad={onVpaidIframeLoaded}
           />
-          {shared ? (
-            <iframe
-              id={VPAID_IFRAME_ID}
-              src='about:blank'
-              className='vpaid-host'
-              title='VPAID Host'
-              ref={acceptIframeRef}
-              onLoad={onVpaidIframeLoaded}
-            />
-          ) : null}
-        </div>
-      </div>
-      <div className='video-player-controls'>
-        <nav>
-          <ul>
-            <li>
-              <a
-                title={adPaused ? 'Resume Ad' : 'Pause Ad'}
-                onClick={adActive ? () => onSetAdPaused(!adPaused) : null}
-                className={adActive ? '' : 'disabled'}
-              >
-                <FontAwesome name={adPaused ? 'play' : 'pause'} />
-              </a>
-            </li>
-            <li>
-              <a
-                title={adMuted ? 'Unmute Audio' : 'Mute Audio'}
-                onClick={adActive ? () => onSetAdMuted(!adMuted) : null}
-                className={adActive ? '' : 'disabled'}
-              >
-                <FontAwesome name={adMuted ? 'volume-off' : 'volume-up'} />
-              </a>
-            </li>
-            <li>
-              <a
-                title='Skip Ad'
-                onClick={adActive ? onSkipAd : null}
-                className={adActive ? '' : 'disabled'}
-              >
-                <FontAwesome name='close' />
-              </a>
-            </li>
-          </ul>
-        </nav>
+        ) : null}
       </div>
     </div>
-  )
-}
+    <div className='video-player-controls'>
+      <nav>
+        <ul className='ad-controls'>
+          <li>
+            <a
+              title='Skip Ad'
+              onClick={adActive ? onSkipAd : null}
+              className={adActive ? '' : 'disabled'}
+            >
+              <FontAwesome name='close' />
+            </a>
+          </li>
+        </ul>
+        <ul className='playback-controls'>
+          <li>
+            <a
+              title={adPaused ? 'Resume Ad' : 'Pause Ad'}
+              onClick={adActive ? () => onSetAdPaused(!adPaused) : null}
+              className={adActive ? '' : 'disabled'}
+            >
+              <FontAwesome name={adPaused ? 'play' : 'pause'} />
+            </a>
+          </li>
+          <li>
+            <a
+              title={adMuted ? 'Unmute Audio' : 'Mute Audio'}
+              onClick={adActive ? () => onSetAdMuted(!adMuted) : null}
+              className={adActive ? '' : 'disabled'}
+            >
+              <FontAwesome name={adMuted ? 'volume-off' : 'volume-up'} />
+            </a>
+          </li>
+          <li>
+            <a
+              title={adFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
+              onClick={adActive ? () => onSetAdFullscreen(!adFullscreen) : null}
+              className={adActive ? '' : 'disabled'}
+            >
+              <FontAwesome name={adFullscreen ? 'compress' : 'expand'} />
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+)
 
 const mapStateToProps = ({
   video: { shared, src: videoSrc, muted: videoMuted, paused: videoPaused },
-  ad: { active: adActive, paused: adPaused, muted: adMuted }
+  ad: {
+    active: adActive,
+    paused: adPaused,
+    muted: adMuted,
+    fullscreen: adFullscreen
+  }
 }) => ({
   shared,
   videoSrc,
@@ -131,7 +147,8 @@ const mapStateToProps = ({
   videoMuted,
   adActive,
   adPaused,
-  adMuted
+  adMuted,
+  adFullscreen
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -146,6 +163,9 @@ const mapDispatchToProps = dispatch => ({
   },
   onSetAdMuted: value => {
     dispatch(requestAdMuted(value))
+  },
+  onSetAdFullscreen: value => {
+    dispatch(requestAdFullscreen(value))
   },
   onSkipAd: () => {
     dispatch(requestAdSkip())

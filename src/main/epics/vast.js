@@ -140,7 +140,9 @@ const applyVerificationAccessMode = (verifications, accessMode) => {
 
 const selectVideos = (mediaFiles, response, videoElement) =>
   mediaFiles.filter(
-    mediaFile => videoElement.canPlayType(mediaFile.type) === response
+    mediaFile =>
+      mediaFile.type !== 'video/3gpp' &&
+      videoElement.canPlayType(mediaFile.type) === response
   )
 
 const triageMediaFiles = linear => {
@@ -218,7 +220,7 @@ const loadVastEpic = (action$, state$) =>
 const vastLoadedEpic = (action$, state$) =>
   action$.pipe(
     ofType(VAST_LOADED),
-    mergeMap(({ payload: { chain, inLine, linear, verifications } }) => {
+    mergeMap(({ payload: { linear, verifications } }) => {
       const {
         config: { audioUnmuted, vpaidEnabled }
       } = state$.value

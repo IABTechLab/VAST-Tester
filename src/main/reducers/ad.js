@@ -3,13 +3,15 @@ import {
   START_TEST,
   SET_AD_ACTIVE,
   SET_AD_MUTED,
+  SET_AD_FULLSCREEN,
   SET_AD_PAUSED
 } from '../actions'
 
 const defaultState = () => ({
   active: false,
-  paused: true,
-  muted: false
+  muted: false,
+  fullscreen: false,
+  paused: true
 })
 
 const reducer = handleActions(
@@ -22,6 +24,10 @@ const reducer = handleActions(
     [SET_AD_MUTED]: (state, { payload: { muted } }) => ({
       ...state,
       muted
+    }),
+    [SET_AD_FULLSCREEN]: (state, { payload: { fullscreen } }) => ({
+      ...state,
+      fullscreen
     }),
     [SET_AD_PAUSED]: (state, { payload: { paused } }) => ({
       ...state,
