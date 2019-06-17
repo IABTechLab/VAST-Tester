@@ -26,11 +26,11 @@ const About = () => (
       <div>
         by the{' '}
         <a
-          href='https://www.zentrick.com/'
+          href='https://www.doubleverify.com/'
           target='_blank'
           rel='noopener noreferrer'
         >
-          Zentrick
+          DoubleVerify
         </a>{' '}
         team
       </div>

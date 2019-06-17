@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/InteractiveAdvertisingBureau/VAST-Tester.svg?style=shield)](https://circleci.com/gh/InteractiveAdvertisingBureau/VAST-Tester) [![JavaScript Standard Style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](https://standardjs.com/)
 
-Tests IAB VAST ads. Contributed by the [Zentrick](https://www.zentrick.com/) team.
+Tests IAB VAST ads. Contributed by the [DoubleVerify](https://www.doubleverify.com/) team.
 
 ## Getting Started
 
