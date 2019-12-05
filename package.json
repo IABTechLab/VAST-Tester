@@ -33,7 +33,7 @@
     "husky": "^2.4.1",
     "iab-vast-loader": "^2.2.0",
     "lint-staged": "^8.2.1",
-    "lodash-es": "^4.17.11",
+    "lodash-es": "^4.17.14",
     "lower-case-first": "^1.0.2",
     "node-sass": "^4.12.0",
     "p-defer": "^3.0.0",
