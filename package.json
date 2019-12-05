@@ -20,6 +20,7 @@
     "start": "react-scripts start",
     "clean": "rimraf build",
     "build": "yarn run clean && REACT_APP_BUILD_DATE=\"$( TZ=GMT date )\" react-scripts build",
+    "buildwin": "yarn run clean && react-scripts build",
     "test": "standard \"src/**/*.js\"",
     "format": "prettier-standard \"src/**/*.js\" && standard --fix \"src/**/*.js\""
   },
