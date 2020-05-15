@@ -169,7 +169,8 @@ const selectByDimensions = (mediaFiles, maxWidth, maxHeight) => {
   let i = 0
   while (
     i + 1 < sorted.length &&
-    (sorted[i + 1].width <= maxWidth && sorted[i + 1].height <= maxHeight)
+    sorted[i + 1].width <= maxWidth &&
+    sorted[i + 1].height <= maxHeight
   ) {
     ++i
   }

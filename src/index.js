@@ -33,7 +33,9 @@ const composeMiddleware = middleware => {
 const route = () => {
   const params = new URLSearchParams(window.location.search)
   const requestedMode = params.get('mode')
-  const mode = ROUTES.hasOwnProperty(requestedMode) ? requestedMode : 'default'
+  const mode = Object.prototype.hasOwnProperty.call(ROUTES, requestedMode)
+    ? requestedMode
+    : 'default'
   const { App, reducer, middleware, epics } = ROUTES[mode]
   let dom = <App />
   if (reducer != null) {

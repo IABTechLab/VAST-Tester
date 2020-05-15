@@ -1,5 +1,5 @@
 import defer from 'p-defer'
-import ucfirst from 'upper-case-first'
+import { upperCaseFirst } from 'upper-case-first'
 
 export default class Receiver {
   constructor (target) {
@@ -32,7 +32,7 @@ export default class Receiver {
   }
 
   _callReceptionHandler (action, args) {
-    const handler = this._target['handle' + ucfirst(action)]
+    const handler = this._target['handle' + upperCaseFirst(action)]
     if (typeof handler === 'function') {
       handler.call(this._target, args)
     }

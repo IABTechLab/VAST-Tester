@@ -11,8 +11,8 @@ import {
   tap
 } from 'rxjs/operators'
 import { ofType, combineEpics } from 'redux-observable'
-import ucfirst from 'upper-case-first'
-import lcfirst from 'lower-case-first'
+import { lowerCaseFirst } from 'lower-case-first'
+import { upperCaseFirst } from 'upper-case-first'
 import {
   CALL_VPAID_FUNCTION,
   END_TEST,
@@ -71,10 +71,7 @@ const withVpaidApiFramework = ({ payload: { apiFramework } }) =>
   apiFramework === 'VPAID'
 
 const toVpaidMediaFileActionStream = action$ =>
-  action$.pipe(
-    ofType(SET_MEDIA_FILE),
-    filter(withVpaidApiFramework)
-  )
+  action$.pipe(ofType(SET_MEDIA_FILE), filter(withVpaidApiFramework))
 
 const vpaidIframeUpdateEpic = action$ =>
   action$.pipe(
@@ -179,7 +176,7 @@ const runVpaidAd = (
     const collectProperties = () => {
       properties = {}
       for (const name of VPAID_PROPERTY_NAMES) {
-        const getter = 'get' + ucfirst(name)
+        const getter = 'get' + upperCaseFirst(name)
         call(getter, [], true)
       }
     }
@@ -194,20 +191,12 @@ const runVpaidAd = (
       }
     })
 
-    action$
-      .pipe(
-        ofType(START_VPAID_AD),
-        takeUntilEndTest
-      )
-      .subscribe(() => {
-        call('startAd')
-      })
+    action$.pipe(ofType(START_VPAID_AD), takeUntilEndTest).subscribe(() => {
+      call('startAd')
+    })
 
     action$
-      .pipe(
-        ofType(CALL_VPAID_FUNCTION),
-        takeUntilEndTest
-      )
+      .pipe(ofType(CALL_VPAID_FUNCTION), takeUntilEndTest)
       .subscribe(({ payload: { name, args } }) => {
         call(name, args)
       })
@@ -259,7 +248,7 @@ const runVpaidAd = (
     const handlers = {
       [RETURN_VALUE]: ({ name, args, value }) => {
         if (name.startsWith('get')) {
-          const prop = lcfirst(name.substr(3))
+          const prop = lowerCaseFirst(name.substr(3))
           properties[prop] = value
         }
         if (returnValueHandlers[name] != null) {
@@ -332,10 +321,7 @@ const startVpaidEpic = (action$, state$) =>
 const startAdEpic = action$ =>
   toVpaidMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      action$.pipe(
-        ofType(START_AD),
-        takeUntil(action$.ofType(END_TEST))
-      )
+      action$.pipe(ofType(START_AD), takeUntil(action$.ofType(END_TEST)))
     ),
     mapTo(startVpaidAd())
   )

@@ -1,16 +1,15 @@
 import '../style/app.scss'
 import React from 'react'
-import { connect } from 'react-redux'
 import { HashRouter, Switch, Route } from 'react-router-dom'
-import About from '../components/About'
-import ApplyConfig from './ApplyConfig'
-import Config from './Config'
-import Runner from './Runner'
-import Share from './Share'
+import About from './About'
+import ApplyConfig from '../containers/ApplyConfig'
+import Config from '../containers/Config'
+import Runner from '../containers/Runner'
+import Share from '../containers/Share'
 
-const App = ({ config }) => (
+const App = () => (
   <HashRouter>
-    <React.Fragment>
+    <>
       <Runner />
       <Switch>
         <Route exact path='/' component={Config} />
@@ -18,10 +17,8 @@ const App = ({ config }) => (
         <Route exact path='/share' component={Share} />
         <Route exact path='/about' component={About} />
       </Switch>
-    </React.Fragment>
+    </>
   </HashRouter>
 )
 
-const mapStateToProps = ({ config }) => ({ config })
-
-export default connect(mapStateToProps)(App)
+export default App

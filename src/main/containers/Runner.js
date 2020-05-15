@@ -8,14 +8,7 @@ import Header from '../components/Header'
 import Details from '../components/Details'
 import { stringifyConfig } from '../util/config'
 
-const Runner = ({
-  location,
-  config,
-  onApplyConfig,
-  vastLoaded,
-  mediaFileIsVpaid,
-  omidScriptsPresent
-}) =>
+const Runner = ({ config, vastLoaded, mediaFileIsVpaid, omidScriptsPresent }) =>
   config == null ? null : (
     <main className='runner'>
       <Header />

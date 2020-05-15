@@ -71,7 +71,7 @@ class Config extends React.Component {
                 tooltip={
                   'Delays the start of the ad by ' +
                   msToString(PRELOAD_SIMULATION_TIME) +
-                  ' (useful to diagnose premature events)'
+                ' (useful to diagnose premature events)'
                 }
                 defaultValue={this.state.startDelayed}
                 onChange={this._onChange('startDelayed')}
@@ -150,7 +150,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Config)
+export default connect(mapStateToProps, mapDispatchToProps)(Config)

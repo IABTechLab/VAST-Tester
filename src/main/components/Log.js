@@ -27,22 +27,22 @@ class LogItem extends React.PureComponent {
     const timeTooltip =
       timeDelta >= 0
         ? `Elapsed: ${msToString(timeDelta)} since previous, ${msToString(
-          timeTotal
-        )} total`
+            timeTotal
+          )} total`
         : null
     const textWithMetadata =
       metadata == null ? (
         text
       ) : (
-        <React.Fragment>
+        <>
           {text}
           <div className='metadata'>
             <KeyValue data={metadata} serializer={stringify} />
           </div>
-        </React.Fragment>
+        </>
       )
     return (
-      <React.Fragment>
+      <>
         <tr className={`${classNames} first`}>
           <td className='time' title={timeTooltip}>
             {fecha.format(timestamp, 'HH:mm:ss.SSS')}
@@ -62,7 +62,7 @@ class LogItem extends React.PureComponent {
             {textWithMetadata}
           </td>
         </tr>
-      </React.Fragment>
+      </>
     )
   }
 }
