@@ -11,6 +11,8 @@ import {
   parseConfig,
   stringifyConfig
 } from '../util/config'
+import { PRELOAD_SIMULATION_TIME } from '../../common/settings'
+import msToString from '../../common/util/msToString'
 import { setConfig } from '../actions'
 
 const { atob, btoa } = window
@@ -59,31 +61,48 @@ class Config extends React.Component {
             </Fieldset>
             <Fieldset legend='Video Player Behavior'>
               <Checkbox
-                label='Enable audio by default'
+                label='Unmute audio by default'
+                tooltip='Allows the ad to play audio without user interaction'
                 defaultValue={this.state.audioUnmuted}
                 onChange={this._onChange('audioUnmuted')}
               />
               <Checkbox
                 label='Simulate creative preloading'
+                tooltip={
+                  'Delays the start of the ad by ' +
+                  msToString(PRELOAD_SIMULATION_TIME) +
+                  ' (useful to diagnose premature events)'
+                }
                 defaultValue={this.state.startDelayed}
                 onChange={this._onChange('startDelayed')}
               />
             </Fieldset>
-            <Fieldset legend='Media File Selection'>
+            <Fieldset legend='VPAID Creative'>
               <Checkbox
                 label='Allow VPAID media files'
+                tooltip='Prefers interactive media files over standard video if available'
                 defaultValue={this.state.vpaidEnabled}
                 onChange={this._onChange('vpaidEnabled')}
+              />
+              <Checkbox
+                label='Populate VPAID properties before AdLoaded event'
+                tooltip='Aggressively requests metadata from VPAID units (incompatible with some ads)'
+                defaultValue={this.state.vpaidPropertiesAllowedBeforeAdLoaded}
+                onChange={this._onChange(
+                  'vpaidPropertiesAllowedBeforeAdLoaded'
+                )}
               />
             </Fieldset>
             <Fieldset legend='OMID Verification'>
               <Checkbox
                 label='Delay playback until verification start'
+                tooltip='Requires initialization of all verification scripts before playback starts'
                 defaultValue={this.state.verificationSessionRequired}
                 onChange={this._onChange('verificationSessionRequired')}
               />
               <Checkbox
                 label='Run verification scripts in limited-access mode'
+                tooltip='Isolates verification scripts from the video player'
                 defaultValue={this.state.verificationLimitedAccessMode}
                 onChange={this._onChange('verificationLimitedAccessMode')}
               />

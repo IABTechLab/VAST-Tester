@@ -119,7 +119,14 @@ const loadVpaidEpic = action$ =>
     )
   )
 
-const runVpaidAd = (win, slotElement, videoElement, adParameters, action$) =>
+const runVpaidAd = (
+  win,
+  slotElement,
+  videoElement,
+  adParameters,
+  vpaidPropertiesAllowedBeforeAdLoaded,
+  action$
+) =>
   new Observable(observer => {
     const dispatch = action => observer.next(action)
 
@@ -133,6 +140,8 @@ const runVpaidAd = (win, slotElement, videoElement, adParameters, action$) =>
     dispatch(vpaidAdObtained())
 
     const { in$, out$ } = vpaidObservable(vpaidAd)
+
+    let adLoadedPublished = false
 
     const call = (name, args = [], silent = false) => {
       if (!silent) {
@@ -179,8 +188,10 @@ const runVpaidAd = (win, slotElement, videoElement, adParameters, action$) =>
 
     const updateProperties$ = new Subject()
     updateProperties$.pipe(takeUntilEndTest).subscribe(() => {
-      collectProperties()
-      dispatch(setVpaidProperties(properties))
+      if (vpaidPropertiesAllowedBeforeAdLoaded || adLoadedPublished) {
+        collectProperties()
+        dispatch(setVpaidProperties(properties))
+      }
     })
 
     action$
@@ -232,6 +243,9 @@ const runVpaidAd = (win, slotElement, videoElement, adParameters, action$) =>
     }
 
     const eventHandlers = {
+      AdLoaded: () => {
+        adLoadedPublished = true
+      },
       AdStopped: () => {
         dispatch(adStopped())
       },
@@ -291,13 +305,15 @@ const startVpaidEpic = (action$, state$) =>
     mergeMap(() => {
       const { vpaidIframe: iframe, slotElement, videoElement } = sharedDom
       const {
-        vast: { adParameters }
+        vast: { adParameters },
+        config: { vpaidPropertiesAllowedBeforeAdLoaded }
       } = state$.value
       return runVpaidAd(
         iframe.contentWindow,
         slotElement,
         videoElement,
         adParameters,
+        vpaidPropertiesAllowedBeforeAdLoaded,
         action$
       ).pipe(
         takeUntil(action$.ofType(END_TEST)),
