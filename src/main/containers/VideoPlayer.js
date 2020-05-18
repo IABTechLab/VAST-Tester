@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React from 'react'
 import { connect } from 'react-redux'
 import FontAwesome from 'react-fontawesome'
@@ -89,42 +87,42 @@ const VideoPlayer = ({
       <nav>
         <ul className='ad-controls'>
           <li>
-            <a
+            <button
               title='Skip Ad'
               onClick={adActive ? onSkipAd : null}
               className={adActive ? '' : 'disabled'}
             >
               <FontAwesome name='close' />
-            </a>
+            </button>
           </li>
         </ul>
         <ul className='playback-controls'>
           <li>
-            <a
+            <button
               title={adPaused ? 'Resume Ad' : 'Pause Ad'}
               onClick={adActive ? () => onSetAdPaused(!adPaused) : null}
               className={adActive ? '' : 'disabled'}
             >
               <FontAwesome name={adPaused ? 'play' : 'pause'} />
-            </a>
+            </button>
           </li>
           <li>
-            <a
+            <button
               title={adMuted ? 'Unmute Audio' : 'Mute Audio'}
               onClick={adActive ? () => onSetAdMuted(!adMuted) : null}
               className={adActive ? '' : 'disabled'}
             >
               <FontAwesome name={adMuted ? 'volume-off' : 'volume-up'} />
-            </a>
+            </button>
           </li>
           <li>
-            <a
+            <button
               title={adFullscreen ? 'Exit Fullscreen' : 'Enter Fullscreen'}
               onClick={adActive ? () => onSetAdFullscreen(!adFullscreen) : null}
               className={adActive ? '' : 'disabled'}
             >
               <FontAwesome name={adFullscreen ? 'compress' : 'expand'} />
-            </a>
+            </button>
           </li>
         </ul>
       </nav>
@@ -172,7 +170,4 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(VideoPlayer)
+export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayer)

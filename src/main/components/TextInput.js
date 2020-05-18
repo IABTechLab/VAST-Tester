@@ -11,7 +11,7 @@ const TextInput = React.memo(({ label, defaultValue, onChange }) => {
       <TextArea
         id={id}
         defaultValue={defaultValue}
-        className={'expanding'}
+        className='expanding'
         minRows={1}
         maxRows={10}
         onChange={evt => onChange(evt.target.value)}

@@ -278,7 +278,7 @@ const reducer = (state = defaultState(), { type, payload }) => {
       consoleEnabled: payload.consoleEnabled
     }
   }
-  if (HANDLERS.hasOwnProperty(type)) {
+  if (Object.prototype.hasOwnProperty.call(HANDLERS, type)) {
     const handler = HANDLERS[type]
     const result = typeof handler === 'function' ? handler(payload) : handler
     if (result != null) {

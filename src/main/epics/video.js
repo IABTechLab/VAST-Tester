@@ -73,10 +73,7 @@ const withoutApiFramework = ({ payload: { apiFramework } }) =>
   apiFramework == null
 
 const toVastMediaFileActionStream = action$ =>
-  action$.pipe(
-    ofType(SET_MEDIA_FILE),
-    filter(withoutApiFramework)
-  )
+  action$.pipe(ofType(SET_MEDIA_FILE), filter(withoutApiFramework))
 
 const videoElementUpdateEpic = action$ =>
   action$.pipe(
@@ -178,10 +175,7 @@ const toVideoEventStream = (action$, desiredType) =>
 const startAdEpic = action$ =>
   toVastMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      action$.pipe(
-        ofType(START_AD),
-        takeUntil(action$.ofType(END_TEST))
-      )
+      action$.pipe(ofType(START_AD), takeUntil(action$.ofType(END_TEST)))
     ),
     mapTo(setVideoPaused(false))
   )

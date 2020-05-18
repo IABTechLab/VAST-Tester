@@ -3,11 +3,13 @@ import Toggle from 'react-toggle'
 
 let counter = 0
 
-const Checkbox = React.memo(({ label, defaultValue, onChange }) => {
+const Checkbox = React.memo(({ label, tooltip, defaultValue, onChange }) => {
   const id = 'checkbox-' + ++counter
   return (
     <div className='form-group form-group-checkbox'>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} title={tooltip}>
+        {label}
+      </label>
       <Toggle
         id={id}
         icons={false}

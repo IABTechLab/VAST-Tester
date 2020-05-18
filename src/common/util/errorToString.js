@@ -1,4 +1,4 @@
-import serializeError from 'serialize-error'
+import { serializeError } from 'serialize-error'
 import stringify from './stringify'
 
 const errorToString = error => {

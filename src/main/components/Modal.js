@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
-
 import React from 'react'
 import { withRouter } from 'react-router'
 import FontAwesome from 'react-fontawesome'
@@ -10,7 +8,7 @@ const Modal = ({ history, children }) => (
     <nav>
       <ul>
         <li>
-          <a
+          <button
             onClick={() => {
               if (history.length > 1) {
                 history.goBack()
@@ -20,7 +18,7 @@ const Modal = ({ history, children }) => (
             }}
           >
             <FontAwesome name='close' /> Close
-          </a>
+          </button>
         </li>
       </ul>
     </nav>
