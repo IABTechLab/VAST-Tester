@@ -101,6 +101,7 @@ $lg-min-height: ($lg-video-width / $video-aspect-ratio + $lg-space-large) * 2 + 
   button {
     background: rgba(255, 255, 255, 0.5);
     color: rgba(0, 0, 0, 0.5);
+    border: 0;
     @include respond('width', $r-button-size);
 
     &:hover {
