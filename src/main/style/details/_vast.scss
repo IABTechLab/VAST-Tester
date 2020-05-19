@@ -9,7 +9,16 @@
     }
   }
 
-  .vast {
-    @include respond('margin-bottom', $r-space-medium);
+  .vast-chain {
+    @include respond('padding', $r-space-medium);
+    background: transparentize($foreground-color, 0.975);
+
+    * {
+      background: transparent !important;
+    }
+
+    .vast {
+      @include respond('margin-bottom', $r-space-medium);
+    }
   }
 }
