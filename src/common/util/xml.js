@@ -1,5 +1,8 @@
 export const children = (element, name) =>
-  Array.from(element.childNodes).filter(child => child.nodeName === name)
+  Array.prototype.filter.call(
+    element.childNodes,
+    child => child.nodeName === name
+  )
 
 export const child = (element, name) => children(element, name)[0]
 
