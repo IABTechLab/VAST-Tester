@@ -96,7 +96,7 @@ We welcome pull requests for bug fixes and new features.
 
 ## License
 
-Copyright 2018 IAB Technology Laboratory, Inc.
+Copyright 2020 IAB Technology Laboratory, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
