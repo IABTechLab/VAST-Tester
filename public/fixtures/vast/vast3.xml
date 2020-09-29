@@ -26,10 +26,10 @@
                 <![CDATA[https://vasttester.iabtechlab.com/fixtures/vpaid/vpaid-example.js]]>
               </MediaFile>
               <MediaFile delivery="progressive" type="video/webm" width="640" height="360">
-                <![CDATA[https://assets.zentrick.io/h/he/heetb2ic/media/360p30.webm]]>
+                <![CDATA[https://vasttester.iabtechlab.com/fixtures/video/360p30.webm]]>
               </MediaFile>
               <MediaFile delivery="progressive" type="video/mp4" width="640" height="360">
-                <![CDATA[https://assets.zentrick.io/h/he/heetb2ic/media/360p30.mp4]]>
+                <![CDATA[https://vasttester.iabtechlab.com/fixtures/video/360p30.mp4]]>
               </MediaFile>
             </MediaFiles>
           </Linear>
