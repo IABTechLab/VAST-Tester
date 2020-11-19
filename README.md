@@ -4,6 +4,8 @@
 
 Tests IAB VAST ads. Contributed by the [DoubleVerify](https://www.doubleverify.com/) team.
 
+This tool is also hosted by IAB Tech Lab at https://vasttester.iabtechlab.com/
+
 ## Getting Started
 
 Install dependencies:
