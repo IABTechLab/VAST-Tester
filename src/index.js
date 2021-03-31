@@ -1,20 +1,18 @@
 import 'react-app-polyfill/ie11'
 import 'react-app-polyfill/stable'
+
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import { createEpicMiddleware, combineEpics } from 'redux-observable'
-import { createLogger } from 'redux-logger'
+import { applyMiddleware, createStore } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import URLSearchParams from 'url-search-params'
-import adTester from './main'
-import verification from './verification'
+import { createLogger } from 'redux-logger'
+import { combineEpics, createEpicMiddleware } from 'redux-observable'
 
-const ROUTES = {
-  default: adTester,
-  verification
-}
+import App from './components/App'
+import epics from './epics'
+import middleware from './middleware'
+import reducer from './reducers'
 
 const composeMiddleware = middleware => {
   if (process.env.NODE_ENV === 'development') {
@@ -30,25 +28,16 @@ const composeMiddleware = middleware => {
   }
 }
 
-const route = () => {
-  const params = new URLSearchParams(window.location.search)
-  const requestedMode = params.get('mode')
-  const mode = Object.prototype.hasOwnProperty.call(ROUTES, requestedMode)
-    ? requestedMode
-    : 'default'
-  const { App, reducer, middleware, epics } = ROUTES[mode]
-  let dom = <App />
-  if (reducer != null) {
-    const rootEpic = combineEpics(...epics)
-    const epicMiddleware = createEpicMiddleware()
-    const store = createStore(
-      reducer,
-      composeMiddleware([...middleware, epicMiddleware])
-    )
-    epicMiddleware.run(rootEpic)
-    dom = <Provider store={store}>{dom}</Provider>
-  }
-  render(dom, document.getElementById('root'))
-}
-
-route()
+const rootEpic = combineEpics(...epics)
+const epicMiddleware = createEpicMiddleware()
+const store = createStore(
+  reducer,
+  composeMiddleware([...middleware, epicMiddleware])
+)
+epicMiddleware.run(rootEpic)
+const dom = (
+  <Provider store={store}>
+    <App />
+  </Provider>
+)
+render(dom, document.getElementById('root'))
