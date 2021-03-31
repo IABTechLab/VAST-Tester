@@ -1,0 +1,46 @@
+@import '../../../node_modules/react-tabs/style/react-tabs.scss';
+
+.details {
+  @include respond('padding', $r-space-large);
+
+  .react-tabs {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .react-tabs__tab-panel {
+      flex: 1;
+      overflow: auto;
+    }
+
+    .react-tabs__tab-list {
+      display: flex;
+
+      .react-tabs__tab {
+        flex: 1;
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-left: 2px;
+        padding-right: 2px;
+      }
+    }
+  }
+
+  .events {
+    dt {
+      width: 40%;
+    }
+
+    dd {
+      width: 10%;
+    }
+
+    .kv {
+      dt[data-value='0'], dd[data-value='0'] {
+        opacity: 0.5;
+      }
+    }
+  }
+}

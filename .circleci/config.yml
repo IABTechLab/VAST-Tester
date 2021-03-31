@@ -16,9 +16,9 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-          - node14-dependencies-{{ checksum "yarn.lock" }}
+          - node14-dependencies-v2-{{ checksum "yarn.lock" }}
           # Fallback to using the latest cache if no exact match is found
-          - node14-dependencies-
+          - node14-dependencies-v2-
 
       - run:
           name: Set up apt
@@ -44,7 +44,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
-          key: node14-dependencies-{{ checksum "yarn.lock" }}
+          key: node14-dependencies-v2-{{ checksum "yarn.lock" }}
 
       # Build
       - run:
