@@ -7,12 +7,19 @@ import { setConfig } from '../actions'
 import Checkbox from '../components/Checkbox'
 import Fieldset from '../components/Fieldset'
 import Header from '../components/Header'
+import Switch from '../components/Switch'
 import TextInput from '../components/TextInput'
 import { createDefaultConfig, parseConfig, stringifyConfig } from '../config'
 import { PRELOAD_SIMULATION_TIME } from '../settings'
 import msToString from '../util/msToString'
 
 const { atob, btoa } = window
+
+const ACCESS_MODES = {
+  limited: 'Limited',
+  creative: 'Creative',
+  full: 'Full'
+}
 
 const reBase64DataUri = /^data:[^,;]+;base64,(.*)/
 
@@ -53,7 +60,7 @@ class Config extends React.Component {
             <Fieldset legend="VAST (URL or XML)">
               <TextInput
                 defaultValue={fromDataUri(this.state.vastUrl)}
-                onChange={this._onChange('vastUrl')}
+                onChange={this._onVastUrlChange.bind(this)}
               />
             </Fieldset>
             <Fieldset legend="Video Player Behavior">
@@ -90,6 +97,15 @@ class Config extends React.Component {
                 )}
               />
             </Fieldset>
+            <Fieldset legend="Open Measurement">
+              <Switch
+                label="Verification access mode"
+                tooltip="Determines access permissions for verification scripts"
+                options={ACCESS_MODES}
+                defaultValue={this.state.omAccessMode}
+                onChange={this._onChange('omAccessMode')}
+              />
+            </Fieldset>
           </form>
         </div>
         <div className="actions">
@@ -114,14 +130,18 @@ class Config extends React.Component {
 
   _onChange (key) {
     return value => {
-      if (key === 'vastUrl') {
-        value = toDataUri(value)
-      }
       this.setState({
         ...this.state,
         [key]: value
       })
     }
+  }
+
+  _onVastUrlChange (value) {
+    this.setState({
+      ...this.state,
+      vastUrl: toDataUri(value)
+    })
   }
 }
 

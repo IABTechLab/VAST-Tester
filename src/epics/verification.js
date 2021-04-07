@@ -16,8 +16,8 @@ import {
 import {
   AD_STOPPED,
   END_TEST,
+  SET_CONFIG,
   SET_VIDEO_ELEMENT,
-  START_TEST,
   VAST_EVENT,
   VAST_LOADED,
   VERIFICATION_READY,
@@ -28,8 +28,6 @@ import {
 } from '../actions'
 import sharedDom from '../util/sharedDom'
 
-// TODO Configurable
-const ACCESS_MODE = 'full'
 const VIDEO_POSITION = 'standalone'
 const FINISH_DELAY = 1000
 
@@ -71,14 +69,14 @@ const createSdkIframe = () =>
     document.body.appendChild(iframe)
   })
 
-const createResources = verifications =>
+const createResources = (verifications, accessMode) =>
   verifications.map(
     ({ uri, vendor, verificationParameters }) =>
       new omsdk.VerificationScriptResource(
         uri,
         vendor,
         verificationParameters,
-        ACCESS_MODE
+        accessMode
       )
   )
 
@@ -100,13 +98,13 @@ const createAdSession = context => {
   return adSession
 }
 
-const setUpAdSession = async verifications => {
+const setUpAdSession = async (verifications, accessMode) => {
   tearDown()
   iframe = await createSdkIframe()
   const serviceWindow = iframe.contentWindow
   omsdk = serviceWindow.OmidSessionClient.default
   adSession = createAdSession(
-    createContext(createResources(verifications), serviceWindow)
+    createContext(createResources(verifications, accessMode), serviceWindow)
   )
   adEvents = new omsdk.AdEvents(adSession)
   mediaEvents = new omsdk.MediaEvents(adSession)
@@ -121,8 +119,10 @@ const filterVASTEvents = (action$, type) =>
 
 const startVerificationSessionWhenVastAndVideoAvailableEpic = action$ =>
   action$.pipe(
-    ofType(START_TEST),
-    mergeMapTo(
+    ofType(SET_CONFIG),
+    map(({ payload: config }) => config),
+    filter(Boolean),
+    mergeMap(({ omAccessMode }) =>
       action$.pipe(
         ofType(VAST_LOADED),
         combineLatest(action$.ofType(SET_VIDEO_ELEMENT)),
@@ -130,7 +130,7 @@ const startVerificationSessionWhenVastAndVideoAvailableEpic = action$ =>
         mergeMap(async verifications => {
           const enabled = verifications.length > 0
           if (enabled) {
-            await setUpAdSession(verifications)
+            await setUpAdSession(verifications, omAccessMode)
           }
           return enabled
         }),
