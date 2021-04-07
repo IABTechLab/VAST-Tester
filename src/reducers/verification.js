@@ -6,13 +6,17 @@ import incrementCounter from '../util/incrementCounter'
 import mapObject from '../util/mapObject'
 
 const defaultState = () => ({
+  accessMode: null,
   scripts: null,
   eventCounts: mapObject(VERIFICATION_EVENT_TYPES, 0)
 })
 
 const reducer = handleActions(
   {
-    [START_TEST]: defaultState,
+    [START_TEST]: (state, { payload: { omAccessMode } }) => ({
+      ...defaultState(),
+      accessMode: omAccessMode
+    }),
     [VAST_LOADED]: (state, { payload: { verifications } }) => ({
       ...state,
       scripts: verifications
