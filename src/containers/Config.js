@@ -2,6 +2,7 @@ import React from 'react'
 import FontAwesome from 'react-fontawesome'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { upperCaseFirst } from 'upper-case-first'
 
 import { setConfig } from '../actions'
 import Checkbox from '../components/Checkbox'
@@ -10,16 +11,17 @@ import Header from '../components/Header'
 import Switch from '../components/Switch'
 import TextInput from '../components/TextInput'
 import { createDefaultConfig, parseConfig, stringifyConfig } from '../config'
+import { VERIFICATION_ACCESS_MODES } from '../constants/verification'
 import { PRELOAD_SIMULATION_TIME } from '../settings'
+import mapObject from '../util/mapObject'
 import msToString from '../util/msToString'
 
 const { atob, btoa } = window
 
-const ACCESS_MODES = {
-  limited: 'Limited',
-  creative: 'Creative',
-  full: 'Full'
-}
+const VERIFICATION_ACCESS_MODE_OPTIONS = mapObject(
+  VERIFICATION_ACCESS_MODES,
+  upperCaseFirst
+)
 
 const reBase64DataUri = /^data:[^,;]+;base64,(.*)/
 
@@ -101,7 +103,7 @@ class Config extends React.Component {
               <Switch
                 label="Verification access mode"
                 tooltip="Determines access permissions for verification scripts"
-                options={ACCESS_MODES}
+                options={VERIFICATION_ACCESS_MODE_OPTIONS}
                 defaultValue={this.state.omAccessMode}
                 onChange={this._onChange('omAccessMode')}
               />

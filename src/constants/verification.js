@@ -8,3 +8,5 @@ export const VERIFICATION_EVENT_TYPES = [
   'complete',
   'error'
 ]
+
+export const VERIFICATION_ACCESS_MODES = ['limited', 'creative', 'full']

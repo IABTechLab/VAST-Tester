@@ -10,7 +10,7 @@ const configEpic = action$ =>
     mergeMap(({ payload: config }) => {
       const actions = [endTest()]
       if (config != null) {
-        actions.push(startTest())
+        actions.push(startTest(config.omAccessMode))
       }
       return _of(...actions)
     })
