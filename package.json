@@ -22,7 +22,8 @@
     "build": "yarn run clean && REACT_APP_BUILD_DATE=\"$( TZ=GMT date +'%b %_d, %Y, %_I:%M %p %Z' )\" react-scripts build",
     "buildwin": "yarn run clean && react-scripts build",
     "test": "eslint \"src/**/*.js\"",
-    "format": "prettier-eslint --write \"$PWD/src/**/*.js\""
+    "format": "prettier-eslint --write \"$PWD/src/**/*.js\"",
+    "prepare": "husky install"
   },
   "dependencies": {
     "base16": "^1.0.0",
