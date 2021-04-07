@@ -1,7 +1,5 @@
 import React from 'react'
 
-const counter = 0
-
 const Switch = React.memo(
   ({ label, tooltip, options, defaultValue, onChange }) => {
     return (
