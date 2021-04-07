@@ -73,6 +73,44 @@ textarea.expanding {
   }
 }
 
+.form-group-switch {
+  display: flex;
+  // TODO Calculate vertical space more exactly, like for checkbox
+  @include respond('margin-top', $r-space-medium);
+  @include respond('margin-bottom', $r-space-medium);
+
+  label {
+    flex: 1;
+  }
+
+  .switch-option {
+    display: inline;
+    border: 1px solid $accent-color-2;
+    border-right-width: 0;
+    @include respond('padding', $r-space-medium);
+    @include respond('padding-top', $r-space-small);
+    @include respond('padding-bottom', $r-space-small);
+    cursor: pointer;
+
+    &:first-child {
+      border-radius: 10000px 0 0 10000px;
+      @include respond('padding-left', $r-space-large);
+    }
+
+    &:last-child {
+      border-right-width: 1px;
+      border-radius: 0 10000px 10000px 0;
+      @include respond('padding-right', $r-space-large);
+    }
+
+    &.active {
+      background: $accent-color-2;
+      color: $background-color;
+      cursor: default;
+    }
+  }
+}
+
 .form-group-checkbox {
   display: flex;
 

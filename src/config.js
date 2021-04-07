@@ -7,7 +7,8 @@ const ConfigSchema = {
   audioUnmuted: { type: 'boolean', default: false },
   startDelayed: { type: 'boolean', default: false },
   vpaidEnabled: { type: 'boolean', default: true },
-  vpaidPropertiesAllowedBeforeAdLoaded: { type: 'boolean', default: true }
+  vpaidPropertiesAllowedBeforeAdLoaded: { type: 'boolean', default: true },
+  omAccessMode: { type: 'string', default: 'full' }
 }
 
 const isUnset = value => value == null || value === false || value === ''
