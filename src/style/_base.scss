@@ -183,7 +183,7 @@ nav a, button {
   line-height: 1em;
   text-align: center;
   margin: 0;
-  width: 20ex;
+  width: 25ex;
   cursor: pointer;
   @include respond('font-size', $r-font-size-medium);
   @include respond('padding', $r-space-medium);
