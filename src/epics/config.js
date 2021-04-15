@@ -1,5 +1,5 @@
 import { ofType } from 'redux-observable'
-import { of as _of } from 'rxjs'
+import { of as $of } from 'rxjs'
 import { mergeMap } from 'rxjs/operators'
 
 import { endTest, SET_CONFIG, startTest } from '../actions'
@@ -12,7 +12,7 @@ const configEpic = action$ =>
       if (config != null) {
         actions.push(startTest(config.omAccessMode))
       }
-      return _of(...actions)
+      return $of(...actions)
     })
   )
 
