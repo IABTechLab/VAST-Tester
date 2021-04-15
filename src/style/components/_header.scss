@@ -14,7 +14,7 @@ header {
       font-weight: $font-weight-bold;
       text-transform: uppercase;
       @include respond('font-size', $r-font-size-large);
-      @include respond('margin-top', $r-space-large);
+      @include respond('margin-top', $r-header-spacing);
     }
   }
 
