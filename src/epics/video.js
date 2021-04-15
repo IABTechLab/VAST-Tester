@@ -1,9 +1,14 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { empty as _empty, from as _from, Observable, of as _of } from 'rxjs'
+import {
+  combineLatest as $combineLatest,
+  concat as $concat,
+  EMPTY as EMPTY$,
+  from as $from,
+  Observable,
+  of as $of
+} from 'rxjs'
 import {
   catchError,
-  combineLatest,
-  concat,
   distinct,
   filter,
   ignoreElements,
@@ -126,16 +131,18 @@ const setVideoElementSourceEpic = action$ =>
   )
 
 const toggleVideoPausedStateEpic = (action$, state$) =>
-  toVastMediaFileActionStream(action$).pipe(
-    combineLatest(action$.ofType(SET_VIDEO_ELEMENT)),
+  $combineLatest(
+    toVastMediaFileActionStream(action$),
+    action$.ofType(SET_VIDEO_ELEMENT)
+  ).pipe(
     mergeMap(() => {
       const {
         video: { paused }
       } = state$.value
       const { videoElement } = sharedDom
       return paused !== videoElement.paused
-        ? _of(setVideoPaused(paused))
-        : _empty()
+        ? $of(setVideoPaused(paused))
+        : EMPTY$
     })
   )
 
@@ -146,20 +153,19 @@ const playPauseEpic = action$ =>
       const { videoElement } = sharedDom
       if (paused) {
         videoElement.pause()
-        return _empty()
+        return EMPTY$
       }
       const maybeThenable = videoElement.play()
       if (isThenable(maybeThenable)) {
-        return _of(videoPlayPromise()).pipe(
-          concat(
-            _from(maybeThenable).pipe(
-              mapTo(videoPlayPromiseFulfilled()),
-              catchError(error => _of(videoPlayPromiseRejected(error)))
-            )
+        return $concat(
+          $of(videoPlayPromise()),
+          $from(maybeThenable).pipe(
+            mapTo(videoPlayPromiseFulfilled()),
+            catchError(error => $of(videoPlayPromiseRejected(error)))
           )
         )
       } else {
-        return _of(videoPlayNoPromise())
+        return $of(videoPlayNoPromise())
       }
     })
   )
@@ -229,8 +235,10 @@ const adStoppedEpic = action$ =>
 const adErrorEpic = action$ =>
   toVastMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      toVideoEventStream(action$, 'error').pipe(
-        combineLatest(action$.ofType(SET_VIDEO_PROPERTIES)),
+      $combineLatest(
+        toVideoEventStream(action$, 'error'),
+        action$.ofType(SET_VIDEO_PROPERTIES)
+      ).pipe(
         take(1),
         map(([, { payload: { properties: { error } } }]) =>
           error != null ? error.message : null
@@ -343,14 +351,14 @@ const requestAdFullscreenEpic = action$ =>
             [subject, func] = [videoElement.ownerDocument, 'exitFullscreen']
           }
           if (typeof subject[func] !== 'function') {
-            return _of(
+            return $of(
               videoWarning(
                 `Fullscreen API not supported: ${func}() not available`
               )
             )
           }
           const promise = subject[func]()
-          return _of(promise).pipe(ignoreElements())
+          return $of(promise).pipe(ignoreElements())
         }),
         takeUntil(action$.ofType(END_TEST))
       )
@@ -362,7 +370,7 @@ const requestAdSkipEpic = action$ =>
     mergeMapTo(
       action$.pipe(
         ofType(REQUEST_AD_SKIP),
-        mergeMapTo(_of(setVideoSrc(null), vastEvent('skip'))),
+        mergeMapTo($of(setVideoSrc(null), vastEvent('skip'))),
         takeUntil(action$.ofType(END_TEST))
       )
     )

@@ -1,6 +1,6 @@
 import { lowerCaseFirst } from 'lower-case-first'
 import { combineEpics, ofType } from 'redux-observable'
-import { interval as _interval, Observable, of as _of, Subject } from 'rxjs'
+import { interval as $interval, Observable, of as $of, Subject } from 'rxjs'
 import {
   catchError,
   filter,
@@ -202,7 +202,7 @@ const runVpaidAd = (
         call(name, args)
       })
 
-    _interval(VPAID_PROPERTIES_UPDATE_INTERVAL)
+    $interval(VPAID_PROPERTIES_UPDATE_INTERVAL)
       .pipe(
         takeUntilEndTest,
         takeUntil(
@@ -308,7 +308,7 @@ const startVpaidEpic = (action$, state$) =>
       ).pipe(
         takeUntil(action$.ofType(END_TEST)),
         catchError(error =>
-          _of(
+          $of(
             vpaidError(
               errorToString(error),
               error.cause != null ? error.cause.stack : null

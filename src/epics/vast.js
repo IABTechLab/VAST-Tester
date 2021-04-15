@@ -1,8 +1,8 @@
 import { VASTLoader } from 'iab-vast-loader/browser'
 import { flatten } from 'lodash-es'
 import { combineEpics, ofType } from 'redux-observable'
-import { from as _from, of as _of, Subject } from 'rxjs'
-import { catchError, map, merge, mergeMap, takeUntil } from 'rxjs/operators'
+import { from as $from, merge as $merge, of as $of, Subject } from 'rxjs'
+import { catchError, map, mergeMap, takeUntil } from 'rxjs/operators'
 
 import {
   END_TEST,
@@ -45,7 +45,7 @@ const getAdFromVast = (type, warn) => vast => {
 }
 
 const loadVastChain = (vastUrl, warn) =>
-  _from(new VASTLoader(vastUrl, { noSingleAdPods: true }).load()).pipe(
+  $from(new VASTLoader(vastUrl, { noSingleAdPods: true }).load()).pipe(
     map(chain => {
       const wrapperVasts = chain.slice(0, chain.length - 1)
       const wrappers = wrapperVasts.map(getAdFromVast('Wrapper', warn))
@@ -203,14 +203,15 @@ const loadVastEpic = (action$, state$) =>
       const {
         config: { vastUrl }
       } = state$.value
-      return loadAndAnalyzeVastChain(vastUrl, warn).pipe(
-        map(({ chain, inLine, linear, verifications }) => {
-          return vastLoaded(chain, inLine, linear, verifications)
-        }),
-        catchError(error => _of(vastLoadFailed(error))),
-        merge(warnings$),
-        takeUntil(action$.ofType(END_TEST))
-      )
+      return $merge(
+        loadAndAnalyzeVastChain(vastUrl, warn).pipe(
+          map(({ chain, inLine, linear, verifications }) =>
+            vastLoaded(chain, inLine, linear, verifications)
+          ),
+          catchError(error => $of(vastLoadFailed(error)))
+        ),
+        warnings$
+      ).pipe(takeUntil(action$.ofType(END_TEST)))
     })
   )
 
@@ -236,7 +237,7 @@ const vastLoadedEpic = (action$, state$) =>
       } else {
         results.push(unsupportedMediaFiles(), setMediaFile(null, null, null))
       }
-      return _of(...results)
+      return $of(...results)
     })
   )
 

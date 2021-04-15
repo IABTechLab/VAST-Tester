@@ -1,7 +1,6 @@
 import { combineEpics, ofType } from 'redux-observable'
-import { of as _of } from 'rxjs'
+import { combineLatest as $combineLatest } from 'rxjs'
 import {
-  combineLatest,
   delay,
   filter,
   ignoreElements,
@@ -123,9 +122,10 @@ const startVerificationSessionWhenVastAndVideoAvailableEpic = action$ =>
     map(({ payload: config }) => config),
     filter(Boolean),
     mergeMap(({ omAccessMode }) =>
-      action$.pipe(
-        ofType(VAST_LOADED),
-        combineLatest(action$.ofType(SET_VIDEO_ELEMENT)),
+      $combineLatest(
+        action$.ofType(VAST_LOADED),
+        action$.ofType(SET_VIDEO_ELEMENT)
+      ).pipe(
         map(([{ payload }]) => payload.verifications),
         mergeMap(async verifications => {
           const enabled = verifications.length > 0
@@ -221,8 +221,7 @@ const finishSessionEpic = action$ =>
     ofType(VERIFICATION_READY),
     filter(({ payload }) => payload.enabled),
     mergeMapTo(
-      _of(null).pipe(
-        combineLatest(filterVASTEvents(action$, 'complete')),
+      filterVASTEvents(action$, 'complete').pipe(
         delay(FINISH_DELAY),
         tap(() => {
           adSession.finish()

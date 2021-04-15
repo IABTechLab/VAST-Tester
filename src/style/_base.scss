@@ -185,8 +185,8 @@ nav a, button {
   margin: 0;
   width: 20ex;
   cursor: pointer;
-  @include respond('font-size', $r-font-size);
-  @include respond('padding', $r-space-small);
+  @include respond('font-size', $r-font-size-medium);
+  @include respond('padding', $r-space-medium);
   @include respond('height', $r-button-size);
 
   &:disabled {

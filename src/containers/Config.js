@@ -67,7 +67,7 @@ class Config extends React.Component {
             </Fieldset>
             <Fieldset legend="Video Player Behavior">
               <Checkbox
-                label="Unmute audio by default"
+                label="Enable audio by default"
                 tooltip="Allows the ad to play audio without user interaction"
                 defaultValue={this.state.audioUnmuted}
                 onChange={this._onChange('audioUnmuted')}
@@ -91,7 +91,7 @@ class Config extends React.Component {
                 onChange={this._onChange('vpaidEnabled')}
               />
               <Checkbox
-                label="Populate VPAID properties before AdLoaded event"
+                label="Get VPAID properties before AdLoaded"
                 tooltip="Aggressively requests metadata from VPAID units (incompatible with some ads)"
                 defaultValue={this.state.vpaidPropertiesAllowedBeforeAdLoaded}
                 onChange={this._onChange(
