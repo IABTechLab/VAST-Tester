@@ -10,6 +10,9 @@ jobs:
 
     working_directory: ~/repo
 
+    environment:
+      AWS_PAGER: ''
+
     steps:
       - checkout
 
