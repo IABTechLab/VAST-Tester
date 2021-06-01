@@ -53,7 +53,11 @@ jobs:
       # Build
       - run:
           name: Build
-          command: REACT_APP_VERSION=${CIRCLE_SHA1:0:7} REACT_APP_BRANCH=$CIRCLE_BRANCH yarn build
+          command: |
+            export REACT_APP_VERSION=${CIRCLE_SHA1:0:7}
+            export REACT_APP_BRANCH=$CIRCLE_BRANCH
+            export REACT_APP_BUILD_DATE=$(TZ=GMT date +'%b %_d, %Y, %_I:%M %p %Z')
+            yarn build
 
       # Run tests
       - run:
