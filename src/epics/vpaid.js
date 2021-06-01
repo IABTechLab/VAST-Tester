@@ -112,7 +112,7 @@ const loadVpaidEpic = action$ =>
             )
           })
         ),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -182,7 +182,7 @@ const runVpaidAd = (
       }
     }
 
-    const takeUntilEndTest = takeUntil(action$.ofType(END_TEST))
+    const takeUntilEndTest = takeUntil(action$.pipe(ofType(END_TEST)))
 
     const updateProperties$ = new Subject()
     updateProperties$.pipe(takeUntilEndTest).subscribe(() => {
@@ -306,7 +306,7 @@ const startVpaidEpic = (action$, state$) =>
         vpaidPropertiesAllowedBeforeAdLoaded,
         action$
       ).pipe(
-        takeUntil(action$.ofType(END_TEST)),
+        takeUntil(action$.pipe(ofType(END_TEST))),
         catchError(error =>
           $of(
             vpaidError(
@@ -322,7 +322,7 @@ const startVpaidEpic = (action$, state$) =>
 const startAdEpic = action$ =>
   toVpaidMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      action$.pipe(ofType(START_AD), takeUntil(action$.ofType(END_TEST)))
+      action$.pipe(ofType(START_AD), takeUntil(action$.pipe(ofType(END_TEST))))
     ),
     mapTo(startVpaidAd())
   )
@@ -337,7 +337,7 @@ const muteOnStartEpic = action$ =>
         filter(({ payload: { name } }) => PLAY_EVENTS.indexOf(name) >= 0),
         take(1),
         mapTo(callVpaidFunction('setAdVolume', [0])),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -356,7 +356,7 @@ const vpaidEventsToPausedEpic = action$ =>
         ),
         filter(value => typeof value === 'boolean'),
         map(paused => setAdPaused(paused)),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -369,7 +369,7 @@ const vpaidVolumeToMutedEpic = action$ =>
         map(({ payload: { properties: { adVolume } } }) =>
           setAdMuted(adVolume === 0)
         ),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -382,7 +382,7 @@ const requestAdPausedEpic = action$ =>
         map(({ payload: { paused } }) =>
           callVpaidFunction(paused ? 'pauseAd' : 'resumeAd')
         ),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -395,7 +395,7 @@ const requestAdMutedEpic = action$ =>
         map(({ payload: { muted } }) =>
           callVpaidFunction('setAdVolume', [muted ? 0 : 1])
         ),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -423,7 +423,7 @@ const requestAdFullscreenEpic = (action$, state$) =>
             fullscreen ? 'fullscreen' : 'normal'
           ])
         }),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -434,7 +434,7 @@ const requestAdSkipEpic = action$ =>
       action$.pipe(
         ofType(REQUEST_AD_SKIP),
         mapTo(callVpaidFunction('skipAd')),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
