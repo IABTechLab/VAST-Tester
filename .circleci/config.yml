@@ -1,70 +1,66 @@
-# JavaScript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:14-browsers
-
-    working_directory: ~/repo
-
+      - image: cimg/node:14.17.0
     environment:
       AWS_PAGER: ''
-
     steps:
       - checkout
-
-      # Download and cache dependencies
+      - run:
+          name: Install AWS CLI v2
+          command: |
+            curl -sSL https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip
+            unzip awscliv2.zip
+            rm awscliv2.zip
+            sudo aws/install
       - restore_cache:
           keys:
-          - node14-dependencies-v2-{{ checksum "yarn.lock" }}
-          # Fallback to using the latest cache if no exact match is found
-          - node14-dependencies-v2-
-
-      - run:
-          name: Set up apt
-          command: |
-            sudo apt-get -qq update
-            sudo apt-get -y -qq install apt-transport-https
-
+            - node14-dependencies-v2-{{ checksum "yarn.lock" }}
+            - node14-dependencies-v2-
       - run:
           name: Install Yarn
           command: |
+            # Remove preinstalled Yarn to avoid conflicts
             sudo rm -f /usr/local/bin/yarn
-            curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-            echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-            sudo apt-get -qq update
-            # transform the '>=x.y.z' version constraint in package.json to the 'x.y.z-1' version format of apt-get
-            YARN_VERSION=$( jq -r '(.engines.yarn | gsub("[^0-9.]";"")) + "-1"' < package.json )
-            sudo apt-get -qq install --no-install-recommends yarn=$YARN_VERSION
-
+            # Get Yarn version from package.json and remove >= prefix
+            YARN_VERSION=$( jq -r '(.engines.yarn | gsub("[^0-9.]";""))' < package.json )
+            # Download and install
+            curl -sSL "https://github.com/yarnpkg/yarn/releases/download/v$YARN_VERSION/yarn_${YARN_VERSION}_all.deb" -o yarn.deb
+            sudo dpkg -i yarn.deb
+            rm yarn.deb
       - run:
           name: Install dependencies
           command: yarn --frozen-lockfile
-
       - save_cache:
           paths:
             - ~/.cache/yarn
             - node_modules
           key: node14-dependencies-v2-{{ checksum "yarn.lock" }}
-
-      # Build
       - run:
           name: Build
           command: |
             export REACT_APP_VERSION=${CIRCLE_SHA1:0:7}
             export REACT_APP_BRANCH=$CIRCLE_BRANCH
             export REACT_APP_BUILD_DATE=$(TZ=GMT date +'%b %_d, %Y, %_I:%M %p %Z')
-            yarn build
-
-      # Run tests
+            yarn run build
       - run:
           name: Test
-          command: yarn test
-
+          command: yarn run test
       - deploy:
+          name: Deploy if allowed
           command: |
-            sudo apt-get -y -qq install awscli
-            aws s3 sync build/ s3://vasttester-origin-$CIRCLE_BRANCH.iabtechlab.com/ --delete --cache-control max-age=300 --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+            BRANCHES='master candidate release'
+            if [[ " $BRANCHES " = *" $CIRCLE_BRANCH "* ]]; then
+              BUCKET=vasttester-origin-$CIRCLE_BRANCH.iabtechlab.com
+              echo Installing
+              echo Deploying to $BUCKET...
+              aws s3 sync \
+                build/ \
+                s3://$BUCKET/ \
+                --delete \
+                --cache-control max-age=300 \
+                --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers
+            else
+              echo Not deploying $CIRCLE_BRANCH branch
+            fi
