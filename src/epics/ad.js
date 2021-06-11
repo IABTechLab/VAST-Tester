@@ -37,8 +37,8 @@ const scheduleAdStartEpic = action$ =>
           ofType(VAST_EVENT),
           filter(({ payload: { type } }) => type === 'loaded')
         ),
-        action$.ofType(VERIFICATION_READY)
-      ).pipe(mapTo(config), takeUntil(action$.ofType(END_TEST)))
+        action$.pipe(ofType(VERIFICATION_READY))
+      ).pipe(mapTo(config), takeUntil(action$.pipe(ofType(END_TEST))))
     ),
     map(config => scheduleAdStart(config.startDelayed))
   )
@@ -51,7 +51,7 @@ const adStartEpic = action$ =>
       if (settings.delayed) {
         result = result.pipe(
           delay(PRELOAD_SIMULATION_TIME),
-          takeUntil(action$.ofType(END_TEST))
+          takeUntil(action$.pipe(ofType(END_TEST)))
         )
       }
       return result
@@ -66,7 +66,7 @@ const muteUnmuteEpic = action$ =>
     filter(Boolean),
     mergeMap(config =>
       $combineLatest(
-        action$.ofType(SET_AD_MUTED),
+        action$.pipe(ofType(SET_AD_MUTED)),
         action$.pipe(
           ofType(SET_AD_ACTIVE),
           filter(({ payload: { active } }) => active)
@@ -82,7 +82,7 @@ const muteUnmuteEpic = action$ =>
         distinctUntilChanged(),
         skip(1),
         map(muted => vastEvent(muted ? 'mute' : 'unmute')),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )

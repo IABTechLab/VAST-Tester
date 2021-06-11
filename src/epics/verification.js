@@ -123,8 +123,8 @@ const startVerificationSessionWhenVastAndVideoAvailableEpic = action$ =>
     filter(Boolean),
     mergeMap(({ omAccessMode }) =>
       $combineLatest(
-        action$.ofType(VAST_LOADED),
-        action$.ofType(SET_VIDEO_ELEMENT)
+        action$.pipe(ofType(VAST_LOADED)),
+        action$.pipe(ofType(SET_VIDEO_ELEMENT))
       ).pipe(
         map(([{ payload }]) => payload.verifications),
         mergeMap(async verifications => {
@@ -134,7 +134,7 @@ const startVerificationSessionWhenVastAndVideoAvailableEpic = action$ =>
           }
           return enabled
         }),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     map(enabled => verificationReady(enabled))
@@ -226,7 +226,7 @@ const finishSessionEpic = action$ =>
         tap(() => {
           adSession.finish()
         }),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     mapTo(verificationSessionFinished())

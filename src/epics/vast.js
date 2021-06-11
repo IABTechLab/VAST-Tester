@@ -211,7 +211,7 @@ const loadVastEpic = (action$, state$) =>
           catchError(error => $of(vastLoadFailed(error)))
         ),
         warnings$
-      ).pipe(takeUntil(action$.ofType(END_TEST)))
+      ).pipe(takeUntil(action$.pipe(ofType(END_TEST))))
     })
   )
 

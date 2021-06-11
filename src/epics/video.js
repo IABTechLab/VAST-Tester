@@ -121,7 +121,7 @@ const bootstrapVideoElementEpic = action$ =>
           }
           doc.removeEventListener('fullscreenchange', onFullscreenchange)
         }
-      }).pipe(takeUntil(action$.ofType(END_TEST)))
+      }).pipe(takeUntil(action$.pipe(ofType(END_TEST))))
     )
   )
 
@@ -133,7 +133,7 @@ const setVideoElementSourceEpic = action$ =>
 const toggleVideoPausedStateEpic = (action$, state$) =>
   $combineLatest(
     toVastMediaFileActionStream(action$),
-    action$.ofType(SET_VIDEO_ELEMENT)
+    action$.pipe(ofType(SET_VIDEO_ELEMENT))
   ).pipe(
     mergeMap(() => {
       const {
@@ -179,7 +179,7 @@ const toVideoEventStream = (action$, desiredType) =>
 const startAdEpic = action$ =>
   toVastMediaFileActionStream(action$).pipe(
     mergeMapTo(
-      action$.pipe(ofType(START_AD), takeUntil(action$.ofType(END_TEST)))
+      action$.pipe(ofType(START_AD), takeUntil(action$.pipe(ofType(END_TEST))))
     ),
     mapTo(setVideoPaused(false))
   )
@@ -203,7 +203,7 @@ const videoEventToVastEventEpic = (
       toVideoEventStream(action$, videoEventType).pipe(
         ...(once ? [take(1)] : []),
         ...(unlessEnded ? [filterEnded(state$)] : []),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     mapTo(vastEvent(vastEventType))
@@ -214,7 +214,7 @@ const resumeEpic = action$ =>
     mergeMapTo(
       toVideoEventStream(action$, 'playing').pipe(
         skip(1),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     mapTo(vastEvent('resume'))
@@ -227,7 +227,7 @@ const adStoppedEpic = action$ =>
         ofType(VAST_EVENT),
         filter(({ payload: { type } }) => type === 'complete'),
         mapTo(adStopped()),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -237,13 +237,13 @@ const adErrorEpic = action$ =>
     mergeMapTo(
       $combineLatest(
         toVideoEventStream(action$, 'error'),
-        action$.ofType(SET_VIDEO_PROPERTIES)
+        action$.pipe(ofType(SET_VIDEO_PROPERTIES))
       ).pipe(
         take(1),
         map(([, { payload: { properties: { error } } }]) =>
           error != null ? error.message : null
         ),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     map(message =>
@@ -267,7 +267,7 @@ const quartilesEpic = (action$, state$) =>
         }),
         filter(quartile => quartile > 0),
         distinct(),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     map(quartile => vastEvent(VAST_QUARTILE_EVENT_TYPES[quartile - 1]))
@@ -277,7 +277,7 @@ const videoEventToAdEventEpic = (videoEventType, adEvent) => action$ =>
   toVastMediaFileActionStream(action$).pipe(
     mergeMapTo(
       toVideoEventStream(action$, videoEventType).pipe(
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     mapTo(adEvent())
@@ -289,7 +289,7 @@ const bufferFinishEpic = action$ =>
       toVideoEventStream(action$, 'stalled').pipe(
         mergeMapTo(toVideoEventStream(action$, 'canplay')),
         take(1),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     ),
     mapTo(adBufferFinish())
@@ -310,7 +310,7 @@ const videoPropertiesToAdStateEpic = action$ =>
             setAdMuted(muted || volume === 0)
           ]
         ),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -321,7 +321,7 @@ const requestAdPausedEpic = action$ =>
       action$.pipe(
         ofType(REQUEST_AD_PAUSED),
         map(({ payload: { paused } }) => setVideoPaused(paused)),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -332,7 +332,7 @@ const requestAdMutedEpic = action$ =>
       action$.pipe(
         ofType(REQUEST_AD_MUTED),
         map(({ payload: { muted } }) => setVideoMuted(muted)),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -360,7 +360,7 @@ const requestAdFullscreenEpic = action$ =>
           const promise = subject[func]()
           return $of(promise).pipe(ignoreElements())
         }),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
@@ -371,7 +371,7 @@ const requestAdSkipEpic = action$ =>
       action$.pipe(
         ofType(REQUEST_AD_SKIP),
         mergeMapTo($of(setVideoSrc(null), vastEvent('skip'))),
-        takeUntil(action$.ofType(END_TEST))
+        takeUntil(action$.pipe(ofType(END_TEST)))
       )
     )
   )
