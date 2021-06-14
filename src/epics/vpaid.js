@@ -107,7 +107,7 @@ const loadVpaidEpic = action$ =>
                 dispatch(vpaidLoaded())
               },
               error => {
-                dispatch(vpaidLoadFailed(error))
+                dispatch(vpaidLoadFailed(errorToString(error)))
               }
             )
           })

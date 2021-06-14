@@ -16,6 +16,7 @@ import {
   vastLoadFailed,
   vastWarning
 } from '../actions'
+import errorToString from '../util/errorToString'
 import removeKey from '../util/removeKey'
 import sharedDom from '../util/sharedDom'
 import toJSON from '../util/toJSON'
@@ -208,7 +209,7 @@ const loadVastEpic = (action$, state$) =>
           map(({ chain, inLine, linear, verifications }) =>
             vastLoaded(chain, inLine, linear, verifications)
           ),
-          catchError(error => $of(vastLoadFailed(error)))
+          catchError(error => $of(vastLoadFailed(errorToString(error))))
         ),
         warnings$
       ).pipe(takeUntil(action$.pipe(ofType(END_TEST))))

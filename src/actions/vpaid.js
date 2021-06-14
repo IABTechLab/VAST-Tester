@@ -1,4 +1,4 @@
-import errorToString from '../util/errorToString'
+import createAction from '../util/createAction'
 
 export const REQUEST_VPAID_DOM_UPDATE = 'REQUEST_VPAID_DOM_UPDATE'
 export const SET_VPAID_DOM = 'SET_VPAID_DOM'
@@ -16,93 +16,64 @@ export const CALLING_VPAID_FUNCTION = 'CALLING_VPAID_FUNCTION'
 export const VPAID_LOADED = 'VPAID_LOADED'
 export const VPAID_LOAD_FAILED = 'VPAID_LOAD_FAILED'
 
-export const requestVpaidDomUpdate = () => ({
-  type: REQUEST_VPAID_DOM_UPDATE
-})
+export const requestVpaidDomUpdate = () =>
+  createAction(REQUEST_VPAID_DOM_UPDATE)
 
-export const setVpaidDom = () => ({
-  type: SET_VPAID_DOM
-})
+export const setVpaidDom = () => createAction(SET_VPAID_DOM)
 
-export const unsetVpaidDom = () => ({
-  type: UNSET_VPAID_DOM
-})
+export const unsetVpaidDom = () => createAction(UNSET_VPAID_DOM)
 
-export const vpaidWarning = message => ({
-  type: VPAID_WARNING,
-  payload: {
+export const vpaidWarning = message =>
+  createAction(VPAID_WARNING, {
     message
-  }
-})
+  })
 
-export const vpaidError = (message, cause) => ({
-  type: VPAID_ERROR,
-  payload: {
+export const vpaidError = (message, cause) =>
+  createAction(VPAID_ERROR, {
     message,
     cause
-  }
-})
+  })
 
-export const loadVpaid = url => ({
-  type: LOAD_VPAID,
-  payload: {
+export const loadVpaid = url =>
+  createAction(LOAD_VPAID, {
     url
-  }
-})
+  })
 
-export const vpaidLoaded = () => ({
-  type: VPAID_LOADED
-})
+export const vpaidLoaded = () => createAction(VPAID_LOADED)
 
-export const vpaidLoadFailed = error => ({
-  type: VPAID_LOAD_FAILED,
-  payload: {
-    error: errorToString(error)
-  }
-})
+export const vpaidLoadFailed = error =>
+  createAction(VPAID_LOAD_FAILED, {
+    error
+  })
 
-export const vpaidAdObtained = () => ({
-  type: VPAID_AD_OBTAINED
-})
+export const vpaidAdObtained = () => createAction(VPAID_AD_OBTAINED)
 
-export const callVpaidFunction = (name, args = []) => ({
-  type: CALL_VPAID_FUNCTION,
-  payload: {
+export const callVpaidFunction = (name, args = []) =>
+  createAction(CALL_VPAID_FUNCTION, {
     name,
     args
-  }
-})
+  })
 
-export const callingVpaidFunction = (name, args = []) => ({
-  type: CALLING_VPAID_FUNCTION,
-  payload: {
+export const callingVpaidFunction = (name, args = []) =>
+  createAction(CALLING_VPAID_FUNCTION, {
     name,
     args
-  }
-})
+  })
 
-export const vpaidHandshakeSuccessful = response => ({
-  type: VPAID_HANDSHAKE_SUCCESSFUL,
-  payload: {
+export const vpaidHandshakeSuccessful = response =>
+  createAction(VPAID_HANDSHAKE_SUCCESSFUL, {
     response
-  }
-})
+  })
 
-export const startVpaidAd = () => ({
-  type: START_VPAID_AD
-})
+export const startVpaidAd = () => createAction(START_VPAID_AD)
 
-export const vpaidEvent = (name, data) => ({
-  type: VPAID_EVENT,
-  payload: {
+export const vpaidEvent = (name, data) =>
+  createAction(VPAID_EVENT, {
     name,
     data
-  }
-})
+  })
 
-export const setVpaidProperties = properties => ({
-  type: SET_VPAID_PROPERTIES,
-  payload: {
+export const setVpaidProperties = properties =>
+  createAction(SET_VPAID_PROPERTIES, {
     properties
-  }
-})
+  })
