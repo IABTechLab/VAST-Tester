@@ -1,4 +1,4 @@
-import fecha from 'fecha'
+import { format } from 'date-fns'
 import React from 'react'
 import FontAwesome from 'react-fontawesome'
 
@@ -48,7 +48,7 @@ class LogItem extends React.PureComponent {
       <>
         <tr className={`${classNames} first`}>
           <td className="time" title={timeTooltip}>
-            {fecha.format(timestamp, 'HH:mm:ss.SSS')}
+            {format(timestamp, 'HH:mm:ss.SSS')}
           </td>
           <td className="level">
             <span className="icon">
