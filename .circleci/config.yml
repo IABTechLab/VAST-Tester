@@ -53,7 +53,6 @@ jobs:
             BRANCHES='master candidate release'
             if [[ " $BRANCHES " = *" $CIRCLE_BRANCH "* ]]; then
               BUCKET=vasttester-origin-$CIRCLE_BRANCH.iabtechlab.com
-              echo Installing
               echo Deploying to $BUCKET...
               aws s3 sync \
                 build/ \

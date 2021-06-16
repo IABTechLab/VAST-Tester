@@ -9,6 +9,7 @@ const defaultState = () => ({
   chain: null,
   inLine: null,
   linear: null,
+  trackingEvents: null,
   mediaFile: null,
   verifications: null,
   eventCounts: mapObject(VAST_EVENT_TYPES, 0)
@@ -19,12 +20,13 @@ const reducer = handleActions(
     [START_TEST]: defaultState,
     [VAST_LOADED]: (
       state,
-      { payload: { chain, inLine, linear, verifications } }
+      { payload: { chain, inLine, linear, trackingEvents, verifications } }
     ) => ({
       ...state,
       chain,
       inLine,
       linear,
+      trackingEvents,
       verifications
     }),
     [SET_MEDIA_FILE]: (

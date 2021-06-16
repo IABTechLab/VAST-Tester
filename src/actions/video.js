@@ -1,4 +1,4 @@
-import errorToString from '../util/errorToString'
+import createAction from '../util/createAction'
 
 export const VIDEO_WARNING = 'VIDEO_WARNING'
 export const REQUEST_VIDEO_ELEMENT_UPDATE = 'REQUEST_VIDEO_ELEMENT_UPDATE'
@@ -14,75 +14,51 @@ export const VIDEO_PLAY_PROMISE_FULFILLED = 'VIDEO_PLAY_PROMISE_FULFILLED'
 export const VIDEO_PLAY_PROMISE_REJECTED = 'VIDEO_PLAY_PROMISE_REJECTED'
 export const VIDEO_EVENT = 'VIDEO_EVENT'
 
-export const videoWarning = message => ({
-  type: VIDEO_WARNING,
-  payload: {
+export const videoWarning = message =>
+  createAction(VIDEO_WARNING, {
     message
-  }
-})
+  })
 
-export const requestVideoElementUpdate = () => ({
-  type: REQUEST_VIDEO_ELEMENT_UPDATE
-})
+export const requestVideoElementUpdate = () =>
+  createAction(REQUEST_VIDEO_ELEMENT_UPDATE)
 
-export const setVideoElement = () => ({
-  type: SET_VIDEO_ELEMENT
-})
+export const setVideoElement = () => createAction(SET_VIDEO_ELEMENT)
 
-export const unsetVideoElement = () => ({
-  type: UNSET_VIDEO_ELEMENT
-})
+export const unsetVideoElement = () => createAction(UNSET_VIDEO_ELEMENT)
 
-export const setVideoSrc = src => ({
-  type: SET_VIDEO_SRC,
-  payload: {
+export const setVideoSrc = src =>
+  createAction(SET_VIDEO_SRC, {
     src
-  }
-})
+  })
 
-export const setVideoPaused = paused => ({
-  type: SET_VIDEO_PAUSED,
-  payload: {
+export const setVideoPaused = paused =>
+  createAction(SET_VIDEO_PAUSED, {
     paused
-  }
-})
+  })
 
-export const setVideoMuted = muted => ({
-  type: SET_VIDEO_MUTED,
-  payload: {
+export const setVideoMuted = muted =>
+  createAction(SET_VIDEO_MUTED, {
     muted
-  }
-})
+  })
 
-export const setVideoProperties = properties => ({
-  type: SET_VIDEO_PROPERTIES,
-  payload: {
+export const setVideoProperties = properties =>
+  createAction(SET_VIDEO_PROPERTIES, {
     properties
-  }
-})
+  })
 
-export const videoPlayPromise = () => ({
-  type: VIDEO_PLAY_PROMISE
-})
+export const videoPlayPromise = () => createAction(VIDEO_PLAY_PROMISE)
 
-export const videoPlayNoPromise = () => ({
-  type: VIDEO_PLAY_NO_PROMISE
-})
+export const videoPlayNoPromise = () => createAction(VIDEO_PLAY_NO_PROMISE)
 
-export const videoPlayPromiseFulfilled = () => ({
-  type: VIDEO_PLAY_PROMISE_FULFILLED
-})
+export const videoPlayPromiseFulfilled = () =>
+  createAction(VIDEO_PLAY_PROMISE_FULFILLED)
 
-export const videoPlayPromiseRejected = error => ({
-  type: VIDEO_PLAY_PROMISE_REJECTED,
-  payload: {
-    error: errorToString(error)
-  }
-})
+export const videoPlayPromiseRejected = error =>
+  createAction(VIDEO_PLAY_PROMISE_REJECTED, {
+    error
+  })
 
-export const videoEvent = type => ({
-  type: VIDEO_EVENT,
-  payload: {
+export const videoEvent = type =>
+  createAction(VIDEO_EVENT, {
     type
-  }
-})
+  })

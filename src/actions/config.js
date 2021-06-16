@@ -1,6 +1,5 @@
+import createAction from '../util/createAction'
+
 export const SET_CONFIG = 'SET_CONFIG'
 
-export const setConfig = config => ({
-  type: SET_CONFIG,
-  payload: config
-})
+export const setConfig = config => createAction(SET_CONFIG, config)

@@ -1,4 +1,4 @@
-import fecha from 'fecha'
+import { format } from 'date-fns'
 import { saveAs } from 'file-saver'
 import React from 'react'
 import CopyToClipboard from 'react-copy-to-clipboard'
@@ -24,7 +24,7 @@ const getLogData = () =>
   })
 
 const getLogFileName = () =>
-  'vast-tester-' + fecha.format(new Date(), 'YYYY-MM-DD-HH-mm-ss') + '.json'
+  'vast-tester-' + format(new Date(), 'yyyy-MM-dd-HH-mm-ss') + '.json'
 
 const onActivateDownloadLog = () => {
   const blob = new Blob([getLogData()], { type: LOG_MIME_TYPE })

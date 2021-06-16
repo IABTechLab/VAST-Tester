@@ -16,6 +16,7 @@ import {
   vastLoadFailed,
   vastWarning
 } from '../actions'
+import errorToString from '../util/errorToString'
 import removeKey from '../util/removeKey'
 import sharedDom from '../util/sharedDom'
 import toJSON from '../util/toJSON'
@@ -63,6 +64,20 @@ const getLinearFromInLine = (inLine, warn) => {
     warn('Multiple Linear elements in InLine, using first', inLine.uri)
   }
   return linearCreatives[0].linear
+}
+
+const getTrackingEventsFromLinear = linear => {
+  if (linear.trackingEvents == null) {
+    return {}
+  }
+
+  return linear.trackingEvents.types.reduce(
+    (acc, type) => ({
+      ...acc,
+      [type]: linear.trackingEvents.get(type)
+    }),
+    {}
+  )
 }
 
 const parseVerificationInstance = verification => {
@@ -129,11 +144,13 @@ const loadAndAnalyzeVastChain = (url, warn) =>
   loadVastChain(url, warn).pipe(
     map(({ chain, wrappers, inLine }) => {
       const linear = getLinearFromInLine(inLine, warn)
+      const trackingEvents = getTrackingEventsFromLinear(linear)
       const verifications = selectVerifications([...wrappers, inLine])
       return {
         chain: xmlToJSON(chain),
         inLine: xmlToJSON(inLine),
         linear: xmlToJSON(linear),
+        trackingEvents: xmlToJSON(trackingEvents),
         verifications
       }
     })
@@ -205,10 +222,10 @@ const loadVastEpic = (action$, state$) =>
       } = state$.value
       return $merge(
         loadAndAnalyzeVastChain(vastUrl, warn).pipe(
-          map(({ chain, inLine, linear, verifications }) =>
-            vastLoaded(chain, inLine, linear, verifications)
+          map(({ chain, inLine, linear, trackingEvents, verifications }) =>
+            vastLoaded(chain, inLine, linear, trackingEvents, verifications)
           ),
-          catchError(error => $of(vastLoadFailed(error)))
+          catchError(error => $of(vastLoadFailed(errorToString(error))))
         ),
         warnings$
       ).pipe(takeUntil(action$.pipe(ofType(END_TEST))))

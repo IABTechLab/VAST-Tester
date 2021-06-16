@@ -61,6 +61,7 @@ import { VIDEO_ELEMENT_ID } from '../constants/dom'
 import { VAST_QUARTILE_EVENT_TYPES } from '../constants/vast'
 import { VIDEO_EVENT_TYPES, VIDEO_PROPERTY_NAMES } from '../constants/video'
 import clamp from '../util/clamp'
+import errorToString from '../util/errorToString'
 import isThenable from '../util/isThenable'
 import mapObject from '../util/mapObject'
 import sharedDom from '../util/sharedDom'
@@ -161,7 +162,9 @@ const playPauseEpic = action$ =>
           $of(videoPlayPromise()),
           $from(maybeThenable).pipe(
             mapTo(videoPlayPromiseFulfilled()),
-            catchError(error => $of(videoPlayPromiseRejected(error)))
+            catchError(error =>
+              $of(videoPlayPromiseRejected(errorToString(error)))
+            )
           )
         )
       } else {

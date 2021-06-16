@@ -1,3 +1,5 @@
+import createAction from '../util/createAction'
+
 export const SCHEDULE_AD_START = 'SCHEDULE_AD_START'
 export const START_AD = 'START_AD'
 export const REQUEST_AD_MUTED = 'REQUEST_AD_MUTED'
@@ -13,92 +15,66 @@ export const AD_BUFFER_FINISH = 'AD_BUFFER_FINISH'
 export const AD_VOLUME_CHANGE = 'AD_VOLUME_CHANGE'
 export const AD_STOPPED = 'AD_STOPPED'
 
-export const scheduleAdStart = delayed => ({
-  type: SCHEDULE_AD_START,
-  payload: {
+export const scheduleAdStart = delayed =>
+  createAction(SCHEDULE_AD_START, {
     delayed
-  }
-})
+  })
 
-export const startAd = delayed => ({
-  type: START_AD,
-  payload: {
+export const startAd = delayed =>
+  createAction(START_AD, {
     delayed
-  }
-})
+  })
 
-export const requestAdMuted = muted => ({
-  type: REQUEST_AD_MUTED,
-  payload: {
+export const requestAdMuted = muted =>
+  createAction(REQUEST_AD_MUTED, {
     muted
-  }
-})
+  })
 
-export const requestAdFullscreen = fullscreen => ({
-  type: REQUEST_AD_FULLSCREEN,
-  payload: {
+export const requestAdFullscreen = fullscreen =>
+  createAction(REQUEST_AD_FULLSCREEN, {
     fullscreen
-  }
-})
+  })
 
-export const requestAdPaused = paused => ({
-  type: REQUEST_AD_PAUSED,
-  payload: {
+export const requestAdPaused = paused =>
+  createAction(REQUEST_AD_PAUSED, {
     paused
-  }
-})
+  })
 
-export const requestAdSkip = () => ({
-  type: REQUEST_AD_SKIP
-})
+export const requestAdSkip = () => createAction(REQUEST_AD_SKIP)
 
-export const setAdActive = active => ({
-  type: SET_AD_ACTIVE,
-  payload: {
+export const setAdActive = active =>
+  createAction(SET_AD_ACTIVE, {
     active
-  }
-})
+  })
 
-export const setAdMuted = muted => ({
-  type: SET_AD_MUTED,
-  payload: {
+export const setAdMuted = muted =>
+  createAction(SET_AD_MUTED, {
     muted
-  }
-})
+  })
 
-export const setAdFullscreen = fullscreen => ({
-  type: SET_AD_FULLSCREEN,
-  payload: {
+export const setAdFullscreen = fullscreen =>
+  createAction(SET_AD_FULLSCREEN, {
     fullscreen
-  }
-})
+  })
 
-export const setAdPaused = paused => ({
-  type: SET_AD_PAUSED,
-  payload: {
+export const setAdPaused = paused =>
+  createAction(SET_AD_PAUSED, {
     paused
-  }
-})
+  })
 
-export const adBufferStart = () => ({
-  type: AD_BUFFER_START
-})
+export const adBufferStart = () => createAction(AD_BUFFER_START)
 
-export const adBufferFinish = () => ({
-  type: AD_BUFFER_FINISH
-})
+export const adBufferFinish = () => createAction(AD_BUFFER_FINISH)
 
-export const adVolumeChange = () => ({
-  type: AD_VOLUME_CHANGE
-})
+export const adVolumeChange = () => createAction(AD_VOLUME_CHANGE)
 
-export const adStopped = (errorType = null, message = null) => ({
-  type: AD_STOPPED,
-  payload:
+export const adStopped = (errorType = null, message = null) =>
+  createAction(
+    AD_STOPPED,
     errorType == null
       ? null
       : {
           errorType,
           message
         }
-})
+  )
