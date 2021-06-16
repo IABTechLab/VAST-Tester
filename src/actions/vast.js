@@ -16,11 +16,18 @@ export const vastWarning = (message, url) =>
 
 export const loadVast = () => createAction(LOAD_VAST)
 
-export const vastLoaded = (chain, inLine, linear, verifications) =>
+export const vastLoaded = (
+  chain,
+  inLine,
+  linear,
+  trackingEvents,
+  verifications
+) =>
   createAction(VAST_LOADED, {
     chain,
     inLine,
     linear,
+    trackingEvents,
     verifications
   })
 

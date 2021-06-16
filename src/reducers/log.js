@@ -14,6 +14,7 @@ import {
   VAST_EVENT,
   VAST_LOAD_FAILED,
   VAST_LOADED,
+  VAST_TRACKER,
   VAST_WARNING,
   VERIFICATION_ERROR_EVENT,
   VERIFICATION_EVENT,
@@ -84,6 +85,10 @@ const HANDLERS = {
   [VAST_EVENT]: ({ type }) => ({
     category: VAST,
     text: `Event: ${type}`
+  }),
+  [VAST_TRACKER]: ({ type, uri }) => ({
+    category: VAST,
+    text: `Tracking ${type} tracker: ${uri}`
   }),
   [SET_MEDIA_FILE]: ({ url, apiFramework }) => ({
     category: apiFramework != null ? VPAID : VIDEO,
