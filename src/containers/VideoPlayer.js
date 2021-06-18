@@ -16,19 +16,23 @@ import {
   VPAID_IFRAME_ID
 } from '../constants/dom'
 
-const acceptVideoRef = (
-  { shared, videoSrc, videoMuted },
-  callback
-) => element => {
+const kLoadedSrc = Symbol('loadedSrc')
+
+const acceptVideoRef = ({ shared, videoMuted }, callback) => element => {
   if (element == null) {
     return
   }
   // React only sets the muted property, not the attribute
   // See https://github.com/facebook/react/issues/6544
   element.defaultMuted = videoMuted
-  // Only load if we're not sharing the video element with a VPAID
-  if (!shared && videoSrc == null && element.currentSrc != null) {
+  // Load video source if it's not being controlled by a VPAID unit
+  if (
+    !shared &&
+    element[kLoadedSrc] !== element.src &&
+    typeof element.load === 'function'
+  ) {
     element.load()
+    element[kLoadedSrc] = element.src
   }
   // Dispatch
   callback(element)
@@ -67,10 +71,7 @@ const VideoPlayer = ({
           src={videoSrc}
           muted={videoMuted}
           playsInline
-          ref={acceptVideoRef(
-            { shared, videoSrc, videoMuted },
-            onVideoElementRef
-          )}
+          ref={acceptVideoRef({ shared, videoMuted }, onVideoElementRef)}
         />
         {shared
           ? (
