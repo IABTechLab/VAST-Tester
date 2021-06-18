@@ -7,12 +7,12 @@ import KeyValue from '../components/KeyValue'
 import replaceKey from '../util/replaceKey'
 import startsWith from '../util/startsWith'
 
-const TYPE = Symbol('type')
+const kType = Symbol('type')
 
 const renderItem = (type, data, itemType, itemString) => (
   <span>
-    {data != null && data[TYPE] != null
-      ? data[TYPE]
+    {data != null && data[kType] != null
+      ? data[kType]
       : type === 'Array'
         ? itemString
         : itemType}
@@ -58,7 +58,7 @@ const VastDetails = React.memo(({ eventCounts, chain, mediaFileUrl }) => {
 
 const mapStateToProps = ({ vast: { eventCounts, chain, mediaFile } }) => ({
   eventCounts,
-  chain: replaceKey(chain, '$type', TYPE)
+  chain: replaceKey(chain, '$type', kType)
 })
 
 export default connect(mapStateToProps)(VastDetails)
