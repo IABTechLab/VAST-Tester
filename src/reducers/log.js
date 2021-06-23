@@ -88,7 +88,7 @@ const HANDLERS = {
   }),
   [VAST_TRACKER]: ({ type, uri }) => ({
     category: VAST,
-    text: `Tracking ${type} tracker: ${uri}`
+    text: `Firing ${type} tracker: ${uri}`
   }),
   [SET_MEDIA_FILE]: ({ url, apiFramework }) => ({
     category: apiFramework != null ? VPAID : VIDEO,
