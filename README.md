@@ -6,7 +6,7 @@ Please review the IAB Tech Lab Open Source Initiative Governance guidelines [her
 
 Tests IAB VAST ads. Contributed by the [DoubleVerify](https://www.doubleverify.com/) team.
 
-This tool is also hosted by IAB Tech Lab at [vasttester.iabtechlab.com](https://vasttester.iabtechlab.com/).
+This tool is also hosted by IAB Tech Lab at [[vasttester.iabtechlab.com](https://tools.iabtechlab.com/resourcecenter/vastTagValidator)]([https://vasttester.iabtechlab.com](https://tools.iabtechlab.com/resourcecenter/vastTagValidator)).
 
 ## Getting Started
 
